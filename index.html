@@ -115,19 +115,19 @@ header .aside{ display:block; margin-top:12px; font-size:.82rem; color:var(--mut
   width:70%; height:20px; background:linear-gradient(180deg,#d8cba3,#b9a878);
   clip-path:polygon(8% 0,92% 0,100% 100%,0% 100%);
 }
-.sticky{ width:100%; max-width:400px; height:220px; cursor:pointer; perspective:900px; }
+.sticky{ width:100%; max-width:520px; height:320px; cursor:pointer; perspective:900px; }
 .sticky-inner{ position:relative; width:100%; height:100%; transition:transform .45s; transform-style:preserve-3d; }
 .sticky.flip .sticky-inner{ transform:rotateY(180deg); }
-.note-face{ position:absolute; inset:0; backface-visibility:hidden; padding:22px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+.note-face{ position:absolute; inset:0; backface-visibility:hidden; padding:34px 36px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
   background:var(--card); border:1px solid var(--brass); box-shadow:0 14px 26px -12px rgba(0,0,0,.4); }
 .note-face.back{ transform:rotateY(180deg); background:#241f18; color:#f3ecd8; }
-.note-face .tag{ font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; color:var(--brass-dark); margin-bottom:6px; }
+.note-face .tag{ font-size:.78rem; text-transform:uppercase; letter-spacing:.09em; color:var(--brass-dark); margin-bottom:10px; }
 .note-face.back .tag{ color:#d9b95c; }
-.note-face .word{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:1.5rem; }
-.note-face .def{ font-size:.9rem; margin-top:8px; font-family:"Cormorant Garamond",serif; }
-.note-face .ex{ font-size:.78rem; margin-top:12px; padding-top:10px; border-top:1px dashed #6b5c3c; }
-.note-face .ex b{ display:block; font-size:.6rem; text-transform:uppercase; letter-spacing:.06em; color:#d9b95c; margin-bottom:3px; font-family:"Inter",sans-serif; }
-.note-face .hint{ margin-top:10px; font-size:.68rem; opacity:.55; }
+.note-face .word{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:2.2rem; line-height:1.15; }
+.note-face .def{ font-size:1.2rem; margin-top:14px; font-family:"Cormorant Garamond",serif; line-height:1.4; }
+.note-face .ex{ font-size:1rem; margin-top:18px; padding-top:16px; border-top:1px dashed #6b5c3c; width:100%; }
+.note-face .ex b{ display:block; font-size:.7rem; text-transform:uppercase; letter-spacing:.07em; color:#d9b95c; margin-bottom:5px; font-family:"Inter",sans-serif; }
+.note-face .hint{ margin-top:16px; font-size:.76rem; opacity:.55; }
 .note-controls{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center; margin-top:14px; }
 .note-controls button{ font-family:"Inter",sans-serif; font-weight:600; font-size:.76rem; letter-spacing:.04em; text-transform:uppercase; padding:9px 16px; border:1px solid var(--ink); background:var(--card); cursor:pointer; }
 .note-progress{ color:var(--muted); font-weight:600; font-size:.82rem; }
@@ -228,6 +228,8 @@ footer{ text-align:center; color:var(--muted); font-size:.85rem; padding:24px 24
   <div class="complab">
     <div class="pair" id="compPair"></div>
     <p class="prompt" id="compPrompt"></p>
+    <button class="spark-btn" id="compAnsBtn" style="display:block;margin:0 auto;">Show a model answer</button>
+    <div class="spark-out" id="compAnsOut" style="border-color:var(--brass); text-align:left;"></div>
     <button id="compNext">Bring out another pair</button>
   </div>
 </section>
@@ -257,6 +259,7 @@ footer{ text-align:center; color:var(--muted); font-size:.85rem; padding:24px 24
 const stations = [
   { id:"prologue", theme:"prehistoric", era:"Prologue", title:"Opening the Case",
     question:"What does it even mean to look at an image and call it \"art history\"?",
+    answer:"It means treating the image as evidence, not a fact you already know — asking what conventions the maker used, what the object was for, and what assumptions you're bringing to it before you decide what it means. Art history is the argument you build from that evidence.",
     objectives:["Read the textbook Introduction, pp. 1–17","Watch Smarthistory's \"Art History and World Art History\"","Optional: John Berger, Ways of Seeing, Ep. 1 (1972)","Watch the animated Allegory of the Cave — in class"],
     read:[["Heilbrunn Timeline of Art History","https://www.metmuseum.org/essays/timeline-of-art-history","1,000+ essays on artists, materials, movements."],["The Met","https://www.metmuseum.org/","Free / pay-what-you-can for NY residents."],["The Morgan Library & Museum","https://www.themorgan.org/",null],["The MoMA","https://www.moma.org/","Free for NY residents, Fri 5:30–8:30pm."],["Smarthistory","https://smarthistory.org/",null],["Khan Academy","https://www.khanacademy.org/",null],["Smarthistory, \"Art History and World Art History\"","https://smarthistory.org/world-art-history/?tl=world-art-history&sidebar=the-basics-of-art-history",null],["Dr. Lauren Kilroy-Ewbank, \"Iconographic Analysis: An Introduction\"","https://smarthistory.org/introduction-iconographic-analysis/",null],["My Quizlet deck","https://quizlet.com/1203141926/unit-1-ancient-spheres-flash-cards/?funnelUUID=20a24a9a-9ec3-410f-b038-b474c40a6ed1",null],["Full video playlist for the unit","https://youtube.com/playlist?list=PLe5EjtbFno3g&si=s5496AkbFAB6KRZD",null]],
     watch:[["Intro lecture video","https://www.youtube.com/watch?v=Vg7m32lID1Q"],["Optional: Ways of Seeing, Ep. 1 (Berger, 1972)","https://www.youtube.com/watch?v=CZhJjP8kiqE"],["Allegory of the Cave, animated","https://www.youtube.com/watch?v=69F7GhASOdM"]],
@@ -264,6 +267,7 @@ const stations = [
   },
   { id:"prehistoric", theme:"prehistoric", era:"c. 30,000–7,000 BCE", title:"Prehistoric Art in Europe", unit:"Prehistoric",
     question:"What can art made before writing tell us — and how much of what we \"see\" is our own assumption?",
+    answer:"It tells us about technique and organized effort — sustained work deep in a dark cave, coordinated labor at Stonehenge. But motive and meaning are mostly inference: without text, \"fertility goddess\" or \"hunting magic\" are modern narratives placed onto objects that can't confirm or deny them.",
     objectives:["Distinguish portable vs. parietal art","Separate what we know, what we infer, what's unknown","Explain how context shapes interpretation","Consider what changes when an object moves from dig site to museum case"],
     read:[["Smarthistory — Dr. Mary Beth Looney on the Hall of Bulls","https://smarthistory.org/hall-of-bulls-lascaux/",null],["Optional: V&A, \"History of the Cast Courts\"","https://www.vam.ac.uk/articles/history-of-the-cast-courts?srsltid=AfmBOooAAXOXGx0l_wIuHiIGXOxV1OUOMtFDsTzRy92aCVAQdLWBvBJI",null]],
     watch:[["Paula S. Wallace on the Woman of Willendorf | SCAD (25 min)","https://www.youtube.com/watch?v=s78EOFJtk1A"]],
@@ -271,6 +275,7 @@ const stations = [
   },
   { id:"egypt", theme:"egypt", era:"c. 2950–1300 BCE", title:"Art of Ancient Egypt", unit:"Egypt",
     question:"How did Egyptian artists use scale, pose, and inscription — not \"realism\" — to signal kingship and the divine?",
+    answer:"Hierarchical scale made the pharaoh physically larger than everyone around him; composite pose and a fixed canon of proportion kept every royal image instantly recognizable across centuries; hieroglyphic captions locked in identity and religious function. None of it aims at how a body actually looks — it aims at how power should look.",
     objectives:["Explain how images communicate status and power","Read scale, pose, gesture, attributes as meaning","Connect imagery to religion, ritual, the afterlife"],
     read:[["Smarthistory — Dr. Amy Calvert on the Palette of Narmer","https://smarthistory.org/palette-of-king-narmer/",null],["Smarthistory — Middle Kingdom and Second Intermediate Period","https://smarthistory.org/middle-kingdom-and-second-intermediate-period-introduction/",null],["Theban Mapping Project","https://thebanmappingproject.com/","Maps and site data for the Theban Necropolis."]],
     watch:[["Why was the discovery of Tutankhamun's Tomb so important?","https://www.youtube.com/watch?v=_YT_CYR6vGs"]],
@@ -278,6 +283,7 @@ const stations = [
   },
   { id:"greece", theme:"greece", era:"c. 600–30 BCE", title:"Ancient Greek Art", unit:"Greece",
     question:"As Greek bodies move from rigid to naturalistic to theatrical, what does that say about what the culture valued?",
+    answer:"Archaic rigidity gives way to Classical balance and control (the Doryphoros), then Hellenistic drama and emotion (the Nike of Samothrace). The shift tracks a growing interest in the body as something that moves and feels rather than just stands there — reasoned perfection first, then spectacle.",
     objectives:["Track the body across Archaic, Classical, Hellenistic periods","Distinguish naturalism from idealization","Recognize 'Greek art' as many periods, not one style"],
     read:[["The Iliad (trans. Samuel Butler)","http://classics.mit.edu/Homer/iliad.19.xix.html",null],["The Odyssey (trans. Samuel Butler)","http://classics.mit.edu/Homer/odyssey.html",null],["Diggit Magazine — contested cultural heritage","https://www.diggitmagazine.com/missing-sister-unraveling-complexity-contested-cultural-heritage",null],["Images of Antiquity — \"The Lost Sister\"","https://imagesofantiquity.substack.com/p/the-lost-sister-and-other-tales-of",null]],
     watch:[["Khan Academy on the Parthenon","https://www.youtube.com/watch?v=tWDflkBZC6U"],["The Optical Illusions of the Parthenon — NOVA","https://www.youtube.com/watch?v=7AIXvZRsiq4"],["\"What should we do?\"","https://www.youtube.com/watch?v=ib1EzqhI1oQ"],["Smarthistory, \"What is perfect?\"","https://www.youtube.com/watch?v=EAR9RAMg9NY"],["Why The British Museum Has The Parthenon Marbles","https://youtu.be/QRH105_ztAw?si=oBaqLhszs0yRuOiH"],["Who owns the Parthenon sculptures?","https://youtu.be/90hpwMFtHvU?is=d8okakaWmY09MkwR"]],
@@ -285,6 +291,7 @@ const stations = [
   },
   { id:"rome", theme:"rome", era:"Etruscan c. 500 BCE; Rome c. 100 BCE–400 CE", title:"Etruscan Art & Republic/Empire of Rome", unit:"Rome",
     question:"If a portrait can build a career, what happens once an emperor commissions every portrait of himself in the empire?",
+    answer:"Portraiture stops being just identity and becomes propaganda at scale — Augustus of Primaporta shows a ruler frozen at an idealized age decades after the fact, using borrowed Greek proportion to sell a very Roman claim: that his rule is destined and permanent, and worth reproducing everywhere.",
     objectives:["Identify verism vs. idealization in Roman portraiture","Explain how emperors used art/architecture to construct power"],
     read:[["Met — Roman Portrait Sculpture: Republican through Constantinian","https://www.metmuseum.org/essays/roman-portrait-sculpture-republican-through-constantinian",null],["Chroma: Ancient Sculpture in Color (The Met)","https://www.metmuseum.org/exhibitions/chroma","Ancient marble was painted — rediscovered polychromy."],["Virgil's Aeneid","https://classics.mit.edu/Virgil/aeneid.html",null],["List of Rulers: Roman Empire","https://www.metmuseum.org/toah/hd/roru/hd_roru.htm",null],["Vitruvius, Ten Books of Architecture","https://www.gutenberg.org/ebooks/20239",null],["National Museum of Rome","http://www.roma2000.it/zmunaro.html",null],["ETRU — National Etruscan Museum","https://www.museoetru.it/",null]],
     watch:[["Khan Academy — Ara Pacis Augustae","https://www.khanacademy.org/humanities/world-history/ancient-medieval/roman-empire-survey/v/ara-pacis-augustae-altar-of-augustan-peace-13-9-b-c-e-rome"],["Ara Pacis — extra video","https://www.youtube.com/watch?v=kiMNT18c4Ko"],["Smarthistory on Augustus of Primaporta","https://www.youtube.com/watch?v=0HhWj97jKSQ"]],
@@ -292,6 +299,7 @@ const stations = [
   },
   { id:"buddhist", theme:"buddhist", era:"c. 300 BCE–300 CE", title:"Buddhist Art of the Indian Region", unit:"Buddhist India",
     question:"The Buddha wasn't shown as a person at first. What does the shift from symbol to body reveal about cultural exchange?",
+    answer:"Early aniconic images (an empty throne, a wheel, footprints) reflect a belief that depicting an enlightened being directly was presumptuous. Once Buddhism reached Gandhara and met Hellenistic sculptural traditions after Alexander's campaigns, the Buddha gained a fully human, Greek-draped body — proof that religious ideas and artistic techniques traveled together.",
     objectives:["Explain the purpose of the Great Stupa at Sanchi","Compare Gandhara and Mathura Buddha imagery"],
     read:[["Smarthistory — Introduction to Buddhism","https://smarthistory.org/introduction-to-buddhism/",null],["Smarthistory — The Stupa","https://smarthistory.org/the-stupa-sanchi/",null],["Met — Buddhism and Buddhist Art","https://www.metmuseum.org/essays/buddhism-and-buddhist-art",null]],
     watch:[["\"Beliefs made visible\" — Asian Art Museum SF (20 min)","https://www.youtube.com/watch?v=jl6S0wdeWk4"],["Smarthistory, \"How to recognize the Buddha\"","https://www.youtube.com/watch?v=mvDnUhA-1Uk"],["What is Continuous Narrative? (The Great Departure)","https://www.youtube.com/watch?v=4vzuJm1Vczw"]],
@@ -299,6 +307,7 @@ const stations = [
   },
   { id:"maya", theme:"maya", era:"c. 650–850 CE", title:"Mesoamerica — the Ancient Maya", unit:"Maya",
     question:"What do a carved lintel and a painted vase reveal about how the Maya recorded rulers, ritual, and myth?",
+    answer:"Both show the Maya pairing precise record-keeping with visual storytelling — Lintel 24 pins a specific bloodletting ritual to an exact calendar date, while painted vases carried mythological narrative in everyday and ceremonial use. Maya history wasn't only carved into monuments; it circulated on objects people actually used.",
     objectives:["Read glyphs and figures as records of specific rulers and events"],
     read:[["Khan Academy — Lauren Kilroy-Ewbank on Yaxchilán Lintels 24 & 25","https://www.khanacademy.org/humanities/ap-art-history/indigenous-americas-apah/north-america-apah/a/yaxchilan-lintels",null]],
     watch:[["James Doyle on Chakalte', Relief with Enthroned Ruler","https://www.youtube.com/watch?v=yTA8PKdNx78"],["James Doyle on the Vessel with a Mythological Scene","https://www.youtube.com/watch?v=qxvFW5mraHY"]],
@@ -306,6 +315,7 @@ const stations = [
   },
   { id:"christian", theme:"christian", era:"c. 300–700 CE", title:"The Mediterranean — Early Jewish, Christian & Byzantine Art", unit:"Christian/Byzantine",
     question:"How does depicting Christ change once Christianity moves from a hidden faith to the religion of an empire?",
+    answer:"Early images borrow disguise — Christ as a pagan Good Shepherd — because Christianity had no visual language of its own yet and no political power to display. By Justinian's Byzantium, Christ and the emperor share gold-ground, frontal, hierarchical imagery: religious and political authority visually fused.",
     objectives:["Analyze the link between religious and imperial authority","Identify Byzantine mosaic conventions: gold ground, frontality, hierarchical scale"],
     read:[],
     watch:[["Smarthistory on the Junius Bassus Sarcophagus","https://www.youtube.com/watch?v=UjX4ExCixWY"],["Smarthistory on the Church of San Vitale, Ravenna","https://www.youtube.com/watch?v=It3i-dKusIM"]],
@@ -313,6 +323,7 @@ const stations = [
   },
   { id:"islamic", theme:"islamic", era:"c. 600–950 CE", title:"The Mediterranean — Early Islamic World", unit:"Islamic",
     question:"How does calligraphy and geometry carry religious meaning when figural imagery is set aside?",
+    answer:"Without a human figure to carry meaning, the Dome of the Rock and the Great Mosque of Córdoba use inscribed Qur'anic text and endlessly generated geometric pattern instead — the word of God and the order of creation made visible directly, rather than through a picture of anyone.",
     objectives:["Identify major features of early mosque architecture and calligraphy"],
     read:[["Smarthistory — Dr. Elizabeth Macaulay-Lewis, \"Introduction to Islam\"","https://smarthistory.org/introduction-to-islam/",null],["\"Dome of the Rock\" study guide","https://www.collegesidekick.com/study-guides/zeliart101/dome-of-the-rock",null]],
     watch:[["Hikma History on why the Dome of the Rock matters","https://www.youtube.com/watch?v=bXhcfU5K9Go"]],
@@ -439,14 +450,22 @@ const objects = [
 
 /* =========================== COMPARISON LAB pairings =========================== */
 const comparisons = [
-  ["Augustus of Primaporta","Standing Buddha","Both borrow Greek sculptural language for a non-Greek subject — a Roman emperor, a Buddhist teacher. What is each trying to claim by doing that, and does it work the same way twice?"],
-  ["Palette of Narmer","Ara Pacis Augustae","Both use scale and figure arrangement to make a political claim about a ruler, thousands of years apart. What visual tools does each reach for, and what's actually different?"],
-  ["Woman of Willendorf","Aphrodite of Knidos","Both are female figures carved nude, separated by roughly 20,000 years. What changes about how the female body is idealized, and what stays surprisingly constant?"],
-  ["Doryphoros (Spear Bearer)","Standing Buddha","Same contrapposto stance, two completely different belief systems behind it. What's genuinely shared here, and what does contrapposto mean differently in each context?"],
-  ["The Great Stupa, Sanchi","Dome of the Rock","Both are religious monuments built around movement and a sacred point rather than a single image to look at. Compare how each handles — or avoids — figural imagery."],
-  ["Emperor Justinian and Attendants","Augustus of Primaporta","Both fuse political and divine authority into one image of one ruler. What visual strategy does each use to make that fusion feel natural?"],
-  ["Menkaure and a Queen","Sarcophagus from Cerveteri","Both show a married couple. What does each say about that relationship, and about how each culture pictured death?"],
-  ["Junius Bassus Sarcophagus","Lintel 24, Yaxchilán","Both are carved relief records of a specific ritual moment for a specific person. Compare what's actually being commemorated, and for whom."]
+  ["Augustus of Primaporta","Standing Buddha","Both borrow Greek sculptural language for a non-Greek subject — a Roman emperor, a Buddhist teacher. What is each trying to claim by doing that, and does it work the same way twice?",
+    "Augustus borrows Polykleitos's proportion system to claim destined, semi-divine political authority for a specific ruler. The Gandhara Buddha borrows the same naturalism to make a spiritual teacher feel physically present and approachable. Same visual toolkit, opposite goals: one sells power, the other invites devotion."],
+  ["Palette of Narmer","Ara Pacis Augustae","Both use scale and figure arrangement to make a political claim about a ruler, thousands of years apart. What visual tools does each reach for, and what's actually different?",
+    "Narmer uses raw hierarchical scale — he's simply bigger than everyone else. The Ara Pacis is subtler: figures are the same size, but allegorical personifications and a calm processional order imply Augustus's rule caused all this peace and abundance. Blunt scale versus atmosphere — both are still propaganda."],
+  ["Woman of Willendorf","Aphrodite of Knidos","Both are female figures carved nude, separated by roughly 20,000 years. What changes about how the female body is idealized, and what stays surprisingly constant?",
+    "Willendorf exaggerates hips, belly, and breasts with no face — the body as symbol, not likeness. Aphrodite idealizes toward naturalistic beauty, shaped to be looked at. What stays constant: both bodies are shaped by what each culture wanted a woman's body to represent, not by an actual model."],
+  ["Doryphoros (Spear Bearer)","Standing Buddha","Same contrapposto stance, two completely different belief systems behind it. What's genuinely shared here, and what does contrapposto mean differently in each context?",
+    "Both use contrapposto to make a static body feel alive. In Greece it demonstrates mathematical, rational perfection; in Gandhara it's borrowed wholesale to humanize a religious figure. The pose is identical — the meaning it's asked to carry is completely different."],
+  ["The Great Stupa, Sanchi","Dome of the Rock","Both are religious monuments built around movement and a sacred point rather than a single image to look at. Compare how each handles — or avoids — figural imagery.",
+    "Both organize ritual movement around a sacred center — circumambulation at Sanchi, pilgrimage at the Rock. Sanchi avoids the Buddha's body specifically (aniconism); the Dome avoids all figures on principle, replacing them with calligraphy and pattern. Different reasons, same refusal to just paint a picture of the sacred."],
+  ["Emperor Justinian and Attendants","Augustus of Primaporta","Both fuse political and divine authority into one image of one ruler. What visual strategy does each use to make that fusion feel natural?",
+    "Augustus fuses political and semi-divine authority through borrowed Greek proportion and a narrative breastplate. Justinian does it through Byzantine mosaic convention — frontal pose, gold ground, halo — placed visually beside the clergy. Both insist one ruler's power is backed by heaven; the visual grammar for saying so completely changes."],
+  ["Menkaure and a Queen","Sarcophagus from Cerveteri","Both show a married couple. What does each say about that relationship, and about how each culture pictured death?",
+    "Menkaure and his queen stand rigid, formal, eternal — death as stability. The Etruscan couple reclines together smiling, as if still at a banquet — death as continuity of ordinary life. Same subject, opposite emotional register."],
+  ["Junius Bassus Sarcophagus","Lintel 24, Yaxchilán","Both are carved relief records of a specific ritual moment for a specific person. Compare what's actually being commemorated, and for whom.",
+    "Junius Bassus borrows imperial Roman visual authority to elevate Christ for a newly baptized Roman prefect. Yaxchilán's lintel ties royal legitimacy directly to a queen's ritual bloodletting, dated to the day. Different belief systems, same instinct: use dense, exact detail to make one person's moment permanent."]
 ];
 
 /* =========================== THE GALLERY ROOMS =========================== */
@@ -469,6 +488,8 @@ thread.querySelectorAll('.pin-card').forEach(p=>{
       <button class="close" id="closeBtn">✕</button>
       <div class="era">${s.era}</div><h2>${s.title}</h2>
       <p class="question">${s.question}</p>
+      <button class="spark-btn ans-btn" id="ansBtn">Show a way to answer this</button>
+      <div class="spark-out" id="ansOut">${s.answer}</div>
       <h4>Aim to be able to...</h4><ul>${s.objectives.map(o=>`<li>${o}</li>`).join('')}</ul>
       ${unitObjects.length?`<h4>On view in this room</h4><div class="chip-row">${unitObjects.map(o=>`<span class="chip" data-obj="${o.name}">${o.name}</span>`).join('')}</div>`:''}
       ${s.read.length?`<h4>Further reading</h4><ul class="links">${s.read.map(linkRow).join('')}</ul>`:''}
@@ -478,6 +499,7 @@ thread.querySelectorAll('.pin-card').forEach(p=>{
     </div>`;
     overlay.classList.add('open');
     popcard.querySelector('#closeBtn').addEventListener('click', ()=> overlay.classList.remove('open'));
+    popcard.querySelector('#ansBtn').addEventListener('click', ()=> popcard.querySelector('#ansOut').classList.toggle('show'));
     popcard.querySelector('#sparkBtn').addEventListener('click', ()=> popcard.querySelector('#sparkOut').classList.toggle('show'));
     popcard.querySelectorAll('.chip[data-obj]').forEach(chip=>{
       chip.addEventListener('click', ()=>{
@@ -581,19 +603,22 @@ const compPair = document.getElementById('compPair');
 const compPrompt = document.getElementById('compPrompt');
 function findObj(name){ return objects.find(o=>o.name===name || o.name.startsWith(name)) || {}; }
 function renderComp(){
-  const [a,b,prompt] = comparisons[Math.floor(Math.random()*comparisons.length)];
+  const [a,b,prompt,answer] = comparisons[Math.floor(Math.random()*comparisons.length)];
   const oa=findObj(a), ob=findObj(b);
   compPair.innerHTML = `
     <div class="side" data-wiki="${oa.wiki||''}"><div class="shot"><span class="ph">🖼</span></div><div class="name">${a}</div></div>
     <div class="vs">Compare</div>
     <div class="side" data-wiki="${ob.wiki||''}"><div class="shot"><span class="ph">🖼</span></div><div class="name">${b}</div></div>`;
   compPrompt.textContent = prompt;
+  document.getElementById('compAnsOut').classList.remove('show');
+  document.getElementById('compAnsOut').textContent = answer;
   [ [compPair.children[0], oa], [compPair.children[2], ob] ].forEach(async ([side, obj])=>{
     const photo = await findPhoto(obj);
     if(photo) side.querySelector('.shot').innerHTML = `<img src="${photo.src}" alt="${obj.name||''}">`;
   });
 }
 document.getElementById('compNext').addEventListener('click', renderComp);
+document.getElementById('compAnsBtn').addEventListener('click', ()=> document.getElementById('compAnsOut').classList.toggle('show'));
 renderComp();
 
 /* =========================== UNKNOWN IMAGE CHEAT SHEET =========================== */
