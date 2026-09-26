@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Permanent Collection — Unit 1 Test Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#efe8db; --wall2:#e6ddcb; --ink:#231f1a; --brass:#9c7a2e; --brass-dark:#7c5f22;
+  --velvet:#6e1423; --card:#fffdf8; --muted:#6b6255;
+}
+*{ box-sizing:border-box; }
+body{
+  margin:0; color:var(--ink); font-family:"Inter",sans-serif;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.5), transparent 55%),
+    linear-gradient(var(--wall), var(--wall2));
+  min-height:100vh;
+}
+h1,h2{ font-family:"Cormorant Garamond", Georgia, serif; font-weight:600; }
+.smallcaps{ text-transform:uppercase; letter-spacing:.12em; font-size:.7rem; color:var(--brass-dark); font-weight:600; }
+
+header{ text-align:center; padding:50px 20px 18px; }
+header .smallcaps{ display:block; margin-bottom:8px; }
+header h1{ font-size:clamp(2.1rem,6vw,3.2rem); margin:0 0 10px; font-style:italic; }
+header hr{ width:120px; border:none; border-top:2px solid var(--brass); margin:14px auto; }
+header p{ max-width:56ch; margin:0 auto; color:var(--muted); font-size:.98rem; }
+header .aside{ display:block; margin-top:12px; font-size:.82rem; color:var(--muted); font-style:italic; }
+
+/* floor directory / nav */
+.tabs{ display:flex; justify-content:center; gap:0; flex-wrap:wrap; padding:14px 16px 0; }
+.tabs a{ font-family:"Inter",sans-serif; font-weight:600; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--ink); background:var(--card); padding:9px 16px; text-decoration:none; border:1px solid var(--brass);
+  border-left:none; }
+.tabs a:first-child{ border-left:1px solid var(--brass); }
+
+/* ------------- the gallery corridor (unit rooms) ------------- */
+.board{ position:relative; max-width:1180px; margin:34px auto 10px; padding:44px 30px 34px; overflow-x:auto; }
+.thread{ position:relative; display:flex; gap:30px; padding-bottom:6px; width:max-content; margin:0 auto; }
+.thread::before{ content:""; position:absolute; left:0; right:0; top:52px; height:1px; background:var(--brass); opacity:.55; }
+.pin-card{ position:relative; width:180px; cursor:pointer; }
+.pin-card .pin{ position:absolute; top:-4px; left:50%; transform:translateX(-50%); width:9px; height:9px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f4dd8a,var(--brass)); box-shadow:0 1px 2px rgba(0,0,0,.4); z-index:2; }
+.pin-card .card{
+  margin-top:22px; background:var(--card); border:1px solid rgba(35,31,26,.18);
+  box-shadow:0 8px 18px -8px rgba(0,0,0,.35); padding:22px 14px 16px; min-height:120px; text-align:center;
+  transition:transform .18s, box-shadow .18s;
+}
+.pin-card:hover .card{ transform:translateY(-5px); box-shadow:0 14px 24px -10px rgba(0,0,0,.4); }
+.card .era{ font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; color:var(--brass-dark); font-weight:600; }
+.card .title{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:1.15rem; margin-top:8px; line-height:1.25; }
+
+/* ------------- wall-text popup ------------- */
+.overlay{ position:fixed; inset:0; background:rgba(20,17,12,.75); display:none; align-items:center; justify-content:center; padding:20px; z-index:100; }
+.overlay.open{ display:flex; }
+.popcard{ max-width:580px; width:100%; max-height:88vh; overflow-y:auto; padding:0; position:relative;
+  border:1px solid var(--brass); box-shadow:0 20px 45px rgba(0,0,0,.5); }
+.popcard .inner{ padding:30px 28px 28px; }
+.popcard .close{ position:absolute; top:10px; right:14px; background:none; border:none; font-size:1.3rem; cursor:pointer; color:inherit; opacity:.7; font-family:inherit; z-index:2; }
+.popcard .era{ font-weight:600; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; }
+.popcard h2{ font-size:1.7rem; margin:.2em 0 .5em; font-style:italic; }
+.popcard .question{ font-style:italic; padding:12px 16px; margin:12px 0 16px; border:1px solid; border-radius:2px; font-size:.98rem; }
+.popcard h4{ font-size:.68rem; text-transform:uppercase; letter-spacing:.09em; margin:18px 0 7px; opacity:.75; font-family:"Inter",sans-serif; font-weight:600; }
+.popcard ul{ margin:0; padding-left:20px; } .popcard li{ margin-bottom:5px; font-size:.92rem; }
+.popcard .links li{ list-style:none; margin-left:-20px; } .popcard .note{ display:block; opacity:.7; font-size:.8rem; }
+.chip-row{ display:flex; flex-wrap:wrap; gap:6px; }
+.chip{ font-size:.76rem; background:rgba(0,0,0,.07); border:1px solid rgba(0,0,0,.2); border-radius:2px; padding:4px 10px; cursor:pointer; font-style:italic; }
+.chip:hover{ background:rgba(0,0,0,.14); }
+.spark-btn{ font-family:"Inter",sans-serif; font-weight:600; font-size:.76rem; letter-spacing:.05em; text-transform:uppercase; padding:9px 16px; cursor:pointer; margin-top:10px; border:1px solid; background:transparent; }
+.spark-out{ margin-top:10px; font-size:.9rem; padding:12px 14px; border-left:2px solid; display:none; font-style:italic; }
+.spark-out.show{ display:block; }
+
+/* museum "rooms" — flat wall-paint colors instead of loud patterns */
+.theme-prehistoric{ background:#332b23; color:#e9dfcb; } .theme-prehistoric .question{ border-color:#b98a3d; } .theme-prehistoric .spark-btn{ border-color:#b98a3d; color:#e9dfcb; } .theme-prehistoric .spark-out{ border-color:#b98a3d; } .theme-prehistoric .era{ color:#cf9d4d; } .theme-prehistoric a{ color:#e0b262; }
+.theme-egypt{ background:#d9bd85; color:#3a2a0d; } .theme-egypt .question{ border-color:#8a5a1e; } .theme-egypt .spark-btn{ border-color:#8a5a1e; color:#3a2a0d; } .theme-egypt .spark-out{ border-color:#8a5a1e; } .theme-egypt .era{ color:#6e4a15; } .theme-egypt a{ color:#6e3a0a; }
+.theme-greece{ background:#e4e8ea; color:#22303a; } .theme-greece .question{ border-color:#3a6ea5; } .theme-greece .spark-btn{ border-color:#3a6ea5; color:#22303a; } .theme-greece .spark-out{ border-color:#3a6ea5; } .theme-greece .era{ color:#3a6ea5; } .theme-greece a{ color:#2a5f96; }
+.theme-rome{ background:#5c1f22; color:#f1dcd6; } .theme-rome .question{ border-color:#c9a13c; } .theme-rome .spark-btn{ border-color:#c9a13c; color:#f1dcd6; } .theme-rome .spark-out{ border-color:#c9a13c; } .theme-rome .era{ color:#d8b45c; } .theme-rome a{ color:#e6c473; }
+.theme-buddhist{ background:#a34b1e; color:#fbe7cc; } .theme-buddhist .question{ border-color:#f2c05a; } .theme-buddhist .spark-btn{ border-color:#f2c05a; color:#fbe7cc; } .theme-buddhist .spark-out{ border-color:#f2c05a; } .theme-buddhist .era{ color:#f7d78e; } .theme-buddhist a{ color:#ffe1a3; }
+.theme-maya{ background:#1f4d43; color:#d7f0e8; } .theme-maya .question{ border-color:#5fbfab; } .theme-maya .spark-btn{ border-color:#5fbfab; color:#d7f0e8; } .theme-maya .spark-out{ border-color:#5fbfab; } .theme-maya .era{ color:#8fded1; } .theme-maya a{ color:#8fe0d0; }
+.theme-christian{ background:#4a3f1a; color:#f5e8bf; } .theme-christian .question{ border-color:#d9b74a; } .theme-christian .spark-btn{ border-color:#d9b74a; color:#f5e8bf; } .theme-christian .spark-out{ border-color:#d9b74a; } .theme-christian .era{ color:#e8c14a; } .theme-christian a{ color:#f0d072; }
+.theme-islamic{ background:#123a4a; color:#e2f1f5; } .theme-islamic .question{ border-color:#5bb8c4; } .theme-islamic .spark-btn{ border-color:#5bb8c4; color:#e2f1f5; } .theme-islamic .spark-out{ border-color:#5bb8c4; } .theme-islamic .era{ color:#8fd6e0; } .theme-islamic a{ color:#a6e4ec; }
+
+/* ------------- rooms / sections ------------- */
+.room{ max-width:960px; margin:64px auto; padding:0 24px; scroll-margin-top:20px; }
+.room-label{ display:block; text-align:center; margin-bottom:8px; }
+.room h2{ text-align:center; font-size:clamp(1.7rem,4vw,2.3rem); font-style:italic; margin:0 0 6px; }
+.room > p.sub{ text-align:center; color:var(--muted); font-size:.92rem; max-width:60ch; margin:0 auto 30px; }
+
+/* ------------- identification wall: framed pieces ------------- */
+.idwall{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:34px; }
+.idcard{ perspective:1200px; cursor:pointer; height:320px; scroll-margin-top:100px; }
+.idcard-inner{ position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d; }
+.idcard.flip .idcard-inner{ transform:rotateY(180deg); }
+.idface{ position:absolute; inset:0; backface-visibility:hidden; display:flex; flex-direction:column; }
+.idcard.flash .idface.front .frame{ outline:3px solid var(--brass); }
+.idface.front .frame{ flex:1; background:var(--card); border:10px solid #fdfaf2; box-shadow:0 0 0 1px var(--brass), 0 12px 22px -10px rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.idface.front .frame img{ width:100%; height:100%; object-fit:cover; } .idface.front .frame .ph{ font-size:1.8rem; opacity:.35; }
+.idface.front .plaque{ text-align:center; padding:10px 6px 0; }
+.idface.front .plaque .fig{ font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; color:var(--brass-dark); }
+.idface.front .plaque .name{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:1.02rem; line-height:1.25; }
+.idface.front .plaque .tap{ font-size:.65rem; color:var(--muted); margin-top:3px; }
+.idface.back{ transform:rotateY(180deg); background:#231e17; color:#f3ecd8; padding:16px 16px; font-size:.76rem; overflow-y:auto; border:1px solid var(--brass); }
+.idface.back dt{ color:#d9b95c; font-weight:600; text-transform:uppercase; letter-spacing:.05em; font-size:.62rem; margin-top:7px; font-family:"Inter",sans-serif; }
+.idface.back dt:first-child{ margin-top:0; }
+.idface.back dd{ margin:1px 0 0; line-height:1.4; font-family:"Cormorant Garamond",serif; font-size:.92rem; }
+.idface.back a.wikiLink{ display:block; margin-top:10px; color:#8fd6e0; font-size:.68rem; font-family:"Inter",sans-serif; }
+
+/* ------------- glossary pedestal (vocab deck) ------------- */
+.notes-wrap{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+.pedestal-frame{ position:relative; padding-bottom:26px; }
+.pedestal-frame::after{
+  content:""; position:absolute; left:50%; bottom:0; transform:translateX(-50%);
+  width:70%; height:20px; background:linear-gradient(180deg,#d8cba3,#b9a878);
+  clip-path:polygon(8% 0,92% 0,100% 100%,0% 100%);
+}
+.sticky{ width:100%; max-width:400px; height:220px; cursor:pointer; perspective:900px; }
+.sticky-inner{ position:relative; width:100%; height:100%; transition:transform .45s; transform-style:preserve-3d; }
+.sticky.flip .sticky-inner{ transform:rotateY(180deg); }
+.note-face{ position:absolute; inset:0; backface-visibility:hidden; padding:22px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  background:var(--card); border:1px solid var(--brass); box-shadow:0 14px 26px -12px rgba(0,0,0,.4); }
+.note-face.back{ transform:rotateY(180deg); background:#241f18; color:#f3ecd8; }
+.note-face .tag{ font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; color:var(--brass-dark); margin-bottom:6px; }
+.note-face.back .tag{ color:#d9b95c; }
+.note-face .word{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:1.5rem; }
+.note-face .def{ font-size:.9rem; margin-top:8px; font-family:"Cormorant Garamond",serif; }
+.note-face .ex{ font-size:.78rem; margin-top:12px; padding-top:10px; border-top:1px dashed #6b5c3c; }
+.note-face .ex b{ display:block; font-size:.6rem; text-transform:uppercase; letter-spacing:.06em; color:#d9b95c; margin-bottom:3px; font-family:"Inter",sans-serif; }
+.note-face .hint{ margin-top:10px; font-size:.68rem; opacity:.55; }
+.note-controls{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:center; margin-top:14px; }
+.note-controls button{ font-family:"Inter",sans-serif; font-weight:600; font-size:.76rem; letter-spacing:.04em; text-transform:uppercase; padding:9px 16px; border:1px solid var(--ink); background:var(--card); cursor:pointer; }
+.note-progress{ color:var(--muted); font-weight:600; font-size:.82rem; }
+.shuffle-link{ font-family:"Inter",sans-serif; font-size:.76rem; letter-spacing:.04em; text-transform:uppercase; background:none; border:none; border-bottom:1px solid var(--brass); color:var(--brass-dark); cursor:pointer; margin-top:12px; padding:2px 0; }
+
+/* ------------- comparison rotunda ------------- */
+.complab{ background:var(--card); border:1px solid var(--brass); box-shadow:0 14px 26px -12px rgba(0,0,0,.4); padding:30px 24px 26px; max-width:660px; margin:0 auto; position:relative; }
+.complab .pair{ display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-bottom:14px; }
+.complab .side{ text-align:center; width:160px; }
+.complab .side .shot{ aspect-ratio:1/1; background:#e7e0cc; border:8px solid #fdfaf2; box-shadow:0 0 0 1px var(--brass), 0 10px 18px -8px rgba(0,0,0,.4); display:flex; align-items:center; justify-content:center; overflow:hidden; margin-bottom:8px; }
+.complab .side .shot img{ width:100%; height:100%; object-fit:cover; } .complab .side .shot .ph{ font-size:1.6rem; opacity:.4; }
+.complab .side .name{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:.95rem; }
+.complab .vs{ align-self:center; font-family:"Inter",sans-serif; font-weight:600; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--brass-dark); border:1px solid var(--brass); padding:6px 10px; }
+.complab .prompt{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:1.15rem; border-left:2px solid var(--brass); padding-left:16px; margin:16px 0; text-align:left; }
+.complab button{ font-family:"Inter",sans-serif; font-weight:600; font-size:.76rem; letter-spacing:.05em; text-transform:uppercase; padding:9px 18px; border:1px solid var(--ink); background:transparent; cursor:pointer; display:block; margin:14px auto 0; }
+
+/* ------------- docent's checklist ------------- */
+.toolkit{ background:var(--card); border:1px solid var(--brass); box-shadow:0 14px 26px -12px rgba(0,0,0,.4); padding:28px 26px; max-width:720px; margin:0 auto; }
+.toolkit h3{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:1.15rem; margin:16px 0 8px; }
+.toolkit h3:first-child{ margin-top:0; }
+.toolkit ol, .toolkit ul{ margin:0; padding-left:20px; font-size:.94rem; line-height:1.6; }
+.cluetable{ width:100%; border-collapse:collapse; font-size:.86rem; margin-top:6px; }
+.cluetable td{ border-bottom:1px solid #e6ddc8; padding:7px 6px; vertical-align:top; }
+.cluetable td:first-child{ font-weight:600; width:46%; font-family:"Cormorant Garamond",serif; }
+
+/* ------------- the six lenses ------------- */
+.lenses{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+.lens{ background:var(--card); border:1px solid var(--brass); padding:16px 18px; }
+.lens .num{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:1.3rem; color:var(--brass-dark); }
+.lens h4{ margin:2px 0 6px; font-size:1rem; font-family:"Cormorant Garamond",serif; font-style:italic; font-weight:600; }
+.lens p{ margin:0; font-size:.86rem; color:var(--muted); line-height:1.5; }
+.lens .forms{ display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+.lens .forms span{ font-size:.7rem; text-transform:uppercase; letter-spacing:.04em; border:1px solid var(--brass); padding:2px 8px; color:var(--brass-dark); }
+
+/* ------------- read / watch split lists in the wall-text popup ------------- */
+.popcard .watch li a::before{ content:"▶ "; opacity:.7; }
+
+footer{ text-align:center; color:var(--muted); font-size:.85rem; padding:24px 24px 60px; font-style:italic; }
+@media (max-width:640px){ .board{ padding:30px 14px 24px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="smallcaps">Unit 1 · The Ancient Spheres</span>
+  <h1>The Permanent Collection</h1>
+  <hr>
+  <p>A walkthrough built to match the actual test — identification, an unknown work, vocabulary tied to real pieces, and a comparison. Wander the rooms, then work the practice galleries below.</p>
+  <span class="aside">75 minutes, 100 points, four parts — open any door below</span>
+</header>
+
+<nav class="tabs">
+  <a href="#timeline">Gallery Rooms</a>
+  <a href="#idroom">Part 1 · Identification</a>
+  <a href="#lensroom">The Six Lenses</a>
+  <a href="#vocabroom">Part 3 · Glossary</a>
+  <a href="#complab">Part 4 · Rotunda</a>
+  <a href="#toolkit">Part 2 · Docent's Notes</a>
+</nav>
+
+<div class="board" id="timeline"><div class="thread" id="thread"></div></div>
+<div class="overlay" id="overlay"><div class="popcard" id="popcard"></div></div>
+
+<section class="room" id="idroom">
+  <span class="room-label smallcaps">Part 1 · Identification, 50 pts</span>
+  <h2>The gallery wall</h2>
+  <p class="sub">Every focus object hung and labeled. Study the piece, then flip the frame for the full wall text — period, culture, medium, function, why it's here at all. (Dates on the back are just for context — the test only asks for stylistic period, not exact dates.)</p>
+  <div class="idwall" id="idwall"></div>
+</section>
+
+<section class="room" id="lensroom">
+  <span class="room-label smallcaps">Every part of the test uses these</span>
+  <h2>The six lenses</h2>
+  <p class="sub">Whatever you're looking at — a card above, a comparison pairing, something you've never seen before — run it through these. They're the actual grading categories.</p>
+  <div class="lenses" id="lensGrid"></div>
+</section>
+
+<section class="room" id="vocabroom">
+  <span class="room-label smallcaps">Part 3 · Vocabulary, 10 pts</span>
+  <h2>The glossary pedestal</h2>
+  <p class="sub">The test wants a definition and a piece that proves you understand it — so this pedestal gives you both. Say the example out loud, don't just read it.</p>
+  <div class="notes-wrap">
+    <div class="pedestal-frame">
+      <div class="sticky" id="sticky"><div class="sticky-inner">
+        <div class="note-face front"><div class="tag" id="nUnit">unit</div><div class="word" id="nWord">word</div><div class="hint">tap for definition + example</div></div>
+        <div class="note-face back"><div class="tag">definition</div><div class="def" id="nDef">def</div><div class="ex"><b>where you'd point to it</b><span id="nEx">example</span></div><div class="hint">tap to flip back</div></div>
+      </div></div>
+    </div>
+    <div class="note-controls"><button id="nPrev">← Prev</button><span class="note-progress" id="nProg">1 / 1</span><button id="nNext">Next →</button></div>
+    <button class="shuffle-link" id="nShuffle">Shuffle the case</button>
+  </div>
+</section>
+
+<section class="room" id="complab">
+  <span class="room-label smallcaps">Part 4 · Comparison, 30 pts</span>
+  <h2>The rotunda</h2>
+  <p class="sub">Two works, one prompt — same as the test. Actually try answering before you pull the next pairing.</p>
+  <div class="complab">
+    <div class="pair" id="compPair"></div>
+    <p class="prompt" id="compPrompt"></p>
+    <button id="compNext">Bring out another pair</button>
+  </div>
+</section>
+
+<section class="room" id="toolkit">
+  <span class="room-label smallcaps">Part 2 · Unknown Image, 10 pts</span>
+  <h2>The docent's notes</h2>
+  <p class="sub">You can't study a piece you've never seen — but you can study the questions and the visual shortcuts that usually give a period away.</p>
+  <div class="toolkit">
+    <h3>Ask, in order</h3>
+    <ol>
+      <li>What's it made of? Material narrows the period fast.</li>
+      <li>What's shown, and how — idealized, naturalistic, symbolic, abstracted?</li>
+      <li>Any cultural or religious clues in the subject or symbols?</li>
+      <li>What specific visual evidence connects it to something we studied?</li>
+      <li>Given all that — what period, and why that one and not another?</li>
+    </ol>
+    <h3>Visual clue cheat sheet</h3>
+    <table class="cluetable" id="clueTable"></table>
+  </div>
+</section>
+
+<footer>Every object here survived by accident. Handle the interpretations gently.</footer>
+
+<script>
+/* =========================== STATIONS =========================== */
+const stations = [
+  { id:"prologue", theme:"prehistoric", era:"Prologue", title:"Opening the Case",
+    question:"What does it even mean to look at an image and call it \"art history\"?",
+    objectives:["Read the textbook Introduction, pp. 1–17","Watch Smarthistory's \"Art History and World Art History\"","Optional: John Berger, Ways of Seeing, Ep. 1 (1972)","Watch the animated Allegory of the Cave — in class"],
+    read:[["Heilbrunn Timeline of Art History","https://www.metmuseum.org/essays/timeline-of-art-history","1,000+ essays on artists, materials, movements."],["The Met","https://www.metmuseum.org/","Free / pay-what-you-can for NY residents."],["The Morgan Library & Museum","https://www.themorgan.org/",null],["The MoMA","https://www.moma.org/","Free for NY residents, Fri 5:30–8:30pm."],["Smarthistory","https://smarthistory.org/",null],["Khan Academy","https://www.khanacademy.org/",null],["Smarthistory, \"Art History and World Art History\"","https://smarthistory.org/world-art-history/?tl=world-art-history&sidebar=the-basics-of-art-history",null],["Dr. Lauren Kilroy-Ewbank, \"Iconographic Analysis: An Introduction\"","https://smarthistory.org/introduction-iconographic-analysis/",null],["My Quizlet deck","https://quizlet.com/1203141926/unit-1-ancient-spheres-flash-cards/?funnelUUID=20a24a9a-9ec3-410f-b038-b474c40a6ed1",null],["Full video playlist for the unit","https://youtube.com/playlist?list=PLe5EjtbFno3g&si=s5496AkbFAB6KRZD",null]],
+    watch:[["Intro lecture video","https://www.youtube.com/watch?v=Vg7m32lID1Q"],["Optional: Ways of Seeing, Ep. 1 (Berger, 1972)","https://www.youtube.com/watch?v=CZhJjP8kiqE"],["Allegory of the Cave, animated","https://www.youtube.com/watch?v=69F7GhASOdM"]],
+    spark:"Why does this even matter", sparkOut:"Because the test isn't asking you to recite facts — it's asking you to argue for an interpretation with evidence. That's this whole prologue's point."
+  },
+  { id:"prehistoric", theme:"prehistoric", era:"c. 30,000–7,000 BCE", title:"Prehistoric Art in Europe", unit:"Prehistoric",
+    question:"What can art made before writing tell us — and how much of what we \"see\" is our own assumption?",
+    objectives:["Distinguish portable vs. parietal art","Separate what we know, what we infer, what's unknown","Explain how context shapes interpretation","Consider what changes when an object moves from dig site to museum case"],
+    read:[["Smarthistory — Dr. Mary Beth Looney on the Hall of Bulls","https://smarthistory.org/hall-of-bulls-lascaux/",null],["Optional: V&A, \"History of the Cast Courts\"","https://www.vam.ac.uk/articles/history-of-the-cast-courts?srsltid=AfmBOooAAXOXGx0l_wIuHiIGXOxV1OUOMtFDsTzRy92aCVAQdLWBvBJI",null]],
+    watch:[["Paula S. Wallace on the Woman of Willendorf | SCAD (25 min)","https://www.youtube.com/watch?v=s78EOFJtk1A"]],
+    spark:"Light the torch", sparkOut:"Fun fact: Lascaux wasn't found by archaeologists — in 1940 it was found by four teenage boys and a dog named Robot, chasing the dog down a hole in the ground."
+  },
+  { id:"egypt", theme:"egypt", era:"c. 2950–1300 BCE", title:"Art of Ancient Egypt", unit:"Egypt",
+    question:"How did Egyptian artists use scale, pose, and inscription — not \"realism\" — to signal kingship and the divine?",
+    objectives:["Explain how images communicate status and power","Read scale, pose, gesture, attributes as meaning","Connect imagery to religion, ritual, the afterlife"],
+    read:[["Smarthistory — Dr. Amy Calvert on the Palette of Narmer","https://smarthistory.org/palette-of-king-narmer/",null],["Smarthistory — Middle Kingdom and Second Intermediate Period","https://smarthistory.org/middle-kingdom-and-second-intermediate-period-introduction/",null],["Theban Mapping Project","https://thebanmappingproject.com/","Maps and site data for the Theban Necropolis."]],
+    watch:[["Why was the discovery of Tutankhamun's Tomb so important?","https://www.youtube.com/watch?v=_YT_CYR6vGs"]],
+    spark:"Decode a symbol", sparkOut:"The ankh (☥) means life. The Eye of Horus means protection and royal power. Almost nothing in Egyptian art is just decoration — every symbol was doing a job."
+  },
+  { id:"greece", theme:"greece", era:"c. 600–30 BCE", title:"Ancient Greek Art", unit:"Greece",
+    question:"As Greek bodies move from rigid to naturalistic to theatrical, what does that say about what the culture valued?",
+    objectives:["Track the body across Archaic, Classical, Hellenistic periods","Distinguish naturalism from idealization","Recognize 'Greek art' as many periods, not one style"],
+    read:[["The Iliad (trans. Samuel Butler)","http://classics.mit.edu/Homer/iliad.19.xix.html",null],["The Odyssey (trans. Samuel Butler)","http://classics.mit.edu/Homer/odyssey.html",null],["Diggit Magazine — contested cultural heritage","https://www.diggitmagazine.com/missing-sister-unraveling-complexity-contested-cultural-heritage",null],["Images of Antiquity — \"The Lost Sister\"","https://imagesofantiquity.substack.com/p/the-lost-sister-and-other-tales-of",null]],
+    watch:[["Khan Academy on the Parthenon","https://www.youtube.com/watch?v=tWDflkBZC6U"],["The Optical Illusions of the Parthenon — NOVA","https://www.youtube.com/watch?v=7AIXvZRsiq4"],["\"What should we do?\"","https://www.youtube.com/watch?v=ib1EzqhI1oQ"],["Smarthistory, \"What is perfect?\"","https://www.youtube.com/watch?v=EAR9RAMg9NY"],["Why The British Museum Has The Parthenon Marbles","https://youtu.be/QRH105_ztAw?si=oBaqLhszs0yRuOiH"],["Who owns the Parthenon sculptures?","https://youtu.be/90hpwMFtHvU?is=d8okakaWmY09MkwR"]],
+    spark:"Feel the contrapposto", sparkOut:"Stand up and shift your weight onto one leg. Hip drops, shoulder rises to compensate, spine curves slightly. That's contrapposto — Greek sculptors noticed real bodies never stand at attention."
+  },
+  { id:"rome", theme:"rome", era:"Etruscan c. 500 BCE; Rome c. 100 BCE–400 CE", title:"Etruscan Art & Republic/Empire of Rome", unit:"Rome",
+    question:"If a portrait can build a career, what happens once an emperor commissions every portrait of himself in the empire?",
+    objectives:["Identify verism vs. idealization in Roman portraiture","Explain how emperors used art/architecture to construct power"],
+    read:[["Met — Roman Portrait Sculpture: Republican through Constantinian","https://www.metmuseum.org/essays/roman-portrait-sculpture-republican-through-constantinian",null],["Chroma: Ancient Sculpture in Color (The Met)","https://www.metmuseum.org/exhibitions/chroma","Ancient marble was painted — rediscovered polychromy."],["Virgil's Aeneid","https://classics.mit.edu/Virgil/aeneid.html",null],["List of Rulers: Roman Empire","https://www.metmuseum.org/toah/hd/roru/hd_roru.htm",null],["Vitruvius, Ten Books of Architecture","https://www.gutenberg.org/ebooks/20239",null],["National Museum of Rome","http://www.roma2000.it/zmunaro.html",null],["ETRU — National Etruscan Museum","https://www.museoetru.it/",null]],
+    watch:[["Khan Academy — Ara Pacis Augustae","https://www.khanacademy.org/humanities/world-history/ancient-medieval/roman-empire-survey/v/ara-pacis-augustae-altar-of-augustan-peace-13-9-b-c-e-rome"],["Ara Pacis — extra video","https://www.youtube.com/watch?v=kiMNT18c4Ko"],["Smarthistory on Augustus of Primaporta","https://www.youtube.com/watch?v=0HhWj97jKSQ"]],
+    spark:"Read the propaganda", sparkOut:"Augustus was in his mid-70s when he died. Every statue of him shows a man in his 20s. Rome's most famous 'realism' was, quite often, a lie everyone agreed to believe."
+  },
+  { id:"buddhist", theme:"buddhist", era:"c. 300 BCE–300 CE", title:"Buddhist Art of the Indian Region", unit:"Buddhist India",
+    question:"The Buddha wasn't shown as a person at first. What does the shift from symbol to body reveal about cultural exchange?",
+    objectives:["Explain the purpose of the Great Stupa at Sanchi","Compare Gandhara and Mathura Buddha imagery"],
+    read:[["Smarthistory — Introduction to Buddhism","https://smarthistory.org/introduction-to-buddhism/",null],["Smarthistory — The Stupa","https://smarthistory.org/the-stupa-sanchi/",null],["Met — Buddhism and Buddhist Art","https://www.metmuseum.org/essays/buddhism-and-buddhist-art",null]],
+    watch:[["\"Beliefs made visible\" — Asian Art Museum SF (20 min)","https://www.youtube.com/watch?v=jl6S0wdeWk4"],["Smarthistory, \"How to recognize the Buddha\"","https://www.youtube.com/watch?v=mvDnUhA-1Uk"],["What is Continuous Narrative? (The Great Departure)","https://www.youtube.com/watch?v=4vzuJm1Vczw"]],
+    spark:"Spin the wheel", sparkOut:"For centuries the Buddha was shown only through symbols — an empty throne, footprints, a wheel — because depicting an enlightened being directly felt presumptuous. The human figure came later, through contact with Greek sculpture in Gandhara."
+  },
+  { id:"maya", theme:"maya", era:"c. 650–850 CE", title:"Mesoamerica — the Ancient Maya", unit:"Maya",
+    question:"What do a carved lintel and a painted vase reveal about how the Maya recorded rulers, ritual, and myth?",
+    objectives:["Read glyphs and figures as records of specific rulers and events"],
+    read:[["Khan Academy — Lauren Kilroy-Ewbank on Yaxchilán Lintels 24 & 25","https://www.khanacademy.org/humanities/ap-art-history/indigenous-americas-apah/north-america-apah/a/yaxchilan-lintels",null]],
+    watch:[["James Doyle on Chakalte', Relief with Enthroned Ruler","https://www.youtube.com/watch?v=yTA8PKdNx78"],["James Doyle on the Vessel with a Mythological Scene","https://www.youtube.com/watch?v=qxvFW5mraHY"]],
+    spark:"Count like a Maya scribe", sparkOut:"Maya mathematics ran on base 20, not base 10 — and they had a symbol for zero centuries before it reached Europe. That same precision shows up in how exactly lintels like Yaxchilán's record dates."
+  },
+  { id:"christian", theme:"christian", era:"c. 300–700 CE", title:"The Mediterranean — Early Jewish, Christian & Byzantine Art", unit:"Christian/Byzantine",
+    question:"How does depicting Christ change once Christianity moves from a hidden faith to the religion of an empire?",
+    objectives:["Analyze the link between religious and imperial authority","Identify Byzantine mosaic conventions: gold ground, frontality, hierarchical scale"],
+    read:[],
+    watch:[["Smarthistory on the Junius Bassus Sarcophagus","https://www.youtube.com/watch?v=UjX4ExCixWY"],["Smarthistory on the Church of San Vitale, Ravenna","https://www.youtube.com/watch?v=It3i-dKusIM"]],
+    spark:"Catch the light", sparkOut:"Byzantine tesserae were set at slightly tilted angles on purpose, so gold and glass caught candlelight unevenly and seemed to flicker — the wall itself was built to look alive."
+  },
+  { id:"islamic", theme:"islamic", era:"c. 600–950 CE", title:"The Mediterranean — Early Islamic World", unit:"Islamic",
+    question:"How does calligraphy and geometry carry religious meaning when figural imagery is set aside?",
+    objectives:["Identify major features of early mosque architecture and calligraphy"],
+    read:[["Smarthistory — Dr. Elizabeth Macaulay-Lewis, \"Introduction to Islam\"","https://smarthistory.org/introduction-to-islam/",null],["\"Dome of the Rock\" study guide","https://www.collegesidekick.com/study-guides/zeliart101/dome-of-the-rock",null]],
+    watch:[["Hikma History on why the Dome of the Rock matters","https://www.youtube.com/watch?v=bXhcfU5K9Go"]],
+    spark:"Trace the star", sparkOut:"Islamic geometric patterns are built from a compass and a straightedge alone. A handful of overlapping circles generates the whole star grid — part of why it never looks like it's repeating the same way twice."
+  }
+];
+
+/* =========================== THE SIX LENSES (the graded themes) =========================== */
+const lenses = [
+  { title:"Forms of Representation", forms:["Abstracted","Realistic / naturalistic","Idealized"],
+    body:"The simplified version: is the object showing you something stripped down to essentials, something close to how it actually looks, or something improved on nature? Then ask why that choice, not another, was made here." },
+  { title:"Representation of the Divine",
+    body:"How are gods, sacred figures, and leaders shown — and how does that change by culture, period, and region, and why?" },
+  { title:"Art and Ritual",
+    body:"What's the relationship between the object and the ceremony or practice it was actually made for?" },
+  { title:"Portraiture",
+    body:"What does a likeness communicate about identity, status, power, memory, or values — beyond just \"this is what they looked like\"?" },
+  { title:"Art and Power",
+    body:"How does the piece reinforce political, religious, social, or economic power? Who benefits from you seeing it this way?" },
+  { title:"Art in Context",
+    body:"Nothing exists in isolation. Formal qualities + subject matter + function + context, together, is what makes an interpretation actually hold up." }
+];
+document.getElementById('lensGrid').innerHTML = lenses.map((l,i)=>`
+  <div class="lens">
+    <span class="num">0${i+1}</span>
+    <h4>${l.title}</h4>
+    <p>${l.body}</p>
+    ${l.forms?`<div class="forms">${l.forms.map(f=>`<span>${f}</span>`).join('')}</div>`:''}
+  </div>`).join('');
+
+/* =========================== VOCAB — term / unit / definition / worked example =========================== */
+const vocab = [
+  ["Prehistoric","Prehistoric","Before written records — not a synonym for cultural or technological \"primitiveness.\"","No focus object shows this literally — it's the category itself: everything before writing existed."],
+  ["Portable","Prehistoric","A small, movable object — travels with a person or group.","The Woman of Willendorf, small enough to carry, unlike a cave wall."],
+  ["Parietal","Prehistoric","Art fixed to a wall or cave surface, immovable.","The Hall of the Bulls — painted directly onto the cave wall itself."],
+  ["Megalith","Prehistoric","A monument built from massive, roughly worked stones.","Stonehenge — sarsen stones weighing up to 25 tons apiece."],
+  ["Post and lintel","Prehistoric","Two uprights (posts) holding a horizontal beam (lintel).","Stonehenge — uprights topped with a lintel to form a continuous ring."],
+  ["Pharaoh","Egypt","Egypt's king — a living link between gods and people.","Menkaure, shown at the same idealized scale as every other royal statue."],
+  ["Low relief","Egypt","A carved image that projects only slightly from its background.","The Palette of Narmer — figures barely raised from the stone surface."],
+  ["Hieroglyphics","Egypt","A writing system mixing logographic and phonetic signs.","The Palette of Narmer — Narmer's name sits in a hieroglyphic frame above him."],
+  ["Hierarchical scale","Egypt","Bigger figure = higher status, not closer to the viewer.","The Palette of Narmer — Narmer towers over everyone else on the slab."],
+  ["Egyptian canon","Egypt","A fixed system of proportion for the human figure.","Menkaure and a Queen — both bodies follow the same measured grid."],
+  ["Composite pose","Egypt","Body shown from multiple angles at once — frontal torso, profile legs.","Practically any Egyptian relief figure, Menkaure included — torso front, face and legs in profile."],
+  ["Proportions","Egypt","The measured relationships between the parts of a figure or building.","The Egyptian canon itself, applied across Old Kingdom statues like Menkaure's."],
+  ["Amarna style","Egypt","The more naturalistic, elongated style under Akhenaten.","The Sculpture of Akhenaten — elongated skull, soft body, breaking every older rule."],
+  ["Polis","Greece","A Greek city-state — its own political community.","Athens, the polis that built and paid for the Parthenon."],
+  ["Kouros / Kore","Greece","Standing nude male / draped female sculpture, Archaic period.","Not one of our five focus objects directly, but the type the Doryphoros grows out of."],
+  ["Contrapposto","Greece","Weight shifted onto one leg, creating a natural S-curve.","The Doryphoros — weight on one leg, hip and shoulder countering each other."],
+  ["Canon of proportions","Greece","A codified ideal ratio for the human body — see Polykleitos.","The Doryphoros, built specifically to demonstrate Polykleitos's proportion theory."],
+  ["Idealization","Greece","Improving on nature to show a perfect form.","Augustus of Primaporta — styled young and flawless well past middle age."],
+  ["Naturalism","Greece","Representing the body as it actually appears.","The Nike of Samothrace — drapery that moves like real windblown cloth."],
+  ["Foreshortening","Greece","Compressing depicted depth so a form reads as receding in space.","The angled wings and turned body of the Nike of Samothrace."],
+  ["Classical","Greece","The mid-period Greek style — balance, idealism, restraint.","The Parthenon and the Doryphoros — calm and proportion over drama."],
+  ["Hellenistic","Greece","Later Greek period — more movement, emotion, theatricality.","The Nike of Samothrace — motion and emotion over Classical calm."],
+  ["Republic","Rome","Rome's earlier system — elected officials, no single ruler.","Aulus Metellus, a magistrate honored under Rome's pre-imperial system."],
+  ["Empire","Rome","Rule by a single emperor, beginning with Augustus.","Augustus of Primaporta, made after Rome shifted to one-man rule."],
+  ["Plebeian","Rome","A commoner, as opposed to Rome's aristocratic patrician class.","Not one of our five directly, but the audience verism was partly built to flatter."],
+  ["Verism","Rome","Extremely literal, unflattering realism — wrinkles included on purpose.","Aulus Metellus — every fold and wrinkle of an aging face, deliberately kept."],
+  ["Portraiture","Rome","The art of representing a specific individual's likeness.","Augustus of Primaporta, an image built entirely around one man's identity."],
+  ["Propaganda","Rome","Art or messaging built to shape public belief.","The Ara Pacis, using peace imagery to justify one ruler's authority."],
+  ["Apotheosis","Rome","The elevation of a mortal, often an emperor, to godhood.","Not shown directly in our five, but the implied endpoint of portraits like Augustus's."],
+  ["Colosseum","Rome","Rome's giant amphitheater — spectacle as a tool of political control.","The Colosseum itself, funded partly by war spoils and built for mass persuasion through entertainment."],
+  ["Rock edicts","Buddhist India","Buddhist moral and political proclamations carved into stone by Ashoka.","Ashoka, the same patron behind the Great Stupa at Sanchi."],
+  ["Stupa","Buddhist India","A dome-shaped monument holding sacred relics.","The Great Stupa, Sanchi — the reliquary mound itself."],
+  ["Dharma","Buddhist India","The Buddha's teaching, also the wheel that symbolizes it.","The wheel motifs carved into Sanchi's gateways."],
+  ["Buddha","Buddhist India","\"The awakened one\" — a being who has reached enlightenment.","The Standing Buddha from Gandhara, the figure finally given a body."],
+  ["Capital","Buddhist India","The topmost, decorated part of a column or pillar.","Ashoka's pillar capitals, part of the same building program as Sanchi."],
+  ["Drum","Buddhist India","The cylindrical base structure supporting a stupa's dome.","The base of the Great Stupa, Sanchi, beneath its dome."],
+  ["Karma","Buddhist India","The principle that actions carry consequences across lifetimes.","The underlying idea behind the Buddha's life story told at Sanchi's gateways."],
+  ["Architraves","Buddhist India","The horizontal beams resting across the tops of gateway posts.","The carved crossbeams of Sanchi's toranas, including the Great Departure scene."],
+  ["Continuous narrative","Buddhist India","One scene showing the same figure at multiple story moments.","The Great Departure relief — one composition, several moments in the story."],
+  ["Gandhara","Buddhist India","Region (modern Pakistan/Afghanistan) — Greco-influenced Buddha imagery.","The Standing Buddha — Greco-Roman drapery folds on a Buddhist subject."],
+  ["Mathura","Buddhist India","Indian region with an indigenous, fuller-bodied Buddha style.","The Seated Buddha with Two Attendants — the homegrown Indian style."],
+  ["Anthropomorphic","Buddhist India","Given a human form or human characteristics.","The Standing Buddha — the sacred finally rendered in full human form."],
+  ["Relics","Buddhist India","Physical remains or objects tied to a sacred figure, enshrined for veneration.","The Great Stupa, Sanchi, built specifically to house the Buddha's relics."],
+  ["Circumambulation","Buddhist India","Ritual walking around a sacred object, usually clockwise.","The path built around the Great Stupa, walked clockwise as devotion."],
+  ["Aniconism","Buddhist India","Representing the sacred without a literal human figure.","The Great Departure relief — a riderless horse stands in for the Buddha."],
+  ["Catacombs","Christian/Byzantine","Underground burial passages — early Christian imagery sites.","Where images like the Good Shepherd type first appeared, before public churches existed."],
+  ["Symbolic representation","Christian/Byzantine","Standing in for an idea through an image rather than depicting it literally.","The Good Shepherd — Christ shown through a borrowed pastoral figure, not literally."],
+  ["Basilica","Christian/Byzantine","A rectangular hall plan adapted for Christian worship.","The architectural type behind most Early Christian churches of this period."],
+  ["Mosaic","Christian/Byzantine","An image or pattern built from small inlaid pieces of material.","Justinian and Theodora's panels at San Vitale."],
+  ["Tesserae","Christian/Byzantine","The individual pieces of glass or stone that build a mosaic.","The tiny tilted glass pieces making up the San Vitale mosaics."],
+  ["Necropolis","Christian/Byzantine","A large ancient burial ground — literally a \"city of the dead.\"","The burial grounds where sarcophagi like Junius Bassus's were placed."],
+  ["Mausoleum","Christian/Byzantine","A large freestanding building built to house a tomb.","The architectural cousin of the sarcophagus — a building instead of a box."],
+  ["Ambulatory","Christian/Byzantine","A walkway around a church's apse or altar, for circulation and processions.","The walkway around San Vitale's altar, tied to its centralized plan."],
+  ["Relief sculpture","Christian/Byzantine","Carved imagery projecting from a flat background rather than standing free.","The Junius Bassus Sarcophagus — biblical scenes carved right into its surface."]
+];
+
+/* =========================== FOCUS OBJECTS — exam ID card fields =========================== */
+const objects = [
+  {name:"Woman of Willendorf", fig:"Fig. 1-2", unit:"Prehistoric", artist:"Unknown", date:"c. 24,000 BCE", period:"Upper Paleolithic", culture:"Prehistoric Europe (Austria)", medium:"Limestone, traces of red ochre", subject:"A female figure with exaggerated body and no facial detail", visual:"No face, tiny arms, elaborate braided hair or headdress, emphasized torso", func:"Debated — fertility charm, self-portrait, goddess figure, unknown", context:"Predates writing; small enough to be carried, not displayed on a wall", why:"One of the oldest surviving human figures in art, and a case study in how much interpretation fills gaps left by missing evidence.", wiki:"Venus of Willendorf"},
+  {name:"Hall of the Bulls, Lascaux", fig:"Fig. 1-6", unit:"Prehistoric", artist:"Unknown", date:"c. 15,000 BCE", period:"Upper Paleolithic", culture:"Prehistoric Europe (Dordogne, France)", medium:"Mineral pigment on limestone", subject:"Overlapping bulls, horses, and deer across a cave chamber", visual:"Massive scale (up to 17 ft.), animals layered without one clear scene, rock contours used for volume", func:"Unclear — not a living space, possibly ceremonial or ritual", context:"Deep underground, requiring artificial light to reach or view", why:"Shows sophisticated technique long before writing, and raises the question of what \"public\" art meant with no visible audience.", wiki:"Lascaux"},
+  {name:"Bird-Headed Man with Bison", fig:"Fig. 1-7", unit:"Prehistoric", artist:"Unknown", date:"c. 15,000 BCE", period:"Upper Paleolithic", culture:"Prehistoric Europe (Lascaux)", medium:"Paint on limestone", subject:"A stick-figure man with a bird's head, a wounded bison, a bird on a pole", visual:"Rare narrative-like grouping; simplified human vs. detailed animal", func:"Unknown — found in an isolated shaft, possibly ritual or shamanic", context:"Located away from Lascaux's main gallery, suggesting restricted access", why:"One of very few scenes read as a \"story,\" making it central to debates over narrative vs. symbol in prehistoric art.", wiki:"Lascaux"},
+  {name:"Stonehenge", fig:"Fig. 1-14", unit:"Prehistoric", artist:"Builders unknown", date:"c. 2750–1500 BCE", period:"Neolithic–Bronze Age", culture:"Prehistoric Britain", medium:"Sarsen and bluestone megaliths", subject:"No figural subject — an architectural monument", visual:"True post-and-lintel construction, circular plan, stones hauled from up to 150 miles away", func:"Likely ceremonial/astronomical, aligned to solstices", context:"Physical proof of organized labor across generations, without writing to record instructions", why:"Evidence of large-scale social coordination in a culture that left no written record of how or why.", wiki:"Stonehenge"},
+  {name:"Funerary Mask of Tutankhamun", fig:"Fig. 3-1", unit:"Egypt", artist:"Unknown", date:"c. 1327 BCE", period:"New Kingdom", culture:"Ancient Egypt", medium:"Gold inlaid with glass and semiprecious stone", subject:"The king's face merged with divine attributes (false beard, uraeus)", visual:"Idealized youthful face, symmetrical, richly inlaid", func:"Placed over the mummy so the soul could recognize the body in the afterlife", context:"Part of one of the only royal Egyptian burials found nearly untouched by looters", why:"Rare intact evidence of royal funerary craft at the height of Egyptian wealth.", wiki:"Mask of Tutankhamun"},
+  {name:"Palette of Narmer", fig:"Fig. 3-2", unit:"Egypt", artist:"Unknown", date:"c. 2950 BCE", period:"Early Dynastic", culture:"Ancient Egypt (Hierakonpolis)", medium:"Greenschist", subject:"King Narmer smiting an enemy / inspecting the dead", visual:"Hierarchical scale, registers dividing the composition, early hieroglyphs", func:"Ceremonial, possibly commemorating unification of Egypt", context:"Found at a temple site in Hierakonpolis", why:"Often treated as the founding image of Egyptian visual convention, and possibly of Egypt's unification itself.", wiki:"Narmer Palette"},
+  {name:"Menkaure and a Queen", fig:"Fig. 3-8", unit:"Egypt", artist:"Unknown", date:"c. 2490–2472 BCE", period:"Old Kingdom, Dynasty 4", culture:"Ancient Egypt (Giza)", medium:"Graywacke with paint traces", subject:"Pharaoh and queen standing together", visual:"Rigid frontality, idealized youthful bodies, her arm around him", func:"Funerary/temple statuary", context:"Found in Menkaure's valley temple at Giza", why:"The queen's equal scale and intimate gesture are unusual for the period, fueling real debate over her identity and status.", wiki:"Menkaure and Khamerernebty II"},
+  {name:"Funerary Temple of Hatshepsut", fig:"Fig. 3-13", unit:"Egypt", artist:"Architect unknown", date:"c. 1473–1458 BCE", period:"New Kingdom, Dynasty 18", culture:"Ancient Egypt (Deir el-Bahri)", medium:"Stone, terraced construction", subject:"A mortuary and cult temple complex", visual:"Colonnades and terraces built directly into desert cliffs", func:"Mortuary and cult worship site", context:"Built for one of the few women to rule as pharaoh, shown in art with male regalia to assert legitimacy", why:"Direct evidence of how gender and legitimacy were negotiated visually in Egyptian kingship.", wiki:"Mortuary Temple of Hatshepsut"},
+  {name:"Sculpture of Akhenaten", fig:"Fig. 3-19", unit:"Egypt", artist:"Unknown", date:"c. 1353–1335 BCE", period:"New Kingdom, Amarna period", culture:"Ancient Egypt (Karnak)", medium:"Sandstone with traces of polychromy", subject:"The king in the radical Amarna style", visual:"Elongated skull, wide hips, soft belly, androgynous features", func:"Religious/political, tied to Aten worship", context:"Part of Akhenaten's monotheistic religious revolution", why:"A deliberate break from centuries of convention, tied directly to one king's radical religious agenda.", wiki:"Akhenaten"},
+  {name:"The Parthenon", fig:"Fig. 5-27B", unit:"Greece", artist:"Iktinos & Kallikrates", date:"c. 447–432 BCE", period:"Classical", culture:"Ancient Greece (Athens)", medium:"Marble, limestone", subject:"A temple to Athena", visual:"Doric order, optical refinements — curved lines built to appear straight", func:"Religious and civic use; also served as treasury", context:"Built after the Persian Wars, funded through the Delian League", why:"The defining statement of Classical Greek architecture, and a symbol of Athenian democracy and power.", wiki:"Parthenon"},
+  {name:"Doryphoros (Spear Bearer)", fig:"Fig. 5-34", unit:"Greece", artist:"Polykleitos", date:"c. 450–440 BCE (Roman copies survive)", period:"Classical", culture:"Ancient Greece", medium:"Marble (copy of lost bronze original)", subject:"An idealized male youth, possibly Achilles", visual:"Contrapposto stance, strict canon of proportions", func:"Demonstration piece for Polykleitos's written treatise on ideal proportion", context:"No Greek bronze originals survive; known only through Roman marble copies", why:"Literally built to argue for what \"perfect\" proportion looks like.", wiki:"Doryphoros"},
+  {name:"Aphrodite of Knidos", fig:"Fig. 5-36", unit:"Greece", artist:"Praxiteles", date:"c. 350 BCE (Roman copy shown)", period:"Late Classical", culture:"Ancient Greece", medium:"Marble", subject:"The goddess of love, nude, about to bathe", visual:"Naturalistic pose, soft modeling of flesh", func:"Cult statue in a temple at Knidos", context:"Said to be the first life-size female nude in Greek sculpture", why:"Reshaped how the female body was represented in Western art for centuries afterward.", wiki:"Aphrodite of Knidos"},
+  {name:"Nike of Samothrace", fig:"Fig. 5-42", unit:"Greece", artist:"Unknown", date:"c. 180 BCE", period:"Hellenistic", culture:"Ancient Greece", medium:"Marble", subject:"Nike (Victory) alighting on a ship's prow", visual:"Windswept drapery, implied motion, missing head and arms", func:"Votive monument, likely commemorating a naval victory", context:"Found in a sanctuary on the island of Samothrace", why:"Shows the Hellenistic shift toward drama and movement over Classical restraint.", wiki:"Winged Victory of Samothrace"},
+  {name:"Sarcophagus from Cerveteri", fig:"Fig. 6-6", unit:"Rome", artist:"Unknown", date:"c. 520 BCE", period:"Archaic Etruscan", culture:"Etruscan (Cerveteri)", medium:"Terracotta", subject:"A husband and wife reclining together", visual:"Relaxed pose, smiling faces, informal intimacy", func:"Funerary container/monument", context:"Reflects Etruscan attitudes toward death, distinct from Roman or Greek severity", why:"Shows Etruscan visual habits that Rome would later absorb and then diverge from.", wiki:"Sarcophagus of the Spouses"},
+  {name:"Aulus Metellus (\"the Arringatore\")", fig:"Fig. 6-8", unit:"Rome", artist:"Unknown", date:"c. 80 BCE", period:"Roman Republic (Etrusco-Roman)", culture:"Etruscan/Roman transition", medium:"Bronze", subject:"A magistrate mid-speech", visual:"Raised arm, Roman toga, veristic facial detail", func:"Commemorative public statue", context:"Inscribed in Etruscan while dressed in Roman civic costume", why:"Captures a culture visually adopting Roman identity in real time.", wiki:"Arringatore"},
+  {name:"Ara Pacis Augustae", fig:"Fig. 6-13", unit:"Rome", artist:"State commission, artist unknown", date:"13–9 BCE", period:"Roman Empire, Augustan", culture:"Ancient Rome", medium:"Marble", subject:"Imperial family procession and allegorical figures", visual:"Classicizing style, dense relief, personified peace and abundance", func:"Altar commemorating peace", context:"Built after Augustus's campaigns in Gaul and Spain", why:"Propaganda that frames one man's rule as the source of universal peace and fertility.", wiki:"Ara Pacis"},
+  {name:"Augustus of Primaporta", fig:"Fig. 6-12", unit:"Rome", artist:"Unknown, after a Polykleitan model", date:"Early 1st c. CE (copy of c. 20 BCE bronze)", period:"Roman Empire, Augustan", culture:"Ancient Rome", medium:"Marble", subject:"Augustus in military dress", visual:"Idealized youthful body modeled on the Doryphoros, narrative breastplate", func:"Political portrait / propaganda", context:"Commissioned decades after the diplomatic victory shown on his breastplate", why:"Shows Rome borrowing Greek visual language to sell a very Roman message of destined power.", wiki:"Augustus of Prima Porta"},
+  {name:"The Colosseum", fig:"6-21", unit:"Rome", artist:"Architect unknown", date:"72–80 CE", period:"Roman Empire, Flavian", culture:"Ancient Rome", medium:"Concrete, stone, travertine", subject:"An amphitheater for public spectacle", visual:"Tiered arches, massive engineered scale, retractable awning system", func:"Gladiatorial games and public entertainment", context:"Funded partly by spoils from the Jewish–Roman War", why:"Entertainment used as a political tool — controlling public opinion through spectacle at enormous scale.", wiki:"Colosseum"},
+  {name:"The Great Stupa, Sanchi", fig:"Fig. 4.4", unit:"Buddhist India", artist:"Commissioned by Ashoka, later enlarged", date:"Founded 3rd c. BCE, enlarged c. 150–50 BCE", period:"Mauryan/Shunga", culture:"Buddhist India", medium:"Sandstone with brick core", subject:"A reliquary mound", visual:"Hemispherical dome, carved gateways (toranas), circumambulatory path", func:"Houses relics; site of ritual circumambulation", context:"Tied to Ashoka's conversion and the spread of Buddhism", why:"One of Buddhism's earliest architectural statements — ritual movement itself becomes the sacred practice.", wiki:"Sanchi"},
+  {name:"The Great Departure, East Torana", fig:"—", unit:"Buddhist India", artist:"Unknown", date:"1st c. BCE", period:"Shunga/early Andhra", culture:"Buddhist India (Sanchi)", medium:"Sandstone relief", subject:"The Buddha's departure from palace life", visual:"Continuous narrative, a riderless horse standing in for the Buddha", func:"Narrative/devotional relief on a stupa gateway", context:"Reflects early Buddhist aniconism", why:"Shows how early Buddhist art told the Buddha's story without ever depicting his body.", wiki:"Sanchi"},
+  {name:"Seated Buddha with Two Attendants", fig:"Fig. 4.7", unit:"Buddhist India", artist:"Unknown", date:"c. 132 CE", period:"Kushan", culture:"Mathura, India", medium:"Red sandstone", subject:"The Buddha seated, flanked by attendants", visual:"Fuller-bodied figure, thin clinging robe, indigenous facial features", func:"Devotional icon", context:"Represents the Mathura school, distinct from Gandhara made in the same period", why:"Comparing it to Gandhara Buddhas shows how the same subject changes with regional tradition.", wiki:"Mathura art"},
+  {name:"Standing Buddha", fig:"Fig. 4.6", unit:"Buddhist India", artist:"Unknown", date:"2nd–3rd c. CE", period:"Kushan", culture:"Gandhara (modern Pakistan/Afghanistan)", medium:"Gray schist", subject:"The Buddha standing, hand raised in a teaching gesture", visual:"Greco-Roman-style drapery folds, wavy hair, naturalistic anatomy", func:"Devotional icon", context:"Result of Hellenistic influence following Alexander the Great's earlier campaigns", why:"Direct physical evidence of Greek and Buddhist artistic traditions merging.", wiki:"Greco-Buddhist art"},
+  {name:"Relief with Enthroned Ruler", fig:"—", unit:"Maya", artist:"Chakalte' (signed)", date:"c. 770 CE", period:"Late Classic", culture:"Maya", medium:"Limestone with paint", subject:"A ruler enthroned in state", visual:"Detailed regalia, hieroglyphic captions", func:"Commemorative/political monument", context:"One of very few surviving Maya works with an artist's name attached", why:"Rare direct evidence of an individual Maya artist's identity and status.", wiki:null},
+  {name:"Lintel 24, Yaxchilán", fig:"Fig. 15-7", unit:"Maya", artist:"Unknown", date:"723–726 CE", period:"Late Classic", culture:"Maya (Yaxchilán)", medium:"Limestone", subject:"Lady Xok performing a bloodletting ritual, Shield Jaguar holding a torch", visual:"Detailed costume, hieroglyphic date, ritual bloodletting rope", func:"Commemorative/ritual record, likely tied to accession or dedication", context:"Precisely dated using the Maya calendar", why:"Ties royal power directly to ritual sacrifice and exact historical record-keeping.", wiki:"Yaxchilan Lintel 24"},
+  {name:"Vase with Mythological Scene", fig:"—", unit:"Maya", artist:"Unknown", date:"7th–8th c. CE", period:"Late Classic", culture:"Maya (Guatemala)", medium:"Painted ceramic", subject:"A mythological narrative wrapping the vessel", visual:"Continuous rolled-out composition, fine line painting", func:"Likely elite/ceremonial vessel", context:"Part of a broader Maya tradition of painted narrative pottery", why:"Shows Maya storytelling wasn't limited to stone monuments — it traveled on everyday ceremonial objects.", wiki:null},
+  {name:"The Good Shepherd", fig:"Fig. 7-6", unit:"Christian/Byzantine", artist:"Unknown", date:"2nd half of 3rd c. CE", period:"Early Christian", culture:"Eastern Mediterranean (Anatolia)", medium:"Marble", subject:"A shepherd carrying a lamb", visual:"Borrows a stock pagan pastoral type", func:"Funerary or devotional sculpture", context:"Made when Christianity had no independent visual language yet", why:"Shows early Christians repurposing existing Roman imagery rather than inventing new forms from scratch.", wiki:"Good Shepherd"},
+  {name:"Junius Bassus Sarcophagus", fig:"Fig. 7-12", unit:"Christian/Byzantine", artist:"Unknown", date:"Mid-4th c. CE", period:"Early Christian", culture:"Rome", medium:"Marble", subject:"Biblical scenes across two registers, Christ enthroned", visual:"Columned strigillated framing, classical drapery on biblical figures", func:"Funerary container for a Roman prefect", context:"Made for a man baptized just before his death", why:"Shows Christianity adopting imperial visual authority right as it gained real political power.", wiki:"Junius Bassus Sarcophagus"},
+  {name:"Emperor Justinian and Attendants", fig:"Fig. 7-18", unit:"Christian/Byzantine", artist:"Unknown", date:"Mid-6th c. CE", period:"Early Byzantine", culture:"Byzantine Empire (Ravenna)", medium:"Mosaic (glass and stone tesserae)", subject:"Justinian flanked by clergy and soldiers", visual:"Frontal, flat, gold ground, halo", func:"Political/religious assertion of imperial authority", context:"Ravenna was far from Constantinople, the empire's actual capital", why:"Projects the emperor's presence and divine sanction into territory he likely never visited in person.", wiki:"Basilica of San Vitale"},
+  {name:"Empress Theodora and Attendants", fig:"Fig. 7-19", unit:"Christian/Byzantine", artist:"Unknown", date:"Mid-6th c. CE", period:"Early Byzantine", culture:"Byzantine Empire (Ravenna)", medium:"Mosaic", subject:"Theodora with her own retinue, facing Justinian's mosaic", visual:"Equal formal weight to Justinian's panel, elaborate jeweled costume", func:"Political/religious assertion of co-authority", context:"Theodora rose from a controversial background to imperial power", why:"Unusually direct visual evidence of a woman holding formal, matching authority in imperial art.", wiki:"Basilica of San Vitale"},
+  {name:"Dome of the Rock", fig:"Fig. 8-2", unit:"Islamic", artist:"Commissioned by Caliph Abd al-Malik", date:"Begun 691 CE", period:"Early Islamic, Umayyad", culture:"Jerusalem", medium:"Stone, wood, mosaic, gold dome", subject:"A shrine over a sacred rock", visual:"Octagonal plan, extensive non-figural mosaic, inscribed Qur'anic text", func:"Commemorative shrine, pilgrimage site", context:"Built on ground sacred to Judaism, Christianity, and Islam alike", why:"Uses architecture and calligraphy, not figures, to assert Islamic presence on deeply contested sacred ground.", wiki:"Dome of the Rock"},
+  {name:"Prayer Hall, Great Mosque of Córdoba", fig:"Fig. 8-6", unit:"Islamic", artist:"Commissioned by Abd al-Rahman I", date:"Begun 785 CE", period:"Early Islamic, Umayyad (Spain)", culture:"Islamic Spain (al-Andalus)", medium:"Stone, reused Roman/Visigothic columns", subject:"A hypostyle prayer hall", visual:"Repeating double arches, striped voussoirs", func:"Congregational mosque", context:"A Renaissance cathedral was later built directly inside it", why:"Physically holds two religious architectural histories in one building, layered rather than erased.", wiki:"Great Mosque of Córdoba"},
+  {name:"Plate with Kufic Border", fig:"~Fig. 8-9", unit:"Islamic", artist:"Unknown", date:"10th c. CE", period:"Samanid, Early Islamic", culture:"Nishapur (modern Iran)", medium:"Slip-painted earthenware", subject:"A plate decorated entirely with script", visual:"Angular Kufic calligraphy as the sole ornament", func:"Domestic or ceremonial tableware", context:"Part of a broader Islamic tradition using text as primary decoration", why:"Treats writing itself as the image, collapsing the line between language and art.", wiki:null}
+];
+
+/* =========================== COMPARISON LAB pairings =========================== */
+const comparisons = [
+  ["Augustus of Primaporta","Standing Buddha","Both borrow Greek sculptural language for a non-Greek subject — a Roman emperor, a Buddhist teacher. What is each trying to claim by doing that, and does it work the same way twice?"],
+  ["Palette of Narmer","Ara Pacis Augustae","Both use scale and figure arrangement to make a political claim about a ruler, thousands of years apart. What visual tools does each reach for, and what's actually different?"],
+  ["Woman of Willendorf","Aphrodite of Knidos","Both are female figures carved nude, separated by roughly 20,000 years. What changes about how the female body is idealized, and what stays surprisingly constant?"],
+  ["Doryphoros (Spear Bearer)","Standing Buddha","Same contrapposto stance, two completely different belief systems behind it. What's genuinely shared here, and what does contrapposto mean differently in each context?"],
+  ["The Great Stupa, Sanchi","Dome of the Rock","Both are religious monuments built around movement and a sacred point rather than a single image to look at. Compare how each handles — or avoids — figural imagery."],
+  ["Emperor Justinian and Attendants","Augustus of Primaporta","Both fuse political and divine authority into one image of one ruler. What visual strategy does each use to make that fusion feel natural?"],
+  ["Menkaure and a Queen","Sarcophagus from Cerveteri","Both show a married couple. What does each say about that relationship, and about how each culture pictured death?"],
+  ["Junius Bassus Sarcophagus","Lintel 24, Yaxchilán","Both are carved relief records of a specific ritual moment for a specific person. Compare what's actually being commemorated, and for whom."]
+];
+
+/* =========================== THE GALLERY ROOMS =========================== */
+const thread = document.getElementById('thread');
+const overlay = document.getElementById('overlay');
+const popcard = document.getElementById('popcard');
+
+function linkRow([text,url,note]){ return `<li>${url?`<a href="${url}" target="_blank" rel="noopener">${text}</a>`:text}${note?`<span class="note">${note}</span>`:""}</li>`; }
+function watchRow([text,url]){ return `<li>${url?`<a href="${url}" target="_blank" rel="noopener">${text}</a>`:text}</li>`; }
+
+thread.innerHTML = stations.map((s,i)=>`
+  <div class="pin-card" data-i="${i}"><div class="pin"></div><div class="card"><div class="era">${s.era}</div><div class="title">${s.title}</div></div></div>`).join('');
+
+thread.querySelectorAll('.pin-card').forEach(p=>{
+  p.addEventListener('click', ()=>{
+    const s = stations[+p.dataset.i];
+    const unitObjects = objects.filter(o=>o.unit===s.unit);
+    popcard.className = 'popcard theme-' + s.theme;
+    popcard.innerHTML = `<div class="inner">
+      <button class="close" id="closeBtn">✕</button>
+      <div class="era">${s.era}</div><h2>${s.title}</h2>
+      <p class="question">${s.question}</p>
+      <h4>Aim to be able to...</h4><ul>${s.objectives.map(o=>`<li>${o}</li>`).join('')}</ul>
+      ${unitObjects.length?`<h4>On view in this room</h4><div class="chip-row">${unitObjects.map(o=>`<span class="chip" data-obj="${o.name}">${o.name}</span>`).join('')}</div>`:''}
+      ${s.read.length?`<h4>Further reading</h4><ul class="links">${s.read.map(linkRow).join('')}</ul>`:''}
+      ${s.watch.length?`<h4>Watch</h4><ul class="links watch">${s.watch.map(watchRow).join('')}</ul>`:''}
+      <button class="spark-btn" id="sparkBtn">${s.spark}</button>
+      <div class="spark-out" id="sparkOut">${s.sparkOut}</div>
+    </div>`;
+    overlay.classList.add('open');
+    popcard.querySelector('#closeBtn').addEventListener('click', ()=> overlay.classList.remove('open'));
+    popcard.querySelector('#sparkBtn').addEventListener('click', ()=> popcard.querySelector('#sparkOut').classList.toggle('show'));
+    popcard.querySelectorAll('.chip[data-obj]').forEach(chip=>{
+      chip.addEventListener('click', ()=>{
+        overlay.classList.remove('open');
+        const target = document.querySelector(`.idcard[data-name="${CSS.escape(chip.dataset.obj)}"]`);
+        if(target){ target.scrollIntoView({behavior:'smooth', block:'center'}); target.classList.add('flash'); setTimeout(()=>target.classList.remove('flash'),1400); }
+      });
+    });
+  });
+});
+overlay.addEventListener('click', e=>{ if(e.target === overlay) overlay.classList.remove('open'); });
+
+/* =========================== ID CARDS =========================== */
+const idwall = document.getElementById('idwall');
+idwall.innerHTML = objects.map(o=>`
+  <div class="idcard" data-name="${o.name}"><div class="idcard-inner">
+    <div class="idface front">
+      <div class="frame"><span class="ph">🖼</span></div>
+      <div class="plaque"><div class="fig">${o.fig} · ${o.unit}</div><div class="name">${o.name}</div><div class="tap">tap to read the wall text</div></div>
+    </div>
+    <div class="idface back">
+      <dl>
+        <dt>Artist</dt><dd>${o.artist}</dd>
+        <dt>Date</dt><dd>${o.date}</dd>
+        <dt>Period</dt><dd>${o.period}</dd>
+        <dt>Culture</dt><dd>${o.culture}</dd>
+        <dt>Medium</dt><dd>${o.medium}</dd>
+        <dt>Subject</dt><dd>${o.subject}</dd>
+        <dt>Visual traits</dt><dd>${o.visual}</dd>
+        <dt>Function</dt><dd>${o.func}</dd>
+        <dt>Context</dt><dd>${o.context}</dd>
+        <dt>Why it matters</dt><dd>${o.why}</dd>
+      </dl>
+      <a href="https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(o.name)}" target="_blank" rel="noopener" class="wikiLink">full article →</a>
+    </div>
+  </div></div>`).join('');
+idwall.querySelectorAll('.idcard').forEach(c=> c.addEventListener('click', ()=> c.classList.toggle('flip')));
+
+/* Two-step photo lookup, both live, neither one hardcoded:
+   1) try the Wikipedia summary API using our best-guess title
+   2) if that comes up empty (wrong title, or no Wikipedia page at
+      all — looking at you, obscure Met relief fragments), fall
+      back to a live search of Wikimedia Commons by name. Commons
+      covers a lot of museum photography Wikipedia articles don't
+      bother linking to. */
+async function findPhoto(o){
+  if(o.wiki){
+    try{
+      const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(o.wiki)}`);
+      if(res.ok){
+        const data = await res.json();
+        if(data.thumbnail && data.thumbnail.source){
+          return { src:data.thumbnail.source, page:(data.content_urls && data.content_urls.desktop) ? data.content_urls.desktop.page : null };
+        }
+      }
+    }catch(e){ /* fall through to Commons */ }
+  }
+  try{
+    const q = encodeURIComponent(o.name + ' ' + (o.culture||''));
+    const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrlimit=1&gsrnamespace=6&prop=imageinfo&iiprop=url&iiurlwidth=500&format=json&origin=*`;
+    const res = await fetch(url);
+    if(!res.ok) return null;
+    const data = await res.json();
+    const pages = data.query && data.query.pages;
+    if(!pages) return null;
+    const first = Object.values(pages)[0];
+    const info = first && first.imageinfo && first.imageinfo[0];
+    if(info) return { src: info.thumburl || info.url, page: `https://commons.wikimedia.org/wiki/${encodeURIComponent(first.title)}` };
+  }catch(e){ /* no photo found anywhere — placeholder stays, which is fine */ }
+  return null;
+}
+
+objects.forEach(async (o)=>{
+  const photo = await findPhoto(o);
+  if(!photo) return;
+  const card = idwall.querySelector(`.idcard[data-name="${CSS.escape(o.name)}"] .frame`);
+  card.innerHTML = `<img src="${photo.src}" alt="${o.name}" loading="lazy">`;
+  if(photo.page){
+    idwall.querySelector(`.idcard[data-name="${CSS.escape(o.name)}"] .wikiLink`).href = photo.page;
+  }
+});
+
+/* =========================== VOCAB DECK =========================== */
+let deck=[...vocab], idx=0;
+function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
+const sticky=document.getElementById('sticky'), nUnit=document.getElementById('nUnit'), nWord=document.getElementById('nWord'), nDef=document.getElementById('nDef'), nEx=document.getElementById('nEx'), nProg=document.getElementById('nProg');
+function renderNote(){
+  sticky.classList.remove('flip');
+  const [w,u,d,ex]=deck[idx];
+  nUnit.textContent=u; nWord.textContent=w; nDef.textContent=d; nEx.textContent=ex;
+  nProg.textContent=`${idx+1} / ${deck.length}`;
+}
+sticky.addEventListener('click', ()=> sticky.classList.toggle('flip'));
+document.getElementById('nNext').addEventListener('click', ()=>{ idx=(idx+1)%deck.length; renderNote(); });
+document.getElementById('nPrev').addEventListener('click', ()=>{ idx=(idx-1+deck.length)%deck.length; renderNote(); });
+document.getElementById('nShuffle').addEventListener('click', ()=>{ deck=shuffle([...vocab]); idx=0; renderNote(); });
+renderNote();
+
+/* =========================== COMPARISON ROTUNDA =========================== */
+const compPair = document.getElementById('compPair');
+const compPrompt = document.getElementById('compPrompt');
+function findObj(name){ return objects.find(o=>o.name===name || o.name.startsWith(name)) || {}; }
+function renderComp(){
+  const [a,b,prompt] = comparisons[Math.floor(Math.random()*comparisons.length)];
+  const oa=findObj(a), ob=findObj(b);
+  compPair.innerHTML = `
+    <div class="side" data-wiki="${oa.wiki||''}"><div class="shot"><span class="ph">🖼</span></div><div class="name">${a}</div></div>
+    <div class="vs">Compare</div>
+    <div class="side" data-wiki="${ob.wiki||''}"><div class="shot"><span class="ph">🖼</span></div><div class="name">${b}</div></div>`;
+  compPrompt.textContent = prompt;
+  [ [compPair.children[0], oa], [compPair.children[2], ob] ].forEach(async ([side, obj])=>{
+    const photo = await findPhoto(obj);
+    if(photo) side.querySelector('.shot').innerHTML = `<img src="${photo.src}" alt="${obj.name||''}">`;
+  });
+}
+document.getElementById('compNext').addEventListener('click', renderComp);
+renderComp();
+
+/* =========================== UNKNOWN IMAGE CHEAT SHEET =========================== */
+const clues = [
+  ["Hierarchical scale (size = status)","Egypt"],
+  ["Contrapposto, idealized nude body","Greece, Classical"],
+  ["Verism — wrinkles, imperfection kept on purpose","Rome, Republic"],
+  ["Idealized youth on an obviously older ruler","Rome, Empire"],
+  ["Gold background, flat frontal figures","Byzantine mosaic"],
+  ["Non-figural geometric pattern or calligraphy only","Islamic"],
+  ["Empty throne, wheel, footprints standing in for a figure","Early Buddhist (aniconic)"],
+  ["One scene, same figure repeated at different moments","Buddhist relief or Maya narrative"],
+  ["Hieroglyphic captions plus register lines","Egypt or Maya — check the script itself"],
+  ["Drapery that looks windblown, dramatic twisting pose","Hellenistic Greece"]
+];
+document.getElementById('clueTable').innerHTML = clues.map(c=>`<tr><td>${c[0]}</td><td>${c[1]}</td></tr>`).join('');
+</script>
+</body>
+</html>
