@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
+
 :root{
   --wall:#efe8db; --wall2:#e6ddcb; --ink:#231f1a; --brass:#9c7a2e; --brass-dark:#7c5f22;
   --velvet:#6e1423; --card:#fffdf8; --muted:#6b6255;
@@ -109,7 +110,7 @@ header .aside{ display:block; margin-top:12px; font-size:.82rem; color:var(--mut
 
 /* ------------- glossary pedestal (vocab deck) ------------- */
 .notes-wrap{ display:flex; flex-direction:column; align-items:center; gap:6px; }
-.pedestal-frame{ position:relative; padding-bottom:26px; }
+.pedestal-frame{ position:relative; width:100%; max-width:520px; padding-bottom:26px; }
 .pedestal-frame::after{
   content:""; position:absolute; left:50%; bottom:0; transform:translateX(-50%);
   width:70%; height:20px; background:linear-gradient(180deg,#d8cba3,#b9a878);
