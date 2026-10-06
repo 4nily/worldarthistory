@@ -269,7 +269,7 @@ footer{ text-align:center; color:var(--muted); font-size:.85rem; padding:24px 24
       <span class="deck-progress" id="compProg">1 / 1</span>
       <button id="compNextArrow">Next →</button>
     </div>
-    <button id="compRandom">🎲 jump to a random pairing</button>
+    <button id="compRandom">shuffle to a random pairing</button>
   </div>
 </section>
 
@@ -295,7 +295,7 @@ footer{ text-align:center; color:var(--muted); font-size:.85rem; padding:24px 24
   <span class="room-label smallcaps">Put it all together</span>
   <h2>Mock exam</h2>
   <p class="sub">A randomized, four-part practice test pulled from everything above — same structure as the real thing. Write your actual answers in the boxes, then hit Finished once, at the end, to see everything you should've covered.</p>
-  <button id="newMockBtn" style="display:block;margin:0 auto 20px;font-family:'Inter',sans-serif;font-weight:600;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--ink);background:var(--card);cursor:pointer;">🎲 New mock exam</button>
+  <button id="newMockBtn" style="display:block;margin:0 auto 20px;font-family:'Inter',sans-serif;font-weight:600;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;padding:9px 18px;border:1px solid var(--ink);background:var(--card);cursor:pointer;">New mock exam</button>
 
   <div class="mock-part">
     <h3>Part 1 — Identification <span>50 pts</span></h3>
@@ -328,13 +328,14 @@ footer{ text-align:center; color:var(--muted); font-size:.85rem; padding:24px 24
     <div class="reveal-box" id="mockReveal4"></div>
   </div>
 
-  <button id="finishMockBtn" style="display:block;margin:24px auto 0;font-family:'Inter',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;padding:12px 24px;border:1px solid var(--ink);background:var(--ink);color:var(--card);cursor:pointer;">✅ Finished — show me what I should've written</button>
+  <button id="finishMockBtn" style="display:block;margin:24px auto 0;font-family:'Inter',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;padding:12px 24px;border:1px solid var(--ink);background:var(--ink);color:var(--card);cursor:pointer;">Finished — show me what I should've written</button>
 </section>
 
 <footer>Every object here survived by accident. Handle the interpretations gently.</footer>
 
 <script>
-/* =========================== STATIONS =========================== */
+/* all the "rooms" on the corridor. one object per unit, same shape
+   every time so the render function below doesn't need special cases */
 const stations = [
   { id:"prologue", theme:"prehistoric", era:"Prologue", title:"Opening the Case",
     question:"What does it even mean to look at an image and call it \"art history\"?",
@@ -410,7 +411,7 @@ const stations = [
   }
 ];
 
-/* =========================== THE SIX LENSES (the graded themes) =========================== */
+// these six are straight off the professor's rubric, not something I made up
 const lenses = [
   { title:"Forms of Representation", forms:["Abstracted","Realistic / naturalistic","Idealized"],
     body:"The simplified version: is the object showing you something stripped down to essentials, something close to how it actually looks, or something improved on nature? Then ask why that choice, not another, was made here." },
@@ -433,7 +434,11 @@ document.getElementById('lensGrid').innerHTML = lenses.map((l,i)=>`
     ${l.forms?`<div class="forms">${l.forms.map(f=>`<span>${f}</span>`).join('')}</div>`:''}
   </div>`).join('');
 
-/* =========================== VOCAB — term / unit / definition / worked example =========================== */
+/* every term from the professor's review sheet, grouped by unit.
+   format is [term, unit, definition, example] — keeping the example
+   in the same row as the definition because that's literally how
+   Part 3 is graded (1 pt def, 1 pt example), so there's no reason
+   to store them separately and have to zip them back together later */
 const vocab = [
   ["Narrative","General","A story told through images — events implied or sequenced rather than written out.","The Great Departure relief at Sanchi — the Buddha's whole story told through continuous narrative, with no Buddha shown."],
   ["Representation","General","The broad act of standing in for something real through an image, symbol, or form.","Honestly, the whole unit — every object we've studied is a different culture's answer to \"how do you represent this?\""],
@@ -511,7 +516,10 @@ const vocab = [
   ["Qibla","Islamic","The direction toward Mecca that Muslims face during prayer.","The wall holding Córdoba's mihrab is oriented to the qibla — the direction every worshiper faces."]
 ];
 
-/* =========================== FOCUS OBJECTS — exam ID card fields =========================== */
+/* the 32 objects, matching the professor's official list exactly (down to
+   fig numbers). "terms" is which vocab words actually apply to that piece —
+   added these after realizing Part 3 wants you to pair a term with an
+   object anyway, so might as well show the pairing right on the card */
 const objects = [
   {name:"Woman of Willendorf", fig:"Fig. 1-3", unit:"Prehistoric", artist:"Unknown", date:"c. 24,000 BCE", period:"Upper Paleolithic", culture:"Prehistoric Europe (Austria)", medium:"Limestone, traces of red ochre", subject:"A female figure with exaggerated body and no facial detail", visual:"Only 4½ inches tall; no face, tiny arms, elaborate braided hair or headdress, emphasized torso", func:"Debated — fertility charm, self-portrait, goddess figure, unknown", context:"Predates writing; small enough to be carried in a pocket, not displayed on a wall", why:"One of the oldest surviving human figures in art, and a case study in how much interpretation fills gaps left by missing evidence.", terms:["Portable","Abstraction","Interpretation"], wiki:"Venus of Willendorf"},
   {name:"Hall of the Bulls, Lascaux", fig:"Fig. 1-6", unit:"Prehistoric", artist:"Unknown", date:"c. 15,000 BCE", period:"Upper Paleolithic", culture:"Prehistoric Europe (Dordogne, France)", medium:"Mineral pigment on limestone", subject:"Overlapping bulls, horses, and deer across a cave chamber", visual:"Massive scale (up to 17 ft.), animals layered without one clear scene, rock contours used for volume", func:"Unclear — not a living space, possibly ceremonial or ritual", context:"Deep underground, requiring artificial light to reach or view", why:"Shows sophisticated technique long before writing, and raises the question of what \"public\" art meant with no visible audience.", terms:["Parietal","Interpretation"], wiki:"Lascaux"},
@@ -547,7 +555,11 @@ const objects = [
   {name:"Plate with Kufic Border", fig:"Fig. 8-9", unit:"Islamic", artist:"Unknown", date:"10th–12th c. CE", period:"Samanid, Early Islamic", culture:"Khurasan (greater Iran/Central Asia)", medium:"Earthenware with white and black slip, lead glaze, diameter 14½\"", subject:"A plate decorated entirely with script", visual:"Angular Kufic calligraphy as the sole ornament", func:"Domestic or ceremonial tableware", context:"Part of a broader Islamic tradition using text as primary decoration; now in the Musée du Louvre, Paris", why:"Treats writing itself as the image, collapsing the line between language and art.", terms:["Abstraction","Representation"], wiki:null}
 ];
 
-/* =========================== COMPARISON LAB pairings =========================== */
+/* format: [object A, object B, the prompt, a model answer].
+   first 8 are the original set I wrote by hand; everything after the
+   divider below was added so that every possible unit-to-unit combo
+   (all 28 of them) has at least one pairing — Part 4 always compares
+   works from different cultures, so there was no reason to leave gaps */
 const comparisons = [
   ["Augustus of Primaporta","Buddha Shakyamuni","Both borrow Greek sculptural language for a non-Greek subject — a Roman emperor, a Buddhist teacher. What is each trying to claim by doing that, and does it work the same way twice?",
     "Augustus borrows Polykleitos's proportion system to claim destined, semi-divine political authority for a specific ruler. The Gandhara Buddha borrows the same naturalism to make a spiritual teacher feel physically present and approachable. Same visual toolkit, opposite goals: one sells power, the other invites devotion."],
@@ -566,7 +578,7 @@ const comparisons = [
   ["Sarcophagus of Junius Bassus","Lintel 24, Yaxchilán","Both are carved relief records of a specific ritual moment for a specific person. Compare what's actually being commemorated, and for whom.",
     "Junius Bassus borrows imperial Roman visual authority to elevate Christ for a newly baptized Roman prefect. Yaxchilán's lintel ties royal legitimacy directly to a queen's ritual bloodletting, dated to the day. Different belief systems, same instinct: use dense, exact detail to make one person's moment permanent."],
 
-  /* ---- the rest: one comparison for every remaining unit-to-unit combination ---- */
+  // everything below fills in the unit-pairs the original 8 didn't cover
   ["Woman of Willendorf","Palette of Narmer","Both are among the earliest surviving attempts to give a body deliberate meaning. How \"readable\" is each image's message meant to be?",
     "Willendorf abstracts the body into exaggerated shapes with no face — interpretation stays wide open. Narmer uses hierarchical scale and early hieroglyphics to lock in one specific political claim. Abstraction invites guessing; Narmer's iconography was built to be understood immediately."],
   ["Hall of the Bulls, Lascaux","Ara Pacis Augustae","Both cover a surface with imagery meant to communicate something lasting. What changes once a culture has writing and a political program behind the art?",
@@ -611,7 +623,7 @@ const comparisons = [
     "Justinian's mosaic asserts authority through the human figure — frontal, gold-ground, haloed, standing beside clergy. The Dome of the Rock asserts authority by removing the figure entirely, using architecture and calligraphy instead. Byzantium builds legitimacy around a face; early Islamic art builds it around a word."]
 ];
 
-/* =========================== THE GALLERY ROOMS =========================== */
+// rendering the corridor + the popup that opens when you click a room
 const thread = document.getElementById('thread');
 const overlay = document.getElementById('overlay');
 const popcard = document.getElementById('popcard');
@@ -669,12 +681,12 @@ document.addEventListener('keydown', e=>{
   if(e.key === 'Escape') overlay.classList.remove('open');
 });
 
-/* =========================== ID CARDS =========================== */
+// the flip-card wall. front shows a photo + name, back shows the full label
 const idwall = document.getElementById('idwall');
 idwall.innerHTML = objects.map(o=>`
   <div class="idcard" data-name="${o.name}"><div class="idcard-inner">
     <div class="idface front">
-      <div class="frame"><span class="ph">🖼</span></div>
+      <div class="frame"><span class="ph">image</span></div>
       <div class="plaque"><div class="fig">${o.fig} · ${o.unit}</div><div class="name">${o.name}</div><div class="tap">tap to read the wall text</div></div>
     </div>
     <div class="idface back">
@@ -740,7 +752,7 @@ objects.forEach(async (o)=>{
   }
 });
 
-/* =========================== VOCAB DECK =========================== */
+// the flashcard deck — just an index into the vocab array plus a flip class
 let deck=[...vocab], idx=0;
 function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
 const sticky=document.getElementById('sticky'), nUnit=document.getElementById('nUnit'), nWord=document.getElementById('nWord'), nDef=document.getElementById('nDef'), nEx=document.getElementById('nEx'), nProg=document.getElementById('nProg');
@@ -756,7 +768,7 @@ document.getElementById('nPrev').addEventListener('click', ()=>{ idx=(idx-1+deck
 document.getElementById('nShuffle').addEventListener('click', ()=>{ deck=shuffle([...vocab]); idx=0; renderNote(); });
 renderNote();
 
-/* =========================== COMPARISON ROTUNDA =========================== */
+// used to be pure random — swapped to an index so prev/next actually make sense
 const compPair = document.getElementById('compPair');
 const compPrompt = document.getElementById('compPrompt');
 const compProg = document.getElementById('compProg');
@@ -768,9 +780,9 @@ function renderComp(i){
   const [a,b,prompt,answer] = comparisons[compIdx];
   const oa=findObj(a), ob=findObj(b);
   compPair.innerHTML = `
-    <div class="side" data-wiki="${oa.wiki||''}"><div class="shot"><span class="ph">🖼</span></div><div class="name">${a}</div></div>
+    <div class="side" data-wiki="${oa.wiki||''}"><div class="shot"><span class="ph">image</span></div><div class="name">${a}</div></div>
     <div class="vs">Compare</div>
-    <div class="side" data-wiki="${ob.wiki||''}"><div class="shot"><span class="ph">🖼</span></div><div class="name">${b}</div></div>`;
+    <div class="side" data-wiki="${ob.wiki||''}"><div class="shot"><span class="ph">image</span></div><div class="name">${b}</div></div>`;
   compPrompt.textContent = prompt;
   compProg.textContent = `${compIdx+1} / ${comparisons.length}`;
   document.getElementById('compAnsOut').classList.remove('show');
@@ -786,7 +798,7 @@ document.getElementById('compRandom').addEventListener('click', ()=> renderComp(
 document.getElementById('compAnsBtn').addEventListener('click', ()=> document.getElementById('compAnsOut').classList.toggle('show'));
 renderComp(0);
 
-/* =========================== UNKNOWN IMAGE CHEAT SHEET =========================== */
+// quick lookup table for part 2 — "if you see X it's probably Y"
 const clues = [
   ["Hierarchical scale (size = status)","Egypt"],
   ["Contrapposto, idealized nude body","Greece, Classical"],
@@ -801,9 +813,11 @@ const clues = [
 ];
 document.getElementById('clueTable').innerHTML = clues.map(c=>`<tr><td>${c[0]}</td><td>${c[1]}</td></tr>`).join('');
 
-/* =========================== MOCK EXAM =========================== */
-// Picks random content from the same data every other part of the page
-// uses, so there's nothing here that isn't already backed by a real card.
+// mock exam section. didn't want to write a separate question bank for
+// this, so it just pulls random entries from the same objects/vocab/
+// comparisons arrays everything else on the page already uses. means the
+// mock exam can never ask about something that isn't also studyable above.
+
 function sampleWithoutReplacement(arr, n){
   const copy = [...arr]; const out = [];
   while(out.length < n && copy.length){ out.push(copy.splice(Math.floor(Math.random()*copy.length),1)[0]); }
@@ -815,7 +829,7 @@ let mock = {};
 function renderMockImages(containerId, objs){
   const el = document.getElementById(containerId);
   el.innerHTML = objs.map((o,i)=>`
-    <div class="mshot" data-name="${o.name}"><div class="box"><span class="ph">🖼</span></div><div class="num">${i+1}</div></div>`).join('');
+    <div class="mshot" data-name="${o.name}"><div class="box"><span class="ph">image</span></div><div class="num">${i+1}</div></div>`).join('');
   objs.forEach(async o=>{
     const photo = await findPhoto(o);
     if(photo){
