@@ -189,6 +189,9 @@ textarea:focus, select:focus{ outline:none; border-color:var(--brass-dim); }
 .mock-top button{ font-family:"Space Mono",monospace; font-weight:700; font-size:.66rem; letter-spacing:.04em; text-transform:uppercase; padding:9px 16px; border:1px solid var(--brass-dim); background:var(--card); color:var(--parch); cursor:pointer; }
 .mock-top button:hover:not(:disabled){ border-color:var(--brass); }
 .mock-top button:disabled{ opacity:.45; cursor:default; }
+/* top buttons stay put while scrolling, since the exam is long */
+.mock-top:not(.bottom){ position:sticky; top:0; z-index:20; padding:10px 0; margin-bottom:16px; background:linear-gradient(var(--sky),rgba(11,16,38,.92)); }
+.mock-top.bottom{ margin:6px 0 0; }
 .mock-part{ background:var(--card); border:1px solid var(--line); padding:20px 20px 16px; margin-bottom:18px; }
 .mock-help{ font-size:.74rem; color:var(--muted); line-height:1.55; margin:0 0 14px; }
 .mock-q{ display:flex; gap:16px; margin-bottom:18px; flex-wrap:wrap; }
@@ -294,8 +297,9 @@ footer{ text-align:center; color:var(--muted); font-size:.72rem; padding:24px 24
   <span class="room-label smallcaps">Practice run · 75 min · 100pts</span>
   <h2>Mock exam</h2>
   <p class="sub">Type your answers like it's the real test. Hit Finished and each part shows what you should have covered, with the key words you hit lit up.</p>
-  <div class="mock-top"><button id="mockNew">New mock exam</button><button id="mockDone">Finished: show me what I should have written</button></div>
+  <div class="mock-top"><button class="mockNewBtn">Reset: new mock exam</button><button class="mockDoneBtn">Reveal what I should have said</button></div>
   <div id="mockBody"></div>
+  <div class="mock-top bottom"><button class="mockNewBtn">Reset: new mock exam</button><button class="mockDoneBtn">Reveal what I should have said</button></div>
 </section>
 
 <section class="room" id="formula">
@@ -1209,7 +1213,7 @@ function renderMock(){
   findPhoto({name:mock.unk.name, wiki:mock.unk.wiki, culture:mock.unk.culture}).then(p=>{ if(p) document.getElementById('munk').innerHTML = `<img src="${p.src}" alt="">`; });
   findPhoto(mock.a).then(p=>{ if(p) document.getElementById('mca').innerHTML = `<img src="${p.src}" alt="">`; });
   findPhoto(mock.b).then(p=>{ if(p) document.getElementById('mcb').innerHTML = `<img src="${p.src}" alt="">`; });
-  document.getElementById('mockDone').disabled = false;
+  document.querySelectorAll('.mockDoneBtn').forEach(b=> b.disabled = false);
 }
 
 function finishMock(){
@@ -1229,10 +1233,15 @@ function finishMock(){
   });
   document.getElementById('mcKey').innerHTML = `<b>${mock.a.name}</b> and <b>${mock.b.name}</b>. ${mock.cmp.label}:<br>${mock.cmp.answer.replace(/\n\n/g,'<br><br>')}${keyChips(mock.cmp.keys, document.getElementById('mcAns').value)}`;
   document.querySelectorAll('#mockBody .mock-key').forEach(k=>k.classList.add('show'));
-  document.getElementById('mockDone').disabled = true;
+  document.querySelectorAll('.mockDoneBtn').forEach(b=> b.disabled = true);
+  // jump to the first answer key so the reveal is actually visible
+  document.getElementById('mkey0').scrollIntoView({behavior:'smooth', block:'center'});
 }
-document.getElementById('mockNew').addEventListener('click', newMock);
-document.getElementById('mockDone').addEventListener('click', finishMock);
+document.querySelectorAll('.mockNewBtn').forEach(b=> b.addEventListener('click', ()=>{
+  newMock();
+  document.getElementById('mockexam').scrollIntoView({behavior:'smooth', block:'start'});
+}));
+document.querySelectorAll('.mockDoneBtn').forEach(b=> b.addEventListener('click', finishMock));
 newMock();
 </script>
 
