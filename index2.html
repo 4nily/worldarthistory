@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+/* second sky. the first one was the ancient spheres, this is the
+   medieval-to-baroque unit. kept the exact styling since i liked how it
+   turned out, only the material changed */
 
 :root{
   --sky:#0b1026; --sky2:#141a3a; --ink:#eef0f8; --muted:#9aa5c4;
@@ -156,6 +159,52 @@ nav.tabs a:hover{ background:var(--line); }
 .cluetable td{ border-bottom:1px solid var(--line); padding:6px 4px; color:var(--parch-dim); }
 .cluetable td:first-child{ font-weight:700; color:var(--parch); width:50%; }
 
+/* the dotted vocab words inside descriptions + the popup link lists */
+.vt{ color:var(--brass); border-bottom:1px dotted var(--brass-dim); cursor:pointer; }
+.vt:hover{ color:var(--parch); }
+.popcard ul a{ color:#8fb8e0; text-decoration:none; word-break:break-word; }
+.popcard ul a:hover{ text-decoration:underline; }
+.nolink{ color:var(--muted); font-size:.64rem; }
+.vlist{ display:flex; flex-direction:column; gap:5px; }
+.vrow{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.vrow .arrow{ color:var(--brass-dim); font-size:.7rem; }
+.chip.objchip{ border-color:var(--brass-dim); color:var(--parch); }
+.objlink{ font-family:"Space Mono",monospace; font-weight:700; font-size:.66rem; margin-top:12px; padding:7px 12px; background:var(--sky2); border:1px solid var(--brass-dim); color:var(--brass); cursor:pointer; }
+.objlink:hover{ border-color:var(--brass); color:var(--parch); }
+.idface.back .term-chips span{ cursor:pointer; }
+/* text boxes for the mock exam and the pick-two box. colors are the
+   same ones from above */
+select{ font-family:"Space Mono",monospace; font-size:.7rem; background:var(--sky2); color:var(--parch); border:1px solid var(--line); padding:7px 8px; max-width:100%; }
+textarea{ font-family:"Space Mono",monospace; font-size:.76rem; line-height:1.5; background:#060814; color:var(--ink); border:1px solid var(--line); padding:10px 12px; width:100%; min-height:110px; resize:vertical; }
+textarea:focus, select:focus{ outline:none; border-color:var(--brass-dim); }
+.pickrow{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin:12px 0; }
+.pickrow select{ flex:1 1 200px; }
+.complab.picker{ margin-top:24px; }
+.complab.picker h3, .mock-part h3{ font-family:"Cormorant Garamond",serif; font-style:italic; font-weight:600; color:var(--parch); margin:0 0 6px; font-size:1.2rem; }
+.keyrow{ display:flex; flex-wrap:wrap; gap:5px; margin-top:10px; }
+.keyrow span{ font-size:.62rem; border:1px solid var(--brass-dim); color:var(--brass); padding:2px 7px; }
+.keyrow span.hit{ background:rgba(201,162,39,.18); color:var(--parch); }
+.keyrow span.miss{ opacity:.65; }
+.mock-top{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:26px; }
+.mock-top button{ font-family:"Space Mono",monospace; font-weight:700; font-size:.66rem; letter-spacing:.04em; text-transform:uppercase; padding:9px 16px; border:1px solid var(--brass-dim); background:var(--card); color:var(--parch); cursor:pointer; }
+.mock-top button:hover:not(:disabled){ border-color:var(--brass); }
+.mock-top button:disabled{ opacity:.45; cursor:default; }
+.mock-part{ background:var(--card); border:1px solid var(--line); padding:20px 20px 16px; margin-bottom:18px; }
+.mock-help{ font-size:.74rem; color:var(--muted); line-height:1.55; margin:0 0 14px; }
+.mock-q{ display:flex; gap:16px; margin-bottom:18px; flex-wrap:wrap; }
+.mock-q.two{ justify-content:center; }
+.mshot{ width:170px; height:170px; flex:none; background:#060814; border:1px solid var(--line); display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
+.mshot img{ width:100%; height:100%; object-fit:cover; }
+.mshot .ph{ font-size:.62rem; color:var(--muted); }
+.mcap{ position:absolute; left:0; right:0; bottom:0; background:rgba(5,7,20,.85); color:var(--parch); font-size:.6rem; padding:4px 6px; text-align:center; }
+.mock-ans{ flex:1 1 280px; min-width:0; }
+.mock-term{ margin-bottom:14px; }
+.mock-term label{ display:block; font-family:"Cormorant Garamond",serif; font-style:italic; font-size:1rem; color:var(--parch); margin-bottom:4px; }
+.mock-term textarea{ min-height:60px; }
+.mock-key{ display:none; margin-top:10px; font-size:.74rem; line-height:1.55; color:var(--parch-dim); background:rgba(201,162,39,.08); border:1px solid var(--brass-dim); padding:10px 12px; }
+.mock-key.show{ display:block; }
+.mock-key b{ color:var(--brass); }
+.mock-part .prompt{ font-family:"Cormorant Garamond",serif; font-style:italic; font-size:1.05rem; color:var(--ink); border-left:2px solid var(--brass); padding-left:14px; margin:6px 0 12px; }
 footer{ text-align:center; color:var(--muted); font-size:.72rem; padding:24px 24px 60px; font-style:italic; }
 @media (max-width:640px){ .orbit-wrap{ padding:0 14px; } }
 </style>
@@ -174,7 +223,10 @@ footer{ text-align:center; color:var(--muted); font-size:.72rem; padding:24px 24
   <a href="#recordwall">Part 1 · Identification</a>
   <a href="#vocabdeck">Part 3 · Vocabulary</a>
   <a href="#connections">Part 4 · Comparison</a>
+  <a href="#mockexam">Mock Exam</a>
   <a href="#formula">The Navigation Key</a>
+  <a href="https://quizlet.com/1219944176/unit-2-medieval-and-early-modern-worlds-flash-cards" target="_blank" rel="noopener">Quizlet ↗</a>
+  <a href="https://quizlet.com/1219944176/unit-2-medieval-and-early-modern-worlds-flash-cards" target="_blank" rel="noopener">Quizlet ↗</a>
 </nav>
 
 <div class="orbit-wrap" id="orbitnav"><div class="orbit" id="orbit"></div></div>
@@ -202,11 +254,11 @@ footer{ text-align:center; color:var(--muted); font-size:.72rem; padding:24px 24
 <section class="room" id="vocabdeck">
   <span class="room-label smallcaps">Part 3 · Vocabulary, choose 5 of 10 given · 10pts</span>
   <h2>The glossary deck</h2>
-  <p class="sub">Definition (1pt) + tie it to a focus object and explain why (1pt). Never define a term floating on its own.</p>
+  <p class="sub">Definition (1pt) + tie it to a focus object and explain why (1pt). Never define a term floating on its own. <a href="https://quizlet.com/1219944176/unit-2-medieval-and-early-modern-worlds-flash-cards" target="_blank" rel="noopener" style="color:#8fb8e0">Quizlet set for this unit</a>.</p>
   <div class="notes-wrap">
     <div class="sticky" id="sticky"><div class="sticky-inner">
       <div class="note-face front"><div class="tag" id="nUnit">unit</div><div class="word" id="nWord">word</div><div class="hint">tap for definition + example</div></div>
-      <div class="note-face back"><div class="tag">definition</div><div class="def" id="nDef">def</div><div class="ex"><b>where you'd point to it</b><span id="nEx">example</span></div><div class="hint">tap to flip back</div></div>
+      <div class="note-face back"><div class="tag">definition</div><div class="def" id="nDef">def</div><div class="ex"><b>where you'd point to it</b><span id="nEx">example</span></div><button class="objlink" id="nObj"></button><div class="hint">tap to flip back</div></div>
     </div></div>
     <div class="note-controls"><button id="nPrev">← Prev</button><span class="note-progress" id="nProg">1 / 1</span><button id="nNext">Next →</button></div>
     <button class="shuffle-link" id="nShuffle">Shuffle the deck</button>
@@ -228,6 +280,22 @@ footer{ text-align:center; color:var(--muted); font-size:.72rem; padding:24px 24
     </div>
     <button id="compRandom">Jump to a random pairing</button>
   </div>
+  <div class="complab picker">
+    <h3>Any two focus objects</h3>
+    <p class="prompt" style="border:none;padding:0;margin:4px 0 0;font-size:.95rem">She can pair any two of the 32. Pick them and you get a question, an answer to study, and the key words.</p>
+    <div class="pickrow"><select id="pickA"></select><span class="vs">vs</span><select id="pickB"></select></div>
+    <button id="pickGo">Compare these two</button>
+    <button id="pickRandom">Random pair</button>
+    <div id="pickOut"></div>
+  </div>
+</section>
+
+<section class="room" id="mockexam">
+  <span class="room-label smallcaps">Practice run · 75 min · 100pts</span>
+  <h2>Mock exam</h2>
+  <p class="sub">Type your answers like it's the real test. Hit Finished and each part shows what you should have covered, with the key words you hit lit up.</p>
+  <div class="mock-top"><button id="mockNew">New mock exam</button><button id="mockDone">Finished: show me what I should have written</button></div>
+  <div id="mockBody"></div>
 </section>
 
 <section class="room" id="formula">
@@ -241,9 +309,9 @@ footer{ text-align:center; color:var(--muted); font-size:.72rem; padding:24px 24
 <footer>Charted for one exam, not the stars themselves. Good luck.</footer>
 
 <script>
-// data block — unit 2, pulled straight from the Blackboard folders +
-// the unit 2 test description (56 / 10 / 10 / 24 point split, 4 ID
-// objects instead of 3, 5-of-10 vocab instead of 5-of-12).
+// everything below is typed up from the unit 2 blackboard folders and
+// the test description. this exam is 56 / 10 / 10 / 24, with 4 id objects
+// and 5 vocab words out of 10 (unit 1 was 3 and 5 out of 12)
 
 const stations = [
   { id:"medieval-britain", era:"c.600–800", title:"Early Medieval Britain", unit:"Medieval Britain",
@@ -390,7 +458,7 @@ const threads = [
 ];
 
 const comparisons = [
-  ["Mérode Altarpiece","Journey: The Last Supper","Both use careful spatial construction to stage a sacred moment inside an ordinary room. How does each use space differently to carry meaning?",
+  ["Mérode Altarpiece","The Last Supper","Both use careful spatial construction to stage a sacred moment inside an ordinary room. How does each use space differently to carry meaning?",
     "The Mérode Altarpiece hides its theology inside a cluttered, true-to-life domestic interior — disguised symbolism rewards close looking. The Last Supper instead uses mathematically exact one-point perspective to funnel every line toward Christ, making the room's architecture argue for his centrality. Flemish detail invites searching; Italian perspective insists on a single reading."],
   ["The Virgin of Guadalupe","Mass of Saint Gregory","Both fuse Catholic subject matter with Indigenous Mexican material or technique. What survives of Indigenous tradition in each?",
     "The Virgin of Guadalupe reimagines a European Marian image with features and symbolism tied to Indigenous identity, painted on Indigenous maguey cloth. The Mass of Saint Gregory renders a European devotional scene entirely in featherwork, an Indigenous craft tradition. In both, a European subject survives, but the material and the hand making it stay distinctly Indigenous."],
@@ -412,7 +480,413 @@ const comparisons = [
     "Giotto's Lamentation uses weighted bodies, individualized gesture, and diagonal composition to stage collective, visible grief. Michelangelo's Pietà instead idealizes Mary's youth and softens the drapery into something almost serene, emotion carried through quiet restraint rather than outward display. Both rely on new naturalism, but aim it at opposite emotional registers — communal anguish versus private tenderness."],
 ];
 
-// ---------- rendering (same mechanics as the unit 1 chart) ----------
+// readings, videos and links for each station, copied from the folder.
+// the folder lists some things with no url (textbook pages, a few smarthistory
+// videos) so those show as plain text instead of me guessing an address
+
+const stationExtra = {
+  "medieval-britain":{
+    note:"Hiberno-Saxon / Insular art blends Celtic, Anglo-Saxon and Christian traditions: animal style, interlace and horror vacui fill the page, most famously on a carpet page in an illuminated manuscript. Books like this were copied on vellum in a monastic scriptorium, and the Chi Rho monogram is where the scribes showed off most. The Carolingian court of Charlemagne went the other way and revived Roman classicism for Christian books. The Sutton Hoo purse lid shows the secular side, with cloisonné garnet work made for a buried king. Most of this survives because churches and monasteries kept it, so ask what gets lost once it sits in a museum.",
+    read:[["Stokstad & Cothren ch. 10, 'Looking Forward: Early Medieval and Romanesque Art,' pp. 233-236"],["Stokstad & Cothren 10.1, 'The British Isles and Scandinavia,' pp. 236-238"]],
+    watch:[["Khan Academy: The Sutton Hoo Ship Burial","https://www.khanacademy.org/humanities/medieval-world/early-medieval-art/x4b0eb531:england/v/sutton-hoo-ship-burial-c-700"],["Khan Academy: Page with Matthew the Evangelist, Ebbo Gospels","https://pl.khanacademy.org/humanities/medieval-world/carolingian-ottonian/carolingian1/v/saint-matthew-from-the-ebbo-gospel"],["The Worst Jobs in History, 'The Dark Ages' (The Monk and the Viking)","https://www.youtube.com/watch?v=GmoX_ok6vHs"]],
+    more:[["The Lindisfarne Gospels (technical details + content)","https://www.lindisfarne.org.uk/gospels/"],["Sutton Hoo Society","https://www.suttonhoo.org/"],["Beowulf (full text)","https://etext.virginia.edu/toc/modeng/public/AnoBeow.html"],["Museum of the Viking Age: the Oseberg Ship","https://www.vikingtidsmuseet.no/english/news/brief-intro-the-oseberg-ship.html"],["The Morgan Library & Museum","https://www.themorgan.org/"],["Animals in Medieval Art (the Met)","https://www.metmuseum.org/essays/animals-in-medieval-art"]]
+  },
+  "gothic":{
+    note:"Gothic builders used pointed arches, ribbed vaults and flying buttresses to carry the weight outward, so the walls could open up into stained glass and light could stand for the divine. By the Rayonnant phase a building like Sainte-Chapelle works almost like a giant reliquary, glass held up by the thinnest stone. Outside, the story is told in stone: the tympanum over the door and the jamb statues beside it teach scripture to the whole community. It starts with Abbot Suger at Saint-Denis, and a cathedral like Amiens takes generations to finish.",
+    read:[["Stokstad & Cothren ch. 11, 'Looking Forward,' pp. 261-263"],["Stokstad & Cothren 11.1, 'The Origins of Gothic at Saint-Denis,' pp. 263-265"],["Stokstad & Cothren 11.2, 'Gothic Art in France,' pp. 265-276"],["Jacqueline Jung, 'Reflections on Africans in Gothic Sculpture, pt. 1'","https://blog.yalebooks.com/2020/07/21/reflections-on-africans-in-gothic-sculpture-part-1/"]],
+    watch:[["Smarthistory: Birth of the Gothic, Abbot Suger and the ambulatory at St. Denis"],["Smarthistory: Amiens Cathedral"]],
+    more:[["Timographie: virtual 360 of Sainte-Chapelle","https://www.timographie360.fr/nos-realisations/la-sainte-chapelle-42"],["Gothic by Design: The Dawn of Architectural Draftsmanship (the Met, Apr 16-Jul 19, 2026)","https://www.metmuseum.org/exhibitions/gothic-by-design-the-dawn-of-architectural-draftsmanship"]]
+  },
+  "china":{
+    note:"Shan shui means mountain-water, and Song painters worked it in ink wash on silk, as a vertical hanging scroll or a handscroll you unroll section by section. Daoism (the dao, harmony with nature, and qi, the life force) and the ideals of Confucius (ren, li, filial piety, self-cultivation) shape what the paintings mean. The literati were scholar-officials who treated painting and calligraphy as self-cultivation, not a trade. Atmospheric perspective and negative space turn mist into distance, and the tiny people show where humanity sits in nature.",
+    read:[["Stokstad & Cothren 9.2.1, 'Song Dynasty,' pp. 214-217"],["Khan Academy: Chinese Landscape Painting","https://www.khanacademy.org/humanities/art-asia/imperial-china/song-dynasty/a/chinese-landscape-painting"],["Khan Academy: Mountings (hanging scrolls, handscrolls, fans, album leaf)","https://www.khanacademy.org/humanities/art-asia/imperial-china/song-dynasty/a/mountings-hanging-scrolls-handscrolls-fans-and-the-album-leaf"],["Khan Academy: Neo-Confucianism and Fan Kuan, Travelers by Streams and Mountains","https://www.khanacademy.org/humanities/art-asia/imperial-china/song-dynasty/a/neo-confucianism-fan-kuan-travelers-by-streams-and-mountains"]],
+    watch:[["Intro video by Dr. Asato Ikeda (Blackboard)"],["The Met: How Liang Kai paints with Metaphor","https://www.youtube.com/watch?v=QvdMC_wY_K4"],["NYT: Arts, Ancient Chinese Art (a Met curator on handscrolls)","https://www.youtube.com/watch?v=WPmED0GbYUs"],["BBC: the Chinese paintbrush","https://www.youtube.com/watch?v=K7AgPvZVlM4"]],
+    more:[["Chinese Calligraphy (the Met)","https://www.metmuseum.org/essays/chinese-calligraphy"]]
+  },
+  "late-medieval-northern":{
+    note:"Duccio still works on a gold-ground panel with Byzantine habits; Giotto's weighty figures and emotional fresco cycle in the Scrovegni Chapel push toward naturalism. In Flanders the new tool is oil: thin oil glazing built over a careful underdrawing gives jewel-like color and tiny reflected detail. Northern painters pack symbolism, often disguised symbolism in ordinary household objects, into a triptych like the Mérode Altarpiece. Van Eyck's signatures and mottos raise questions of authorship, which is why he keeps showing up.",
+    read:[["Stokstad & Cothren 11.4, 'Late Medieval Art in Italy,' pp. 282-283"],["11.4.2, 'Painting in Siena,' pp. 284-286"],["11.4.3, 'Painting in Florence,' pp. 286-290"],["11.4.4, 'Comparing Duccio and Giotto,' pp. 290-291"],["12.1, 'Northern Renaissance Art,' p. 294; 12.1.2, 'Painting in Flanders,' pp. 296-299"],["Optional: Erwin Panofsky's 1934 iconographical analysis of the Arnolfini Portrait"]],
+    watch:[["Smarthistory: Cimabue and Giotto compared","https://www.youtube.com/watch?v=DKnFvXmUlOI"],["Smarthistory: Duccio's Maestà (front)","https://www.youtube.com/watch?v=kMVg53FDx-g"],["Smarthistory: Duccio's Maestà (second video in the folder)","https://www.youtube.com/watch?v=wAg7NQ0akkQ"]],
+    more:[["Getty: How to Make a Gold-Ground Painting","https://www.youtube.com/watch?v=WVyusmjiTXI"],["Duccio, Maestà (course file)","https://drive.google.com/file/d/17ZRFvDF-1yar6f8dMK57TMmFuvpZS2nk/view?usp=drive_link"],["Giotto, Madonna and Child Enthroned (course file)","https://drive.google.com/file/d/166Wxm7CC7g0Mwn4Wc7iVKj8A6drQg3Nl/view?usp=drive_link"],["Giotto, Scrovegni Chapel (course file)","https://drive.google.com/file/d/1KBmO6STJyqqb3YWEV1W_Oi-_kQq2vHfY/view?usp=drive_link"],["Giotto, Lamentation (course file)","https://drive.google.com/file/d/1HBcGNX6UAWtqGOqYCjarjFX79ezbrdoO/view?usp=drive_link"],["Mérode Altarpiece (the Met)","https://www.metmuseum.org/art/collection/search/470304"],["Arnolfini Portrait (National Gallery, London)","https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait"]]
+  },
+  "italian-renaissance":{
+    note:"Renaissance artists revived classical antiquity and aimed it at Christian and papal goals; Julius II used Rome's classical past to rebuild papal prestige. Leonardo's Last Supper is the one-point (linear) perspective showpiece, with sfumato softening every edge and chiaroscuro building volume. Raphael works in fresco on a Vatican wall, and Michelangelo's Pietà uses naturalism to deepen grief instead of weakening it. Titian shows what Venetian oil painting does with the classical nude.",
+    read:[["Stokstad & Cothren 13.1, 'Italian Art of the High Renaissance,' pp. 326-346"],["Smarthistory: Dr. Heather Graham, 'A primer for Italian Renaissance art'"]],
+    watch:[["Smarthistory: Raphael, School of Athens","https://youtu.be/Smd-q44ysoM"],["Prof. Maria Ruvoldt on Michelangelo's Pietà and naturalism in religious art (Blackboard)"]],
+    more:[["Classic, classical, and classicism explained","https://www.youtube.com/watch?v=-a-IY0CzKD4"],["The Uffizi Gallery, Florence","https://www.uffizi.it/en/the-uffizi"],["Vasari, Lives of the Artists","https://onlinebooks.library.upenn.edu/webbin/gutbook/author?name=Vasari%2c%20Giorgio%2c%201511%2d1574"],["Leonardo's Last Supper (Britannica)","https://www.britannica.com/topic/Last-Supper-fresco-by-Leonardo-da-Vinci"]]
+  },
+  "baroque":{
+    note:"The Counter-Reformation (Catholic Reformation) wanted art that moved people into belief, partly in answer to the Protestant iconoclasm of the century before. In Italy and Spain that means theatricality: tenebrism's spotlight in Caravaggio and Gentileschi (softer chiaroscuro is its Renaissance cousin), violent foreshortening that pushes figures at you, and the illusionism of Las Meninas. In the Dutch Republic the market is different: quiet genre painting, still life and vanitas, with Vermeer's light as the signature.",
+    read:[["Stokstad & Cothren ch. 14, 'Looking Forward: Seventeenth Century Art in Europe,' p. 368"],["14.1, 'Rome,' pp. 368-369; 14.1.1, 'Bernini,' pp. 369-372"],["14.2, 'Spain,' pp. 380-381; 14.2.1, 'Velázquez,' pp. 381-383"],["14.4, 'The Dutch Republic,' pp. 388-389; 14.4.3, 'Interiors, Landscapes, and Flowers,' pp. 392-396"],["Additional: essay on why the Amsterdam Museum stopped using the term 'Dutch Golden Age'"]],
+    watch:[["How to recognize Baroque art (Northern vs. Southern, Vermeer's Woman with a Water Pitcher)"],["Velázquez, Las Meninas (the mirror, the king and queen, the painter)"],["Julie Mehretu on Juan de Pareja at the Met"],["Optional: Trending Artists of the 17th Century (Artemisia Gentileschi)"]],
+    more:[["Caravaggio, Crucifixion of St. Peter (image)","https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Crucifixion_of_Saint_Peter-Caravaggio_%28c.1600%29.jpg/1920px-Crucifixion_of_Saint_Peter-Caravaggio_%28c.1600%29.jpg"]]
+  },
+  "mexico":{
+    note:"After the conquest, Spanish forces destroyed and melted down huge amounts of Indigenous art, yet Nahua artists kept their own materials and ideas alive inside Christian subjects. Featherwork carries the Mass of Saint Gregory, whose subject is transubstantiation; enconchada shell inlay and hard contour lines are other Indigenous habits that survive. The Florentine Codex, made by Sahagún with Indigenous collaborators, is an encyclopedia of Nahua knowledge in image and Nahuatl text. A concept like tonalli, the life force tied to the sun, shows the older worldview underneath.",
+    read:[["Stokstad & Cothren 15.3, 'The Aftermath of the Spanish Conquest,' p. 417"],["Smarthistory: Lauren Kilroy-Ewbank, 'The Mass of Saint Gregory'"],["Smarthistory: Dr. Elena Fitzpatrick Sifford, 'The Art of the Viceroyalty of New Spain'"],["Khan Academy: Lauren Kilroy-Ewbank, 'Virgin of Guadalupe'"]],
+    watch:[["Portrait of the Aztec ruler Moteuczoma at Chapultepec (Panopto)","https://fordham.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=14ffc3eb-eb36-43c4-90ad-ac0d00f50207"],["Spotlight: The Mass of Saint Gregory (Panopto)","https://fordham.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=983cf085-7074-4de2-84a6-acb50100da98"],["Smarthistory: The Virgin of Guadalupe"]],
+    more:[["Virgin of Guadalupe, Vistas gallery (Fordham)","https://vistasgallery.ace.fordham.edu/items/show/1921"]]
+  },
+  "benin-kongo":{
+    note:"Start by asking who made, commissioned, collected, classified and displays an object today. The Oba's court commissioned brass work cast by lost-wax, and the Igbesamwan guild carved ivory like the Queen Mother pendant mask, both closely tied to royal power. The British Punitive Expedition of 1897 looted the Benin Bronzes, which is why restitution (making it right) and repatriation (sending objects home) are live debates. The Kongo Triple Crucifix shows Christianity absorbed into a local style over generations, so cultural exchange ran in more than one direction.",
+    read:[["Stokstad & Cothren 16.1, 'Thinking about Style: Abstraction and Naturalism,' p. 432"],["Technique: Lost Wax Casting, p. 433"],["16.4, 'Art in Context: The Burden of Colonialism,' pp. 442-444"],["Smarthistory: Benin Plaques"],["Next class (A-K): British Museum 'Benin Bronzes'; NYT 'After 220 Years, the Fate of the Parthenon Marbles Rests in Secret Talks'; NYT 'A Trove of Artifacts Officials Call Stolen Are Returned to Italy'"],["Next class (L-Z): Smithsonian 'Returns 29 Benin Bronzes to Nigeria'; NYT 'How Germany Changed Its Mind, and Gave Benin Bronzes Back to Nigeria'; NYT 'A Trove of Artifacts...Returned to Italy'"]],
+    watch:[["Short video on restitution by museum curator Marie-Cécile Zinsou (Fondation Zinsou, Cotonou, Benin)"]],
+    more:[]
+  }
+};
+
+// one focus object per vocab word, plus a line about how to use it.
+// a few words (still life, vanitas, chi rho) have no perfect match so
+// the line says that straight out
+const vocabLink = {
+  "Animal style":["Sutton Hoo Purse Lid","Stylized, interlaced animals fill the gold plaques."],
+  "Cloisonné":["Sutton Hoo Purse Lid","Garnets set in gold cells walled off by thin metal strips."],
+  "Vellum":["Cross Carpet Page, Lindisfarne Gospels","The page itself is prepared calfskin, painted in the monastery."],
+  "Scriptorium":["Cross Carpet Page, Lindisfarne Gospels","Made in a monastic scriptorium, credited to Eadfrith (?)."],
+  "Illuminated Manuscript":["Page with Matthew the Evangelist, Ebbo Gospels","A hand-painted gospel book: Matthew writes inside a page full of color and line."],
+  "Horror vacui":["Cross Carpet Page, Lindisfarne Gospels","Interlace leaves no empty ground anywhere on the page."],
+  "Hiberno-Saxon / Insular":["Cross Carpet Page, Lindisfarne Gospels","Celtic, Anglo-Saxon and Christian traditions in one page, c. 700 Northumbria."],
+  "Carpet Page":["Cross Carpet Page, Lindisfarne Gospels","A cross built into pure ornament, with no text on the page."],
+  "Chi Rho":["Cross Carpet Page, Lindisfarne Gospels","The Chi Rho monogram page is this page's companion in Insular gospels; the carpet page is your focus object, so use it and name the Chi Rho as the other showpiece."],
+  "Carolingian":["Page with Matthew the Evangelist, Ebbo Gospels","Charlemagne-era revival of Roman classicism for a Christian subject, fig. 10-10."],
+  "Rayonnant":["Interior, Upper Chapel, Sainte-Chapelle","Walls nearly dissolved into glass, 1243-48."],
+  "Tympanum":["Jamb Statues, Reims Cathedral","The tympanum sits over this same central portal; the jamb statues stand beside it."],
+  "Jambs":["Jamb Statues, Reims Cathedral","Standing figures carved into the sides of the central portal."],
+  "Flying buttresses":["Amiens Cathedral","They carry the roof's thrust outward so the walls can hold huge windows."],
+  "Reliquary":["Interior, Upper Chapel, Sainte-Chapelle","Built to house the Crown of Thorns, so the whole chapel acts as a reliquary."],
+  "Shan Shui":["Travelers Among Mountains and Streams","Fan Kuan's monumental mountain-water landscape."],
+  "Ink wash":["Poet Strolling by a Marshy Bank","Tones of diluted ink with almost no color or detail."],
+  "Calligraphy":["Poet Strolling by a Marshy Bank","Painting and writing share the brush; lecture pairs Huang Tingjian's calligraphy with the landscapes, and Liang Kai's few expressive strokes work the same way."],
+  "Hanging scroll":["Travelers Among Mountains and Streams","Vertical silk scroll, ink and colors, about 6 ft 9 in tall."],
+  "Atmospheric perspective":["Travelers Among Mountains and Streams","Mist and fading detail push the far peaks back."],
+  "Negative space":["Twelve Views of Landscape","Blank silk stands in for mist, water and distance."],
+  "Dao / Tao":["Travelers Among Mountains and Streams","Nature as the real subject with people tiny in it; woyou means wandering while lying down."],
+  "Confucius":["Travelers Among Mountains and Streams","The assigned Khan reading ties this painting to Neo-Confucian moral order."],
+  "Literati":["Poet Strolling by a Marshy Bank","A scholar-poet's restrained, personal painting, not a commission."],
+  "Qi":["Poet Strolling by a Marshy Bank","A few strokes carry life force and mood."],
+  "Oil glazing":["Double Portrait of Giovanni Arnolfini and his Wife","Thin oil layers give the glowing surfaces, textures and reflections."],
+  "Underdrawing":["Double Portrait of Giovanni Arnolfini and his Wife","An oil panel built over a preparatory drawing."],
+  "Symbolism":["Mérode Altarpiece","Objects stand for ideas beyond what they literally are."],
+  "Disguised symbolism":["Mérode Altarpiece","Candle, basin and lilies hide Annunciation meaning in an ordinary home."],
+  "Triptych":["Mérode Altarpiece","Three hinged panels: Annunciation in the center, flanked by two wings."],
+  "Chiaroscuro":["The Last Supper","Gradual light-to-dark shading builds weight and volume."],
+  "Fresco":["School of Athens","Painted into wet plaster on the Vatican wall, Stanza della Segnatura."],
+  "Sfumato":["The Last Supper","Smoky, soft edges with no hard outlines, Leonardo's signature."],
+  "One-point / linear perspective":["The Last Supper","Every architectural line converges behind Christ's head."],
+  "Baroque":["Judith Beheading Holofernes","Drama, movement and emotion in a violent moment, 1612-13."],
+  "Iconoclasm":["Crucifixion of St. Peter","Reformation iconoclasm is the backdrop; this vivid chapel painting is Catholic art answering it."],
+  "Tenebrism":["Judith Beheading Holofernes","Harsh single spotlight against a dark ground."],
+  "Foreshortening":["Crucifixion of St. Peter","The straining bodies and raised cross project at the viewer."],
+  "Illusionism":["Las Meninas","A painted room that reads as real space, with a mirror extending it."],
+  "Theatricality":["Judith Beheading Holofernes","A staged, spotlit struggle meant to hit the viewer emotionally."],
+  "Genre painting":["Girl with a Pearl Earring","Vermeer's quiet Dutch world; lecture also uses his Woman with a Water Pitcher."],
+  "Still life":["Girl with a Pearl Earring","No focus object is a still life; the lecture example is Heda's Breakfast with a Lobster, so name it, and use Vermeer as the nearest Dutch focus object."],
+  "Vanitas":["Girl with a Pearl Earring","Same story as still life: the lecture example is Heda's Breakfast with a Lobster; Vermeer is the nearest Dutch focus object."],
+  "Counter-Reformation / Catholic Reformation":["Crucifixion of St. Peter","Emotional, physical martyrdom made to move a Catholic congregation."],
+  "Conquest":["Great Pyramid of Cholula","A Catholic church built straight on top of the sacred pyramid after 1540."],
+  "Enconchada":["The Virgin of Guadalupe","Lecture lists mother-of-pearl inlay as an Indigenous tradition blended into colonial painting; enconchada is the shell-inlay technique, so state that link as your own."],
+  "Transubstantiation":["Mass of Saint Gregory","The subject is the Mass miracle where the host becomes Christ's body."],
+  "Tonalli":["The Virgin of Guadalupe","Sun-rays around the Virgin are a natural hook for the Nahua life force tied to the sun; say it as your own interpretation."],
+  "Florentine Codex":["Portrait of Moteuczoma I Being Carved at Chapultepec Hill","Same world: Nahua artists making images inside a Spanish-sponsored book (Durán's Historia)."],
+  "Nahuatl":["Portrait of Moteuczoma I Being Carved at Chapultepec Hill","Nahua artists and their language are behind colonial records like this; lecture example is a 1563 Nahuatl document."],
+  "Featherwork":["Mass of Saint Gregory","A European devotional image made with an Indigenous craft."],
+  "Oba":["Equestrian Oba with Attendants","The king shown mounted at the center of his court."],
+  "Restitution":["Equestrian Oba with Attendants","Brass court art from the 1897 looting is at the heart of the restitution debate."],
+  "Repatriation":["Queen Mother Pendant Mask","A Benin court treasure in a Western museum is exactly what repatriation claims are about."],
+  "Igbesamwan":["Queen Mother Pendant Mask","The guild of ivory and wood carvers made court objects like this."]
+};
+
+// the folder gave direct links for some objects, so they go on the card
+const objSrc = {
+  "Maestà":"https://drive.google.com/file/d/17ZRFvDF-1yar6f8dMK57TMmFuvpZS2nk/view?usp=drive_link",
+  "Madonna and Child Enthroned":"https://drive.google.com/file/d/166Wxm7CC7g0Mwn4Wc7iVKj8A6drQg3Nl/view?usp=drive_link",
+  "Scrovegni (Arena) Chapel":"https://drive.google.com/file/d/1KBmO6STJyqqb3YWEV1W_Oi-_kQq2vHfY/view?usp=drive_link",
+  "Lamentation, Scrovegni Chapel":"https://drive.google.com/file/d/1HBcGNX6UAWtqGOqYCjarjFX79ezbrdoO/view?usp=drive_link",
+  "Mérode Altarpiece":"https://www.metmuseum.org/art/collection/search/470304",
+  "Double Portrait of Giovanni Arnolfini and his Wife":"https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait",
+  "The Last Supper":"https://www.britannica.com/topic/Last-Supper-fresco-by-Leonardo-da-Vinci",
+  "Crucifixion of St. Peter":"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Crucifixion_of_Saint_Peter-Caravaggio_%28c.1600%29.jpg/1920px-Crucifixion_of_Saint_Peter-Caravaggio_%28c.1600%29.jpg",
+  "The Virgin of Guadalupe":"https://vistasgallery.ace.fordham.edu/items/show/1921",
+  "The Lindisfarne Gospels":"https://www.lindisfarne.org.uk/gospels/",
+  "Cross Carpet Page, Lindisfarne Gospels":"https://www.lindisfarne.org.uk/gospels/",
+  "Sutton Hoo Purse Lid":"https://www.suttonhoo.org/"
+};
+
+// object vocab chips come from the map above so they always agree
+objects.forEach(o=>{ o.terms = vocab.filter(v=> vocabLink[v[0]] && vocabLink[v[0]][0]===o.name).map(v=>v[0]); });
+
+// turns vocab words in a description into clickable spans
+const termAlias = {};
+vocab.forEach(([t])=> t.split(/\s*\/\s*/).forEach(v=>{ termAlias[v.toLowerCase()] = t; }));
+termAlias["one-point perspective"] = "One-point / linear perspective";
+const aliasKeys = Object.keys(termAlias).sort((a,b)=>b.length-a.length).map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+const termRx = new RegExp('(?<![\\w-])(' + aliasKeys.join('|') + ')(?![\\w-])','gi');
+function hl(text){ return String(text).replace(termRx, m=>`<span class="vt" data-term="${termAlias[m.toLowerCase()]}">${m}</span>`); }
+
+function linkList(items){
+  return '<ul>' + items.map(([t,u])=> u
+    ? `<li><a href="${u}" target="_blank" rel="noopener">${t}</a></li>`
+    : `<li>${t} <span class="nolink">(no link in the folder, find it on Blackboard)</span></li>`).join('') + '</ul>';
+}
+function stationLinks(s){
+  const x = stationExtra[s.id] || {};
+  const rows = vocab.filter(v=>v[1]===s.unit).map(v=>{
+    const L = vocabLink[v[0]];
+    return `<div class="vrow"><span class="chip" data-term="${v[0]}">${v[0]}</span>${L?`<span class="arrow">→</span><span class="chip objchip" data-gobj="${L[0]}">${L[0]}</span>`:''}</div>`;
+  }).join('');
+  return `<h4>Vocabulary → focus object</h4><div class="vlist">${rows}</div>`
+    + (x.read && x.read.length ? `<h4>To read</h4>${linkList(x.read)}` : '')
+    + (x.watch && x.watch.length ? `<h4>To watch</h4>${linkList(x.watch)}` : '')
+    + (x.more && x.more.length ? `<h4>More links</h4>${linkList(x.more)}` : '');
+}
+
+function goToTerm(term){
+  overlay.classList.remove('open');
+  deck = [...vocab];
+  idx = Math.max(0, deck.findIndex(v=>v[0]===term));
+  renderNote();
+  sticky.classList.add('flip');
+  document.getElementById('vocabdeck').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function goToObj(name){
+  overlay.classList.remove('open');
+  const t = document.querySelector(`.idcard[data-name="${CSS.escape(name)}"]`);
+  if(!t) return;
+  t.scrollIntoView({behavior:'smooth', block:'center'});
+  t.classList.add('flash','flip');
+  setTimeout(()=>t.classList.remove('flash'),1400);
+}
+document.addEventListener('click', e=>{
+  const t = e.target.closest('[data-term]');
+  if(t){ goToTerm(t.dataset.term); return; }
+  const g = e.target.closest('[data-gobj]');
+  if(g){ goToObj(g.dataset.gobj); }
+});
+
+// the chart and popup below work like the unit 1 version
+// the id question wants a date and an artist, so they get their own
+// lines here instead of being buried in the hist text
+const objMeta = {
+  "Sutton Hoo Purse Lid":["c. 700","maker unknown"],
+  "Cross Carpet Page, Lindisfarne Gospels":["c. 700","Eadfrith (?)"],
+  "Page with Matthew the Evangelist, Ebbo Gospels":["9th century","maker unknown"],
+  "Amiens Cathedral":["begun c. 1220","architects not named in our materials"],
+  "Rose Window and Lancets, Chartres Cathedral":["c. 1230-1235","maker unknown"],
+  "Jamb Statues, Reims Cathedral":["c. 1230-1250","sculptors unknown"],
+  "Interior, Upper Chapel, Sainte-Chapelle":["1243-48","commissioned by King Louis IX"],
+  "Travelers Among Mountains and Streams":["early 11th century","Fan Kuan"],
+  "Twelve Views of Landscape":["early 13th century","Xia Gui"],
+  "Poet Strolling by a Marshy Bank":["early 13th century","Liang Kai"],
+  "Maestà":["1308-11","Duccio"],
+  "Madonna and Child Enthroned":["1305-10","Giotto di Bondone"],
+  "Scrovegni (Arena) Chapel":["1305-6","Giotto di Bondone"],
+  "Lamentation, Scrovegni Chapel":["1305-6","Giotto di Bondone"],
+  "Mérode Altarpiece":["c. 1425-1430s","Workshop of the Master of Flémalle"],
+  "Double Portrait of Giovanni Arnolfini and his Wife":["1434","Jan van Eyck"],
+  "The Last Supper":["1495-1498","Leonardo da Vinci"],
+  "School of Athens":["c. 1510-1511","Raphael"],
+  "Pietà":["c. 1500","Michelangelo"],
+  "Venus of Urbino":["c. 1538","Titian"],
+  "Judith Beheading Holofernes":["1612-13","Artemisia Gentileschi"],
+  "Las Meninas":["1656","Diego Velázquez"],
+  "Juan de Pareja":["1606 on the review sheet (the painting is usually dated c. 1650)","Diego Velázquez"],
+  "Girl with a Pearl Earring":["c. 1665","Johannes Vermeer"],
+  "Crucifixion of St. Peter":["c. 1600","Caravaggio"],
+  "Great Pyramid of Cholula":["c. 900-1500 CE; church on top after 1540","maker unknown"],
+  "Mass of Saint Gregory":["1539","Nahua artists, names unknown"],
+  "Portrait of Moteuczoma I Being Carved at Chapultepec Hill":["c. 1570-80","Nahua artists, names unknown"],
+  "The Virgin of Guadalupe":["17th century (1675-1700)","name(s) unknown"],
+  "Equestrian Oba with Attendants":["1550-1680","Edo maker, name once known"],
+  "Queen Mother Pendant Mask":["16th century","Edo (Igbesamwan guild), name once known"],
+  "Triple Crucifix":["16th-17th c. center; upper and lower figures 18th-19th c.","Kongo maker, name once known"]
+};
+
+// how the object represents things (abstracted / naturalistic / idealized),
+// used for the starter answers in the comparison builder
+const objRep = {
+  "Sutton Hoo Purse Lid":"abstracted","Cross Carpet Page, Lindisfarne Gospels":"abstracted",
+  "Page with Matthew the Evangelist, Ebbo Gospels":"naturalistic with a classical model",
+  "Amiens Cathedral":"architectural, built to symbolize heaven","Rose Window and Lancets, Chartres Cathedral":"abstracted and symbolic",
+  "Jamb Statues, Reims Cathedral":"increasingly naturalistic","Interior, Upper Chapel, Sainte-Chapelle":"architectural, built to symbolize heaven",
+  "Travelers Among Mountains and Streams":"naturalistic but philosophical","Twelve Views of Landscape":"abstracted and suggestive",
+  "Poet Strolling by a Marshy Bank":"abstracted and suggestive","Maestà":"idealized, still Byzantine-influenced",
+  "Madonna and Child Enthroned":"moving toward naturalism","Scrovegni (Arena) Chapel":"naturalistic and emotional",
+  "Lamentation, Scrovegni Chapel":"naturalistic and emotional","Mérode Altarpiece":"naturalistic, with disguised symbolism",
+  "Double Portrait of Giovanni Arnolfini and his Wife":"highly naturalistic","The Last Supper":"naturalistic and idealized",
+  "School of Athens":"idealized","Pietà":"idealized and naturalistic","Venus of Urbino":"naturalistic",
+  "Judith Beheading Holofernes":"naturalistic and theatrical","Las Meninas":"naturalistic with illusionism",
+  "Juan de Pareja":"naturalistic","Girl with a Pearl Earring":"naturalistic","Crucifixion of St. Peter":"naturalistic and theatrical",
+  "Great Pyramid of Cholula":"architectural, symbolic","Mass of Saint Gregory":"stylized, European subject in Indigenous technique",
+  "Portrait of Moteuczoma I Being Carved at Chapultepec Hill":"Indigenous pictorial convention","The Virgin of Guadalupe":"idealized and symbolic",
+  "Equestrian Oba with Attendants":"idealized, hierarchical scale","Queen Mother Pendant Mask":"idealized",
+  "Triple Crucifix":"abstracted, local style"
+};
+
+// themes each object touches. the comparison builder uses overlaps between
+// these to decide what two works have in common
+const objTags = {
+  "Sutton Hoo Purse Lid":["power","funerary","ornament","abstraction"],
+  "Cross Carpet Page, Lindisfarne Gospels":["divine","ornament","text","abstraction","ritual"],
+  "Page with Matthew the Evangelist, Ebbo Gospels":["divine","text","emotion","power"],
+  "Amiens Cathedral":["divine","architecture","light","ritual","power"],
+  "Rose Window and Lancets, Chartres Cathedral":["divine","light","narrative","architecture"],
+  "Jamb Statues, Reims Cathedral":["divine","narrative","naturalism","architecture","power"],
+  "Interior, Upper Chapel, Sainte-Chapelle":["divine","light","power","architecture","ritual"],
+  "Travelers Among Mountains and Streams":["nature","naturalism","divine"],
+  "Twelve Views of Landscape":["nature","abstraction"],
+  "Poet Strolling by a Marshy Bank":["nature","abstraction","portrait"],
+  "Maestà":["divine","ritual","narrative","power"],
+  "Madonna and Child Enthroned":["divine","naturalism","emotion"],
+  "Scrovegni (Arena) Chapel":["divine","narrative","naturalism","emotion"],
+  "Lamentation, Scrovegni Chapel":["emotion","naturalism","narrative","divine"],
+  "Mérode Altarpiece":["divine","naturalism","ritual","narrative","authorship"],
+  "Double Portrait of Giovanni Arnolfini and his Wife":["portrait","naturalism","authorship","power"],
+  "The Last Supper":["divine","naturalism","narrative","emotion"],
+  "School of Athens":["power","architecture","naturalism"],
+  "Pietà":["divine","emotion","naturalism","funerary"],
+  "Venus of Urbino":["naturalism","portrait","power"],
+  "Judith Beheading Holofernes":["emotion","narrative","light","naturalism"],
+  "Las Meninas":["portrait","power","authorship","naturalism"],
+  "Juan de Pareja":["portrait","naturalism","authorship","colonial"],
+  "Girl with a Pearl Earring":["portrait","light","naturalism"],
+  "Crucifixion of St. Peter":["divine","emotion","light","naturalism","narrative"],
+  "Great Pyramid of Cholula":["ritual","architecture","colonial","power"],
+  "Mass of Saint Gregory":["divine","ritual","colonial"],
+  "Portrait of Moteuczoma I Being Carved at Chapultepec Hill":["portrait","power","colonial","narrative"],
+  "The Virgin of Guadalupe":["divine","colonial","ritual","portrait"],
+  "Equestrian Oba with Attendants":["power","portrait","colonial","ritual"],
+  "Queen Mother Pendant Mask":["power","portrait","ritual","colonial"],
+  "Triple Crucifix":["divine","ritual","colonial","abstraction"]
+};
+
+// longer significance notes: first what the art is doing (form, medium,
+// technique), then why it mattered historically
+const objSig = {
+  "Sutton Hoo Purse Lid":"Gold plaques inlaid with garnet and glass in cloisonné, every cell cut and set so tightly that the surface glitters. The animal style turns beasts and figures into interlocked pattern instead of observed bodies. It came out of a ship burial, probably of an East Anglian king, with no writing to explain it, so almost everything we say is inference. Importance: it proves a rich, well-connected Anglo-Saxon court with specialist metalworkers, and it shows the animal and interlace vocabulary that Insular manuscripts later carry onto vellum.",
+  "Cross Carpet Page, Lindisfarne Gospels":"A full page of interlace, spirals and bird and animal heads built on a controlled geometry, with a cross hidden inside the pattern and no text at all. That is horror vacui used as devotion: the viewer has to slow down and trace the lines. It was made on vellum in the Northumbrian monastery's scriptorium, and it blends Celtic, Anglo-Saxon and Christian traditions. Importance: it is the model of Hiberno-Saxon / Insular style and shows monasteries as keepers of both learning and craft, a page that works as a prayer.",
+  "Page with Matthew the Evangelist, Ebbo Gospels":"Matthew sits at his desk writing while the drapery, hills and furniture seem to vibrate with nervous, energetic line. The solid seated body and classical drapery come from late Roman models, but the restless pen work is new. It was made in Charlemagne's circle, so it belongs to the Carolingian revival of Roman classicism for Christian books. Importance: it shows the empire presenting itself as a new Christian Rome and a different choice from the Insular carpet page, putting the human author at the center instead of pure ornament.",
+  "Amiens Cathedral":"A very tall nave built with pointed arches and ribbed vaults, with flying buttresses outside carrying the thrust so the walls can be opened for glass. The west facade is packed with portals and sculpture that teach scripture. It was begun c. 1220 in a prosperous northern French city and is one of the largest Gothic cathedrals. Importance: it is the High Gothic ideal of height, order and light, built over generations by a whole community, and it was also a civic and pilgrimage landmark that kept relics and competed with rival towns.",
+  "Rose Window and Lancets, Chartres Cathedral":"A huge circular window with radiating stone tracery sits over tall lancets. The glass is built from small colored pieces joined by lead, so the window is both an image and a filter that turns daylight into color. Light reads as divine presence moving through the church. It dates c. 1230-35 and is part of Chartres's famous glass program, with royal patronage. Importance: for a mostly illiterate public, glass told sacred history, and it shows Gothic structure dissolving the wall so light itself becomes the message.",
+  "Jamb Statues, Reims Cathedral":"Tall figures attached to the columns of the central west portal. Compared to earlier stiff jamb figures they have softer faces, weight shifts and drapery that falls naturally, some with clear classical influence. They stand beside the tympanum and link people entering the church to biblical figures. Reims was where French kings were crowned, so the sculpture also supports royal and religious authority. Importance: it shows Gothic sculpture moving toward naturalism inside an architectural frame; the assigned Jacqueline Jung reading adds that Gothic sculpture also included Black African figures.",
+  "Interior, Upper Chapel, Sainte-Chapelle":"Walls are almost entirely stained glass between thin stone supports, with a star-spangled vault and gilded detail, the Rayonnant ideal of a glowing shell. It was built 1243-48 for King Louis IX to house relics of Christ's Passion, above all the Crown of Thorns, so the whole room acts as a huge reliquary. Importance: it ties French royal power to sacred relics and biblical kings, and it shows how far Gothic could go in turning structure into light.",
+  "Travelers Among Mountains and Streams":"A monumental central mountain with finely textured rock, mist and a thin waterfall, and tiny travelers with pack animals at the bottom. Ink and colors on silk with layered brush texture and atmospheric perspective create huge depth on a hanging scroll about 6 ft 9 in tall. It was painted in the early 11th century under the Northern Song, when landscape became China's most prized subject. Importance: it expresses Daoist ideas of people inside nature's order and Neo-Confucian ideas of moral hierarchy, and it set the standard for monumental landscape that later painters answered.",
+  "Twelve Views of Landscape":"A handscroll in ink on silk, read section by section, with quick economical brush strokes, a landscape pushed into one side of the composition and large blank areas of silk that become mist, water and distance. Negative space does the work that dense detail does in Fan Kuan. Made in the Southern Song, early 13th century. Importance: it marks a shift from monumental permanence to a quieter, poetic mood, and shows how format matters: a handscroll turns looking into a journey through time.",
+  "Poet Strolling by a Marshy Bank":"A single scholar walks by water, drawn in a few rapid, wet ink strokes with the reeds and bank barely suggested and the rest left empty. Loose ink wash and expressive brush quality carry the mood, tied to qi. Early 13th century, Southern Song, and associated with Liang Kai's free manner. Importance: it shows literati values of restraint and personal expression, and it puts the human figure back at the center of a landscape on an intimate scale, an answer to the monumental Northern Song mountains.",
+  "Maestà":"A huge two-sided altarpiece. The front shows the enthroned Virgin and Child with angels and saints on a gold ground; the back tells scenes from Christ's life. It keeps Byzantine habits, gold background and formal frontality, but gentler gestures, softened faces and a throne with some depth show the style loosening. Made 1308-11 for Siena Cathedral's high altar, it was a civic point of pride and devotion to the Virgin as the city's protector. Importance: it represents one road out of Byzantine style, line and elegance, against Giotto's weight and volume.",
+  "Madonna and Child Enthroned":"The Virgin sits on a throne that feels like it occupies real space, with robes that cover a solid body and kneeling angels and saints around her. Giotto models forms with light and shadow instead of flat gold pattern. Made c. 1305-10 in Florence. Importance: it is a key moment in the Proto-Renaissance shift from Byzantine flatness toward volume, weight and believable space, and later writers treat Giotto as the start of Western naturalism; compare Duccio and Cimabue's more linear designs.",
+  "Scrovegni (Arena) Chapel":"A private chapel in Padua painted from floor to vault with a fresco cycle of the lives of Mary and Christ and a Last Judgment under a blue star-filled ceiling. Giotto gives figures volume, sets them in shallow but believable spaces and organizes scenes to read quickly. It was commissioned c. 1305-6 by Enrico Scrovegni, a wealthy banker, often said to be atoning for his family's moneylending. Importance: it shows fresco wrapping the viewer in a painted environment and moving painting toward illusionistic space and human emotion.",
+  "Lamentation, Scrovegni Chapel":"Mourners crowd around Christ's body in a strong diagonal that runs down the rocky slope to his head, with angels twisting overhead in grief and figures with backs turned. Weighted bodies, gesture and posture show grief instead of idealized calm. Fresco, 1305-6. Importance: it is a landmark of psychological realism in religious art, making viewers feel a sacred story as a human event, and it points ahead to the Renaissance interest in emotion and expression.",
+  "Mérode Altarpiece":"A triptych that sets the Annunciation in a middle-class Flemish room: the Virgin reads beside a vase of lilies and a snuffed candle, Gabriel is in the room, and in a wing Joseph works as a carpenter. Oil on wood panel with oil glazing gives jewel-like color, texture and reflections. Disguised symbolism lets ordinary objects carry meaning about purity and the Incarnation. Made c. 1425-1430s in a workshop (authorship is a question). Importance: sacred events are placed in a believable home, a private devotional image for urban patrons.",
+  "Double Portrait of Giovanni Arnolfini and his Wife":"A full-length couple in a bedroom where every surface is rendered: fur, brass chandelier, fruit, a dog and a convex mirror that reflects the whole room, including two figures in the doorway. Oil glazing over careful underdrawing makes the surface glow. A wall inscription announces van Eyck's presence. Made 1434 in Flanders. Importance: it shows what oil can do, the rise of merchant patrons, and a test case for symbolism (Panofsky's 1934 reading) and authorship, which is why it keeps appearing in discussions.",
+  "The Last Supper":"A wall painting in a monastery refectory, in an experimental technique rather than true fresco. One-point perspective sends every line toward Christ's head, and the apostles react in groups of three to the news of betrayal, modeled with sfumato and chiaroscuro. Made 1495-1498 in Milan. Importance: it unites mathematics, naturalism and emotion, the High Renaissance ideal, and it makes the monks' own dining room part of the sacred scene.",
+  "School of Athens":"A fresco in a Vatican room under a coffered classical vault, with Plato and Aristotle at the vanishing point and philosophers and scientists grouped in lively conversation. The architecture, balanced symmetry and perspective express harmony and idealism. Painted c. 1510-11 for Pope Julius II and paired with Parnassus. Importance: it uses classical antiquity to present Rome and the papacy as heirs to Greek wisdom, art working for papal power and prestige as well as showing High Renaissance ideals.",
+  "Pietà":"Mary supports the adult Christ across her lap in a stable pyramid of forms. Her face is youthful and calm, the drapery deep and carefully polished, and the anatomy accurate, all in marble. Made c. 1500 in Rome for Old St. Peter's, the only work Michelangelo signed. Importance: it uses naturalism and idealism to deepen grief instead of weakening devotion, launched the young sculptor's fame and is a core example of High Renaissance religious art.",
+  "Venus of Urbino":"A nude reclines on a bed and looks directly at the viewer, with a sleeping dog and servants at a chest behind her. Oil on canvas with warm color, soft modeling and rich fabric shows the Venetian taste for color over Florentine drawing. Painted c. 1538, probably for a ducal patron. Importance: it turns the classical Venus into an intimate domestic scene, whether goddess, bride or courtesan is debated, and it shaped the tradition of the reclining nude.",
+  "Judith Beheading Holofernes":"Judith and her maidservant press down on the struggling Holofernes in a violent diagonal, blood spurting, out of deep darkness. Tenebrism and foreshortened arms push the action into the viewer's space; the naturalism owes a debt to Caravaggio's earlier Judith. Made 1612-13 by Artemisia Gentileschi. Importance: a woman painter makes a biblical heroine strong and physically convincing, and it embodies Baroque theatricality. It is often read alongside her biography, although biography-only readings are limited, the Vasari problem from the Renaissance reading.",
+  "Las Meninas":"A huge canvas with the young infanta, her maids, a dwarf and a dog, and Velázquez himself at a large canvas, while a mirror in the back wall shows the king and queen and a figure stands in an open doorway. Loose brushwork and layered space create illusionism. Made 1656 for the Spanish court. Importance: it makes us ask who the subject is, the royal couple, the infanta or the viewer, and it raises painting's status by putting the painter among the court, art about art and royal power.",
+  "Juan de Pareja":"A direct, confident half-length portrait with a sharp glance and brisk brushwork in the collar and cloak. Pareja was Velázquez's enslaved assistant and later a painter in his own right. The review sheet lists 1606, but the painting is generally dated c. 1650. Importance: it gives dignity to a man the society treated as property and raises questions of authorship, race, enslavement and recognition, which Julie Mehretu discusses in the assigned video.",
+  "Girl with a Pearl Earring":"A girl turns toward the viewer against a dark ground, her skin and blue and yellow turban softly lit and a pearl catching one highlight, built from thin glazed layers of oil. It is a tronie, a character study, not a commissioned portrait of a known sitter. Painted c. 1665 in Holland. Importance: it shows the Dutch Republic's market for modest, privately owned pictures and Vermeer's mastery of light, an intimacy that contrasts with the theatrical Catholic Baroque.",
+  "Crucifixion of St. Peter":"Three laborers strain to haul Peter's cross up, and he stares out of the dark, muscular and human. Tenebrism makes the bodies emerge from black, foreshortening pushes them forward and there are no halos or angels. Made c. 1600-1601 for the Cerasi Chapel in Santa Maria del Popolo, Rome. Importance: it shows Counter-Reformation art making faith vividly present and emotional, and Caravaggio's naturalism, which both shocked and inspired other artists.",
+  "Great Pyramid of Cholula":"One of the largest pyramids in the Americas by volume, a stepped earthen structure built and expanded over centuries (c. 900-1500 CE) that now looks like a hill with a church built on its summit after 1540. Importance: the Spanish placed Christian worship directly on a sacred Indigenous site to claim it, so the building is conquest as architectural layering, and it shows both erasure and persistence, since people still use the site, a question of religion, power and memory in colonial space.",
+  "Mass of Saint Gregory":"A picture made from tiny feathers cut and glued to a surface, showing the Mass miracle in which Christ appears over the altar while Pope Gregory prays, a subject known from European prints such as van Meckenem's engraving. Made in 1539 by Nahua artists, whose featherwork was prestigious. Importance: the Catholic doctrine of transubstantiation is carried by an Indigenous technique, so Indigenous skill survives inside a conversion image and shows adaptation and resistance, now kept in Auch, France.",
+  "Portrait of Moteuczoma I Being Carved at Chapultepec Hill":"A manuscript scene in Diego Durán's history showing the ruler's portrait carved into a cliff at Chapultepec while workers carve, mixing Indigenous pictorial conventions with a European book format. Made c. 1570-80 by Nahua artists. Importance: it preserves memory of how Aztec rulers commemorated themselves with portraits in rock, and it shows how Indigenous perspectives reach us through colonial manuscripts shaped by friars' interest in understanding and controlling that history.",
+  "The Virgin of Guadalupe":"The Virgin stands on a crescent moon held by an angel, in a mantle of stars with golden rays around her, painted on maguey cloth and cotton with oil and possibly tempera. Many versions carry the words tocada el original, touched to the original. Tradition links it to an apparition to Juan Diego. Importance: it fuses Marian devotion with Indigenous identity, the Virgin appearing as an Indigenous woman, and it became a unifying devotional and national image across Mexico.",
+  "Equestrian Oba with Attendants":"A brass figure of the Oba mounted between attendants, with scale and placement showing hierarchy, frontal formal arrangement and detailed relief cast by the lost-wax technique, made 1550-1680 for the Benin court. Brass casting was a royal, guild-controlled craft. Importance: it asserts the Oba's divine kingship and military power, and because such works were looted in the British expedition of 1897, the object now also stands for colonial violence and the restitution and repatriation debate.",
+  "Queen Mother Pendant Mask":"A carved ivory face with narrowed inlaid eyes, iron inlay in the brow and ornamented crown and collar, idealized and calm, made by the Igbesamwan ivory carvers' guild in the 16th century. It honors the Queen Mother, associated with Iyoba Idia, whose power helped her son rule. Importance: it shows ivory as a restricted royal material, women's political and ritual power at court, and a Benin court treasure now held in museums abroad, the type of object restitution arguments cover.",
+  "Triple Crucifix":"Cast brass figures on a wooden cross, with a central Christ figure and extra figures above and below added later, in a local Kongo style. The center is 16th-17th century and the upper and lower figures are 18th-19th. Importance: Christianity arrived in Kongo through Portuguese contact and was absorbed into Kongo ideas of authority, ritual and protection over generations, so it shows cultural exchange running in both directions and objects changing over time."
+};
+
+objects.forEach(o=>{
+  const m = objMeta[o.name] || ["",""];
+  o.date = m[0]; o.artist = m[1];
+  o.sig = objSig[o.name] || o.why;
+  o.tags = objTags[o.name] || [];
+  o.rep = objRep[o.name] || "";
+});
+
+// more pairs i could see her picking. the first ten are up above
+comparisons.push(
+  ["Sutton Hoo Purse Lid","Cross Carpet Page, Lindisfarne Gospels","Both are covered in animal-style and interlace pattern. How does ornament work in a royal burial compared with a monastery book?",
+    "Both lean on animal style and interlace, with almost no empty ground. The purse lid does it in gold and garnet cloisonné, a status object for a king taken into the grave. The Lindisfarne page does it in ink on vellum in a scriptorium, with a cross buried in the pattern so the viewer has to meditate to find it. Same visual language, secular display in one and devotion in the other, which shows how Insular artists moved pagan-era craft into Christian service."],
+  ["Cross Carpet Page, Lindisfarne Gospels","Page with Matthew the Evangelist, Ebbo Gospels","Compare Hiberno-Saxon and Carolingian approaches to representation and ornament in a gospel book.",
+    "The Insular carpet page is pure abstraction: no figure, all interlace, horror vacui as prayer. The Carolingian Matthew puts a seated human author at the center, with classical drapery borrowed from Roman models and an energetic line. Insular art spoke through pattern; the Carolingians revived Roman figure style to present Charlemagne's empire as a new Christian Rome."],
+  ["Amiens Cathedral","Interior, Upper Chapel, Sainte-Chapelle","Both are Gothic buildings built for light. How do the two phases of Gothic differ and what do they share?",
+    "Both use pointed arches and rib vaults and treat light as divine. Amiens is High Gothic: a huge community cathedral with flying buttresses and thick sculpture-covered portals. Sainte-Chapelle is Rayonnant: a small royal chapel whose walls nearly vanish into glass, built as a giant reliquary for the Crown of Thorns. One is civic and monumental, the other royal and jewel-like, both about heaven on earth."],
+  ["Rose Window and Lancets, Chartres Cathedral","Travelers Among Mountains and Streams","How do two cultures connect the sacred to light or to the natural world?",
+    "Chartres turns daylight into colored glass so that the church itself feels like divine presence, with saints and stories that teach a Christian public. Fan Kuan's mountain makes nature the sacred subject, with Daoist harmony and Neo-Confucian order read into mist and rock and people shown as tiny. One makes the divine visible through architecture and light, the other through an unpeopled landscape."],
+  ["Travelers Among Mountains and Streams","Poet Strolling by a Marshy Bank","Compare Northern and Southern Song approaches to landscape.",
+    "Fan Kuan's Northern Song hanging scroll is monumental and detailed, with a huge mountain and tiny travelers. Liang Kai's Southern Song poet is small, loose and mostly empty space, a few strokes of ink wash carrying qi and mood. Both use ink and the idea of humanity inside nature, but one stresses permanence and grandeur and the other personal, literati restraint."],
+  ["Maestà","Madonna and Child Enthroned","Compare Duccio and Giotto: how do their Madonnas show the move away from Byzantine style?",
+    "Duccio's Maestà keeps the gold ground, frontal formality and graceful line of Byzantine tradition, with just a hint of softer modeling. Giotto's Madonna has weight: robes cover a solid body, the throne sits in space and the figures are modeled with light and shadow. Both are Siena or Florence altarpieces for the Virgin, but Giotto's volume points to Renaissance naturalism."],
+  ["Lamentation, Scrovegni Chapel","Judith Beheading Holofernes","Both show raw emotion in a religious story, three centuries apart. How is emotion built into each?",
+    "Giotto uses gesture, a strong diagonal and angels twisting in grief to make a quiet, communal sorrow. Gentileschi uses tenebrism, foreshortening and physical force to make violence immediate. Both pull viewers into a biblical story through human feeling, but the medieval-to-Renaissance Giotto is mournful and Baroque Judith is theatrical and aggressive."],
+  ["Double Portrait of Giovanni Arnolfini and his Wife","Girl with a Pearl Earring","Both use oil and observed light. How do the two painters turn ordinary people into subjects worth looking at closely?",
+    "Van Eyck uses oil glazing, underdrawing and dense detail so a merchant couple's room becomes a document full of disguised meaning. Vermeer uses soft glazed layers, a dark ground and one pearl highlight to make a single anonymous face feel intimate. Flemish detail asks for decoding, Dutch Baroque light asks for quiet attention, and both are private pictures for a middle-class market."],
+  ["The Last Supper","School of Athens","Both use perspective to organize a crowd. What does each want the viewer to see?",
+    "Leonardo's one-point perspective focuses everything on Christ at the center of a moment of betrayal, with chiaroscuro and sfumato modeling emotion. Raphael's classical vault frames Plato and Aristotle among philosophers to present harmony and learning. Both are High Renaissance and balanced, but one is a sacred drama in a refectory and the other a papal statement that Rome inherits Greek wisdom."],
+  ["Pietà","Venus of Urbino","One is sacred and one is secular. How does Renaissance naturalism serve each?",
+    "Michelangelo's marble Mary and Christ use perfect anatomy and polished drapery to make devotion and grief feel real. Titian's oil nude uses color, warm light and a direct gaze to make a goddess feel like a person in a household. Same naturalism, one pushing sacred emotion and the other sensuous presence and patron taste."],
+  ["Judith Beheading Holofernes","Crucifixion of St. Peter","Compare how two Italian Baroque painters use light and the body.",
+    "Both use tenebrism, foreshortening and ordinary physical bodies to drag the viewer into the scene. Caravaggio shows a martyr's weight being hauled up with no heroics, while Gentileschi shows a heroine's strength and effort in a murder. Both reflect the Counter-Reformation push for emotional, believable religious art, and Artemisia clearly learned from Caravaggio."],
+  ["Las Meninas","Juan de Pareja","Both are by Velázquez. What do they say about status and who gets to be seen?",
+    "Las Meninas shows the royal family and court in a complex, mirrored space and puts the painter among the elite. Juan de Pareja gives a direct, dignified likeness of an enslaved assistant who later became a painter himself. Together they show how one artist handles power and identity in a court that also depended on enslaved labor."],
+  ["Girl with a Pearl Earring","Las Meninas","Compare Dutch and Spanish Baroque: how do their audiences shape the pictures?",
+    "Vermeer's small, quiet canvas was made for the Dutch market and focuses on one face and a single bright pearl. Velázquez's huge royal canvas shows a layered court scene with a mirror and a painter inside it. Spain's Catholic monarchy produces grand, complex illusion and Holland's merchant culture produces private intimacy."],
+  ["Great Pyramid of Cholula","Amiens Cathedral","Both are sacred sites built by communities over time. How are power and religion built into each?",
+    "Amiens was built over generations as a civic and religious landmark of height and light. Cholula grew over centuries as an Indigenous sacred pyramid and then had a church built directly on top after 1540. One shows a community expressing devotion through new architecture, the other shows conquest claiming a holy place by building over it."],
+  ["Mass of Saint Gregory","Triple Crucifix","Both put Christian subjects in non-European hands. What survives of local tradition in each?",
+    "The Mass of Saint Gregory is made of feathers by Nahua artists, keeping an Indigenous craft inside a Catholic conversion subject. The Triple Crucifix is cast in brass in a Kongo style and altered over centuries. Both show Christianity being absorbed and reshaped, not just imposed, though Mexico's case follows military conquest and Kongo's followed a longer diplomatic relationship."],
+  ["Portrait of Moteuczoma I Being Carved at Chapultepec Hill","Equestrian Oba with Attendants","Both record how a ruler is commemorated. What does each show about portraits and power?",
+    "The Moteuczoma scene shows a king's portrait being carved into rock, preserved through a colonial manuscript made by Nahua artists. The Benin Oba is cast in brass by court guilds, mounted and central, made for the court itself. Both use portraiture to legitimize rule, but one survives filtered through colonial documents and the other through looted museum collections."],
+  ["The Virgin of Guadalupe","Madonna and Child Enthroned","Both are images of Mary. How do culture and context change her?",
+    "Giotto's Madonna and Child is a Florentine altarpiece figure with weight and space, a step toward naturalism. Guadalupe stands on a crescent moon in rays of light as an Indigenous woman on maguey cloth, tied to a Mexican apparition story. Same holy figure, but one shows European naturalism and the other shows Catholic devotion merged with Indigenous identity."],
+  ["Equestrian Oba with Attendants","Queen Mother Pendant Mask","Both come from the court of Benin. How do they show different kinds of royal power?",
+    "The brass Oba shows the king in military and political command, with hierarchical scale and attendants. The ivory mask honors the Queen Mother, a spiritual and political power behind the Oba. Brass casting and ivory carving were both guild crafts under royal control, and both were later taken in the 1897 expedition."],
+  ["Mérode Altarpiece","Scrovegni (Arena) Chapel","Both bring sacred stories into ordinary-looking spaces. How does each try to make faith feel close?",
+    "The Mérode triptych sets the Annunciation in a Flemish home, with oil glazing and disguised symbolism in the candle, lilies and Joseph's workshop. Giotto's chapel wraps the viewer in a fresco cycle with weighty figures and real emotion. One makes faith intimate through objects, the other through human feeling and space."]
+);
+
+// slide-deck works that aren't focus objects. part 2 will be something
+// like these, so the mock exam draws its unknown image from here
+const unknownWorks = [
+  {name:"David, Michelangelo", date:"1501-1504", wiki:"David (Michelangelo)", culture:"Florence", answer:"Italian High Renaissance sculpture",
+   keys:["marble","idealized nude","classical antiquity","contrapposto stance","Florence","Renaissance","naturalism","Michelangelo"],
+   note:"Ties to the Pietà (same artist, same naturalism) and back to Greek and Roman nudes from Unit 1."},
+  {name:"The Calling of St. Matthew, Caravaggio", date:"1599-1600", wiki:null, culture:"Rome", answer:"Italian Baroque painting",
+   keys:["oil on canvas","tenebrism","single beam of light","ordinary clothing","Counter-Reformation","chapel","dramatic gesture","Baroque"],
+   note:"Same light and ordinary bodies as the Crucifixion of St. Peter."},
+  {name:"Judith and Her Maidservant with the Head of Holofernes, Gentileschi", date:"c. 1625", wiki:null, culture:"Italy", answer:"Italian Baroque painting",
+   keys:["oil on canvas","tenebrism","chiaroscuro","biblical heroine","theatricality","female artist","Baroque"],
+   note:"Same subject as the focus Judith, a calmer later version."},
+  {name:"Breakfast with a Lobster, Heda", date:"1648", wiki:null, culture:"Dutch Republic", answer:"Dutch Baroque still life",
+   keys:["still life","vanitas","oil on canvas","everyday objects","reflections","trade and wealth","mortality","Dutch Republic"],
+   note:"Contrasts with the dramatic Catholic Baroque, a secular, market-driven picture."},
+  {name:"Woman Holding a Balance, Vermeer", date:"c. 1664", wiki:null, culture:"Holland", answer:"Dutch Baroque genre painting",
+   keys:["genre painting","soft light","domestic interior","oil","quiet intimacy","possible moral symbolism","Vermeer","Dutch"],
+   note:"Same quiet light as the Girl with a Pearl Earring."},
+  {name:"Portrait of a Man in a Red Chaperon, Jan van Eyck", date:"1433", wiki:null, culture:"Flanders", answer:"Northern Renaissance portrait",
+   keys:["oil glazing","portrait","inscription","authorship","motto","Flemish","small scale detail","wood panel"],
+   note:"The inscription and motto tie to the lecture's authorship question."},
+  {name:"Ghent Altarpiece, Jan and Hubert (?) van Eyck", date:"1432", wiki:null, culture:"Flanders", answer:"Northern Renaissance altarpiece",
+   keys:["oil on panel","wings open and closed","donors","symbolism","Annunciation","Adoration of the Mystic Lamb","authorship","Flemish"],
+   note:"Same family as the Mérode triptych, with real authorship questions."},
+  {name:"Poet on a Mountaintop, Shen Zhou", date:"c. 1500", wiki:null, culture:"China", answer:"Chinese Ming landscape painting",
+   keys:["ink","literati","poem and calligraphy","lone poet","empty space","album leaf","Daoist and Confucian ideas","Ming dynasty"],
+   note:"Later answer to the Song landscapes, with the poet and a poem at the center."},
+  {name:"Image of Christ made with feathers, Juan Baptista Cuiris", date:"c. 1590-1600", wiki:null, culture:"Mexico", answer:"Colonial Mexican featherwork",
+   keys:["featherwork","Indigenous technique","Christian subject","conquest","colonial Mexico","cultural survival","Nahua"],
+   note:"Same idea as the Mass of Saint Gregory."},
+  {name:"Saltcellar with Portuguese Figures, Benin", date:"1525-1600", wiki:null, culture:"Benin", answer:"Benin court ivory carving",
+   keys:["ivory","Edo","Igbesamwan guild","Portuguese figures","cultural exchange","trade","court art","colonial collecting"],
+   note:"Shows trade and exchange between Benin and Europeans before the 1897 expedition."},
+  {name:"Head of a ruler from Ife, Yoruba", date:"1300-1450", wiki:null, culture:"Nigeria (Yoruba)", answer:"Yoruba, Ife, brass portrait head",
+   keys:["lost-wax casting","brass","naturalism","ruler","royal portraiture","Africa before colonialism","Yoruba","idealized features"],
+   note:"Lecture example of lost-wax casting before Benin."},
+  {name:"Lindau Gospels cover, Crucifixion with Angels and Mourning Figure", date:"c. 870-880", wiki:null, culture:"Carolingian Europe", answer:"Carolingian goldsmith work",
+   keys:["gold","pearls and gems","Crucifixion","angels","book cover","Carolingian","Morgan Library","luxury"],
+   note:"Gold and gems for a sacred book, a cousin of the Sutton Hoo gem work."}
+];
+
 const orbit = document.getElementById('orbit');
 const overlay = document.getElementById('overlay');
 const popcard = document.getElementById('popcard');
@@ -434,7 +908,8 @@ function openStation(i){
     </div>
     <div class="era">${s.era}</div><h2>${s.title}</h2>
     <p class="question">${s.question}</p>
-    <div class="notebox"><b>Context —</b> ${s.note}</div>
+    <div class="notebox"><b>Context —</b> ${hl((stationExtra[s.id]||{}).note || s.note)}</div>
+    ${stationLinks(s)}
     ${unitObjects.length?`<h4>On the record wall</h4><div class="chip-row">${unitObjects.map(o=>`<span class="chip" data-obj="${o.name}">${o.name}</span>`).join('')}</div>`:''}
   </div>`;
   overlay.classList.add('open');
@@ -489,17 +964,23 @@ idwall.innerHTML = objects.map(o=>`
     <div class="idface back">
       <dl>
         <dt>Period</dt><dd>${o.period}</dd>
+        <dt>Date · artist</dt><dd>${o.date} · ${o.artist}</dd>
         <dt>Culture</dt><dd>${o.culture}</dd>
         <dt>Medium</dt><dd>${o.medium}</dd>
-        <dt>Visual clue</dt><dd>${o.visual}</dd>
-        <dt>Context</dt><dd class="hist">${o.hist}</dd>
-        <dt>Why it matters</dt><dd>${o.why}</dd>
+        <dt>Visual clue</dt><dd>${hl(o.visual)}</dd>
+        <dt>Context</dt><dd class="hist">${hl(o.hist)}</dd>
+        <dt>Significance</dt><dd>${hl(o.sig)}</dd>
       </dl>
-      ${o.terms.length?`<div class="term-chips">${o.terms.map(t=>`<span>${t}</span>`).join('')}</div>`:''}
+      ${o.terms.length?`<div class="term-chips">${o.terms.map(t=>`<span data-term="${t}">${t}</span>`).join('')}</div>`:''}
       <a href="https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(o.name)}" target="_blank" rel="noopener" class="wikiLink">full article →</a>
+      ${objSrc[o.name]?`<a href="${objSrc[o.name]}" target="_blank" rel="noopener" class="wikiLink">course image / museum page →</a>`:''}
     </div>
   </div></div>`).join('');
-idwall.querySelectorAll('.idcard').forEach(c=> c.addEventListener('click', ()=> c.classList.toggle('flip')));
+idwall.querySelectorAll('.idcard').forEach(c=> c.addEventListener('click', e=>{
+  // vocab chips and links shouldn't flip the card
+  if(e.target.closest('[data-term], a')) return;
+  c.classList.toggle('flip');
+}));
 
 objects.forEach(async (o)=>{
   const photo = await findPhoto(o);
@@ -517,10 +998,18 @@ const sticky=document.getElementById('sticky'), nUnit=document.getElementById('n
 function renderNote(){
   sticky.classList.remove('flip');
   const [w,u,d,ex]=deck[idx];
-  nUnit.textContent=u; nWord.textContent=w; nDef.textContent=d; nEx.textContent=ex;
+  const L = vocabLink[w];
+  nUnit.textContent=u; nWord.textContent=w; nDef.textContent=d; nEx.textContent = L ? L[1] : ex;
+  const nObj = document.getElementById('nObj');
+  nObj.textContent = L ? 'Focus object: ' + L[0] + ' →' : '';
+  nObj.style.display = L ? '' : 'none';
+  nObj.dataset.gobj = L ? L[0] : '';
   nProg.textContent=`${idx+1} / ${deck.length}`;
 }
-sticky.addEventListener('click', ()=> sticky.classList.toggle('flip'));
+sticky.addEventListener('click', e=>{
+  if(e.target.closest('[data-gobj]')) return;
+  sticky.classList.toggle('flip');
+});
 document.getElementById('nNext').addEventListener('click', ()=>{ idx=(idx+1)%deck.length; renderNote(); });
 document.getElementById('nPrev').addEventListener('click', ()=>{ idx=(idx-1+deck.length)%deck.length; renderNote(); });
 document.getElementById('nShuffle').addEventListener('click', ()=>{ deck=shuffle([...vocab]); idx=0; renderNote(); });
@@ -579,7 +1068,172 @@ const clues = [
   ["Brass or ivory court object, hierarchical figures","Kingdom of Benin"],
 ];
 document.getElementById('clueTable').innerHTML = clues.map(c=>`<tr><td>${c[0]}</td><td>${c[1]}</td></tr>`).join('');
-   
+
+// part 4 could pair any two of the 32, and 496 hand-written answers is
+// too many. so: if there's a model answer for the pair it uses that, and
+// if not it stitches a starter answer together from the record cards
+
+const tagQ = {
+  power:"Both works are tied to authority. How does each use form, material, and setting to say who holds power?",
+  divine:"Both works picture the sacred. How does each show the divine, and what does that choice say about its culture's beliefs?",
+  ritual:"Both were made for ritual or devotional use. How does the original setting or function shape what each looks like?",
+  portrait:"Both works turn on a person's identity. What does each say about status, memory, or power through portraiture?",
+  funerary:"Both are linked to death or commemoration. How does each handle memory and the afterlife?",
+  nature:"Both treat the natural world as a subject. What does each say about people's place in it?",
+  naturalism:"Both move toward observed naturalism. What is gained by that choice in each case?",
+  abstraction:"Both favor abstraction or pattern over a literal likeness. Why, and what does the choice communicate?",
+  ornament:"Both treat ornament as meaning, not decoration. How does it work in each?",
+  text:"Both bring writing and image together. How do the two work as one?",
+  light:"Both use light as part of the meaning. How is it built into each and what does it signal?",
+  narrative:"Both tell a story. How does each organize the story for its viewer?",
+  colonial:"Both are bound up with colonial or cross-cultural contact. What does each reveal about exchange, power, or survival?",
+  emotion:"Both aim at emotion. How does each build it, and why does that matter in its context?",
+  architecture:"Both shape sacred or political space. How does the structure create meaning?",
+  authorship:"Both raise questions of authorship or who is really the subject. How does each handle it?"
+};
+const tagDo = {
+  power:"are tied to authority", divine:"picture the sacred", ritual:"were made for ritual or devotion",
+  portrait:"turn on a person's identity", funerary:"relate to death and commemoration", nature:"treat the natural world as a subject",
+  naturalism:"move toward observed naturalism", abstraction:"favor pattern or abstraction over likeness", ornament:"treat ornament as meaning",
+  text:"combine writing and image", light:"use light as meaning", narrative:"tell a story", colonial:"are shaped by colonial or cross-cultural contact",
+  emotion:"aim at emotion", architecture:"shape sacred or political space", authorship:"raise questions of authorship"
+};
+const tagOrder = ["portrait","power","divine","ritual","colonial","naturalism","abstraction","light","emotion","narrative","nature","ornament","text","funerary","architecture","authorship"];
+
+function curatedFor(a,b){
+  return comparisons.find(c=>{
+    const x = findObj(c[0]).name, y = findObj(c[1]).name;
+    return (x===a.name && y===b.name) || (x===b.name && y===a.name);
+  });
+}
+function firstBit(s){ return String(s).split(/[;,]/)[0].trim().toLowerCase(); }
+
+function buildCompare(a,b){
+  const shared = tagOrder.filter(t=> a.tags.includes(t) && b.tags.includes(t));
+  const hit = curatedFor(a,b);
+  const t0 = shared[0];
+  const prompt = hit ? hit[2]
+    : t0 ? tagQ[t0]
+    : "These two come from very different contexts. Compare how each represents its subject and explain what the difference reveals about its culture.";
+  let answer, label;
+  if(hit){
+    answer = hit[3]; label = "Model answer";
+  }else{
+    const sim = t0
+      ? `Both works ${tagDo[t0]}. ${a.name} does it through ${firstBit(a.visual)}, and ${b.name} through ${firstBit(b.visual)}.`
+      : `Both are Unit 2 focus objects asking how an image carries belief or power.`;
+    const dif = `${a.name} (${a.date}, ${a.culture}) is ${a.rep}, made in ${a.medium.toLowerCase()}. ${b.name} (${b.date}, ${b.culture}) is ${b.rep}, made in ${b.medium.toLowerCase()}.`;
+    const why = `Why it matters: ${a.name}: ${a.why} ${b.name}: ${b.why}`;
+    answer = `${sim}\n\n${dif}\n\n${why}`;
+    label = "Starter answer built from the record cards. Put it in your own words and add the context you remember";
+  }
+  const keys = [...new Set([...shared, ...a.terms, ...b.terms, a.period, b.period, a.culture, b.culture, a.rep, b.rep])].filter(Boolean);
+  return {prompt, answer, label, keys, shared};
+}
+
+// the pick-two box under the comparison lab
+const pickA = document.getElementById('pickA'), pickB = document.getElementById('pickB');
+const pickOpts = objects.map(o=>`<option value="${o.name}">${o.name}</option>`).join('');
+pickA.innerHTML = pickOpts; pickB.innerHTML = pickOpts;
+pickB.selectedIndex = 1;
+function showPick(){
+  const a = findObj(pickA.value), b = findObj(pickB.value);
+  const out = document.getElementById('pickOut');
+  if(a.name===b.name){ out.innerHTML = '<p class="prompt">Pick two different works.</p>'; return; }
+  const c = buildCompare(a,b);
+  out.innerHTML = `<p class="prompt">${c.prompt}</p>
+    <div class="spark-out show"><b>${c.label}</b><br><br>${c.answer.replace(/\n\n/g,'<br><br>')}</div>
+    <div class="keyrow">${c.keys.map(k=>`<span>${k}</span>`).join('')}</div>`;
+}
+document.getElementById('pickGo').addEventListener('click', showPick);
+document.getElementById('pickRandom').addEventListener('click', ()=>{
+  pickA.selectedIndex = Math.floor(Math.random()*objects.length);
+  do{ pickB.selectedIndex = Math.floor(Math.random()*objects.length); }while(pickB.value===pickA.value);
+  showPick();
+});
+
+// mock exam
+function pickN(arr,n){ return shuffle([...arr]).slice(0,n); }
+
+// rough check for the key words after Finished. a key counts as hit if
+// at least half of its longer words show up in what was typed
+function covers(typed, key){
+  const words = String(key).toLowerCase().split(/[^a-zà-ÿ0-9]+/).filter(w=>w.length>3);
+  if(!words.length) return typed.toLowerCase().includes(String(key).toLowerCase());
+  const t = typed.toLowerCase();
+  return words.filter(w=>t.includes(w)).length >= Math.ceil(words.length/2);
+}
+function keyChips(keys, typed){
+  return `<div class="keyrow">${keys.map(k=>`<span class="${covers(typed,k)?'hit':'miss'}">${k}</span>`).join('')}</div>`;
+}
+
+let mock = null;
+function newMock(){
+  const ids = pickN(objects,4);
+  const unk = pickN(unknownWorks,1)[0];
+  const terms = pickN(vocab,10);
+  // part 4: two works from different units, and if i can, ones that share a theme
+  const a = pickN(objects,1)[0];
+  let pool = objects.filter(o=>o.unit!==a.unit && o.tags.some(t=>a.tags.includes(t)));
+  if(!pool.length) pool = objects.filter(o=>o.unit!==a.unit);
+  const b = pickN(pool,1)[0];
+  mock = {ids, unk, terms, a, b, cmp:buildCompare(a,b), done:false};
+  renderMock();
+}
+
+function renderMock(){
+  const body = document.getElementById('mockBody');
+  body.innerHTML = `
+    <div class="mock-part"><h3>Part 1: Identification (4 objects, 9 min each, 56 pts)</h3>
+      <p class="mock-help">Give four of: title, style or period, location or culture, approximate date, artist if known. Then say why it matters.</p>
+      ${mock.ids.map((o,i)=>`<div class="mock-q"><div class="mshot" id="mid${i}"><span class="ph">image ${i+1}</span></div>
+        <div class="mock-ans"><textarea id="mans${i}" placeholder="Image ${i+1}: identify it, then write about its significance..."></textarea><div class="mock-key" id="mkey${i}"></div></div></div>`).join('')}
+    </div>
+    <div class="mock-part"><h3>Part 2: Unknown image (10 min, 10 pts)</h3>
+      <p class="mock-help">You won't know the work. Name a likely period or tradition and back it with what you can see: medium, subject, context, a link to something you studied.</p>
+      <div class="mock-q"><div class="mshot" id="munk"><span class="ph">unknown image</span></div>
+        <div class="mock-ans"><textarea id="munkAns" placeholder="Medium, what's shown and how, cultural clue, evidence, closest thing we studied, period and why..."></textarea><div class="mock-key" id="munkKey"></div></div></div>
+    </div>
+    <div class="mock-part"><h3>Part 3: Vocabulary (pick 5 of 10, 10 pts)</h3>
+      <p class="mock-help">For five terms: definition, then a focus object that proves it and how it applies. Leave the other five blank.</p>
+      ${mock.terms.map((t,i)=>`<div class="mock-term"><label for="mt${i}">${t[0]}</label><textarea id="mt${i}" rows="2" placeholder="Definition + focus object..."></textarea><div class="mock-key" id="mtkey${i}"></div></div>`).join('')}
+    </div>
+    <div class="mock-part"><h3>Part 4: Comparison (19 min, 24 pts)</h3>
+      <div class="mock-q two"><div class="mshot" id="mca"><span class="ph">work A</span></div><div class="mshot" id="mcb"><span class="ph">work B</span></div></div>
+      <p class="prompt">${mock.cmp.prompt}</p>
+      <textarea id="mcAns" class="wide" placeholder="Identify both works, answer the question, use visual evidence from both, add context, then say why the difference or similarity matters..."></textarea>
+      <div class="mock-key" id="mcKey"></div>
+    </div>`;
+  // photos come in after the boxes are on the page
+  mock.ids.forEach(async (o,i)=>{ const p = await findPhoto(o); if(p) document.getElementById('mid'+i).innerHTML = `<img src="${p.src}" alt="">`; });
+  findPhoto({name:mock.unk.name, wiki:mock.unk.wiki, culture:mock.unk.culture}).then(p=>{ if(p) document.getElementById('munk').innerHTML = `<img src="${p.src}" alt="">`; });
+  findPhoto(mock.a).then(p=>{ if(p) document.getElementById('mca').innerHTML = `<img src="${p.src}" alt="">`; });
+  findPhoto(mock.b).then(p=>{ if(p) document.getElementById('mcb').innerHTML = `<img src="${p.src}" alt="">`; });
+  document.getElementById('mockDone').disabled = false;
+}
+
+function finishMock(){
+  if(!mock || mock.done) return;
+  mock.done = true;
+  mock.ids.forEach((o,i)=>{
+    const typed = document.getElementById('mans'+i).value;
+    const keys = [o.name, o.period, o.culture, o.date, o.artist, ...o.terms, ...o.visual.split(',').slice(0,3).map(s=>s.trim())].filter(Boolean);
+    document.getElementById('mid'+i).insertAdjacentHTML('beforeend', `<div class="mcap">${o.name}</div>`);
+    document.getElementById('mkey'+i).innerHTML = `<b>${o.name}</b>: ${o.date}, ${o.artist}. ${o.period}, ${o.culture}.<br>${hl(o.sig)}${keyChips(keys, typed)}`;
+  });
+  const u = mock.unk;
+  document.getElementById('munkKey').innerHTML = `<b>${u.name}</b> (${u.date}, ${u.culture}). Likely answer: ${u.answer}.<br>${u.note}${keyChips(u.keys, document.getElementById('munkAns').value)}`;
+  mock.terms.forEach((t,i)=>{
+    const L = vocabLink[t[0]];
+    document.getElementById('mtkey'+i).innerHTML = `<b>Definition:</b> ${t[2]}<br><b>Focus object:</b> ${L?L[0]:'none'}${L?' (' + L[1] + ')':''}`;
+  });
+  document.getElementById('mcKey').innerHTML = `<b>${mock.a.name}</b> and <b>${mock.b.name}</b>. ${mock.cmp.label}:<br>${mock.cmp.answer.replace(/\n\n/g,'<br><br>')}${keyChips(mock.cmp.keys, document.getElementById('mcAns').value)}`;
+  document.querySelectorAll('#mockBody .mock-key').forEach(k=>k.classList.add('show'));
+  document.getElementById('mockDone').disabled = true;
+}
+document.getElementById('mockNew').addEventListener('click', newMock);
+document.getElementById('mockDone').addEventListener('click', finishMock);
+newMock();
 </script>
 
 <a href="index.html" class="github-button">Go back to Unit 1</a>
