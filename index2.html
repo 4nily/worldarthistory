@@ -7,9 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* second sky. the first one was the ancient spheres, this is the
-   medieval-to-baroque unit. kept the exact styling since i liked how it
-   turned out, only the material changed */
 
 :root{
   --sky:#0b1026; --sky2:#141a3a; --ink:#eef0f8; --muted:#9aa5c4;
@@ -296,7 +293,7 @@ footer{ text-align:center; color:var(--muted); font-size:.72rem; padding:24px 24
 <section class="room" id="mockexam">
   <span class="room-label smallcaps">Practice run · 75 min · 100pts</span>
   <h2>Mock exam</h2>
-  <p class="sub">Type your answers like it's the real test. Hit Finished and each part shows what you should have covered, with the key words you hit lit up.</p>
+  <p class="sub">Type your answers like it's the real test. Hit Reveal and each part shows what you should have covered, with the key words you hit lit up.</p>
   <div class="mock-top"><button class="mockNewBtn">Reset: new mock exam</button><button class="mockDoneBtn">Reveal what I should have said</button></div>
   <div id="mockBody"></div>
   <div class="mock-top bottom"><button class="mockNewBtn">Reset: new mock exam</button><button class="mockDoneBtn">Reveal what I should have said</button></div>
@@ -345,8 +342,8 @@ const stations = [
 ];
 
 const vocab = [
-  ["Animal style","Medieval Britain","Decorative art built from interlaced, stylized animal forms.","Sutton Hoo Purse Lid — gold and garnet animal-form plaques."],
-  ["Cloisonné","Medieval Britain","An enamel/gem inlay technique using thin metal strips to wall off each colored section.","Sutton Hoo Purse Lid — garnet cloisonné set into gold."],
+  ["Animal style","Medieval Britain","Decorative art built from interlaced, stylized animal forms.","Sutton Hoo Hinged Clasp — gold and garnet animal-form plaques."],
+  ["Cloisonné","Medieval Britain","An enamel/gem inlay technique using thin metal strips to wall off each colored section.","Sutton Hoo Hinged Clasp — garnet cloisonné set into gold."],
   ["Vellum","Medieval Britain","Fine parchment made from calfskin, used for manuscript pages.","The physical page material of the Lindisfarne Gospels."],
   ["Scriptorium","Medieval Britain","A monastery room set aside for copying and producing manuscripts.","Where a book like the Lindisfarne Gospels would have been made."],
   ["Illuminated Manuscript","Medieval Britain","A hand-written book decorated with gold, color, and elaborate imagery.","The Lindisfarne Gospels and Ebbo Gospels both."],
@@ -359,7 +356,7 @@ const vocab = [
   ["Rayonnant","Gothic","A \"radiant\" phase of Gothic style marked by large traceried windows and a lighter, more skeletal structure.","Sainte-Chapelle's upper chapel — walls nearly dissolve into glass."],
   ["Tympanum","Gothic","The semicircular carved panel above a church portal, usually holding a religious scene.","The carved portal scenes typical of Reims and Chartres."],
   ["Jambs","Gothic","The vertical sides of a doorway, often carved with sculpted standing figures.","Jamb Statues, Central Portal, Reims Cathedral."],
-  ["Flying buttresses","Gothic","External stone supports that carry a roof's outward thrust away from the wall.","What lets Amiens Cathedral's walls open into enormous windows."],
+  ["Flying buttresses","Gothic","External stone supports that carry a roof's outward thrust away from the wall.","What lets Chartres's walls open into enormous stained-glass windows."],
   ["Reliquary","Gothic","A container built to hold and display a sacred relic.","Sainte-Chapelle itself functions as a giant reliquary, built for Christ's Crown of Thorns."],
 
   ["Shan Shui","China","\"Mountain-water\" — the Chinese landscape painting tradition.","Fan Kuan's Travelers Among Mountains and Streams."],
@@ -384,12 +381,12 @@ const vocab = [
   ["Sfumato","Italian Renaissance","A smoky, soft blending of tones and edges with no hard outlines.","Leonardo's signature technique, defining his figures' softened edges."],
   ["One-point / linear perspective","Italian Renaissance","A system using a single vanishing point to create convincing spatial recession.","The Last Supper's architecture converges exactly behind Christ's head."],
 
-  ["Baroque","Baroque","17th-century style marked by drama, movement, emotion, and theatricality.","Artemisia Gentileschi's Judith Beheading Holofernes."],
+  ["Baroque","Baroque","17th-century style marked by drama, movement, emotion, and theatricality.","Artemisia Gentileschi's Judith and Her Maidservant with the Head of Holofernes."],
   ["Iconoclasm","Baroque","The deliberate destruction of religious images, often over doctrinal objections.","Part of the Reformation-era backdrop the Counter-Reformation was responding to."],
   ["Tenebrism","Baroque","Extreme, spotlight-like contrasts of light and dark, harsher than chiaroscuro.","Caravaggio and Gentileschi's single, stark light sources."],
   ["Foreshortening","Baroque","Representing a form so it appears to project or recede sharply into space.","Figures reaching toward the viewer in Gentileschi's Judith."],
   ["Illusionism","Baroque","Techniques that make a painted or sculpted scene look convincingly real.","Velázquez's Las Meninas and its play with mirrored, implied space."],
-  ["Theatricality","Baroque","A staged, dramatic quality meant to heighten emotional impact.","The spotlight drama of Judith Beheading Holofernes."],
+  ["Theatricality","Baroque","A staged, dramatic quality meant to heighten emotional impact.","The spotlight drama of Judith and Her Maidservant with the Head of Holofernes."],
   ["Genre painting","Baroque","Scenes of everyday, ordinary life.","Vermeer's domestic interior scenes, Girl with a Pearl Earring included."],
   ["Still life","Baroque","A composition built from inanimate objects — food, flowers, household items.","Willem Claesz. Heda's Breakfast with a Lobster."],
   ["Vanitas","Baroque","A still-life genre reminding viewers of mortality and life's fleeting pleasures.","Dutch Republic banquet still lifes layered with symbols of decay."],
@@ -406,15 +403,15 @@ const vocab = [
   ["Oba","Benin/Kongo","The title of the king, or ruler, of the Benin Kingdom.","Equestrian Oba with Attendants — the Oba shown mounted and central."],
   ["Restitution","Benin/Kongo","Making amends for a wrong, often through return or compensation.","Part of the ongoing debate around the Benin Bronzes."],
   ["Repatriation","Benin/Kongo","Returning cultural objects to their country or community of origin.","Germany's and the Smithsonian's returns of Benin Bronzes to Nigeria."],
-  ["Igbesamwan","Benin/Kongo","The Benin royal guild of ivory- and wood-carvers.","The guild tradition behind court objects like the Queen Mother Pendant Mask."],
+  ["Igbesamwan","Benin/Kongo","The Benin royal guild of ivory- and wood-carvers.","The guild tradition behind court objects like the Ivory Salt Cellar."],
 ];
 
 const objects = [
-  {name:"Sutton Hoo Purse Lid", fig:"—", unit:"Medieval Britain", period:"Early Medieval", culture:"Anglo-Saxon England (Sutton Hoo)", medium:"Gold, garnet, cloisonné enamel", visual:"Interlaced animal-style plaques, cloisonné garnet inlay", hist:"From a ship-burial, likely a king's grave goods; no writing accompanies it", why:"Shows elite Anglo-Saxon craft and animal-style ornament at its height", terms:["Animal style","Cloisonné"], wiki:"Sutton Hoo"},
+  {name:"Sutton Hoo Hinged Clasp", fig:"10-2", unit:"Medieval Britain", period:"Early Medieval, Anglo-Saxon", culture:"Anglo-Saxon England (Sutton Hoo)", medium:"Gold plaques with granulation, garnet and millefiori glass inlay", visual:"Interlaced animal-style plaques, cloisonné garnet inlay, about 5 in long", hist:"From the Sutton Hoo ship burial, likely a king's grave goods; no writing accompanies it", why:"Shows elite Anglo-Saxon craft and animal-style ornament at its height", terms:["Animal style","Cloisonné"], wiki:"Sutton Hoo"},
   {name:"Cross Carpet Page, Lindisfarne Gospels", fig:"—", unit:"Medieval Britain", period:"Early Medieval, Insular", culture:"Northumbria (England)", medium:"Ink and pigment on vellum", visual:"Dense interlace filling the entire page, cross form embedded in pattern", hist:"Attributed to Eadfrith; made in a monastic scriptorium", why:"Horror vacui + Hiberno-Saxon interlace define the Insular style", terms:["Carpet Page","Hiberno-Saxon / Insular","Horror vacui","Vellum","Illuminated Manuscript","Scriptorium"], wiki:"Lindisfarne Gospels"},
   {name:"Page with Matthew the Evangelist, Ebbo Gospels", fig:"10-10", unit:"Medieval Britain", period:"9th century, Carolingian", culture:"Carolingian Francia", medium:"Ink and pigment on vellum", visual:"Energetic, almost agitated line, classicizing drapery", hist:"Made under the Carolingian revival of Roman/classical models for Christian books", why:"Shows Carolingian art reviving antiquity for Christian subject matter", terms:["Carolingian","Illuminated Manuscript","Vellum"], wiki:"Ebbo Gospels"},
 
-  {name:"Amiens Cathedral", fig:"11-10", unit:"Gothic", period:"High Gothic", culture:"France", medium:"Stone, stained glass", visual:"Soaring nave, flying buttresses, pointed arches, ribbed vaults", hist:"Begun c.1220, built by a community over generations", why:"A textbook case for how Gothic structure transforms interior light and space", terms:["Flying buttresses"], wiki:"Amiens Cathedral"},
+  {name:"West Façade, Cathedral of Notre-Dame, Reims", fig:"11-10", unit:"Gothic", period:"High Gothic", culture:"Reims, France", medium:"Stone, sculpture, stained glass", visual:"Three deep sculpted portals, a rose window above, rows of statues, twin towers", hist:"1220s-1260; towers mid 15th century", why:"The Gothic cathedral as a stone picture of heaven, with sculpture that teaches scripture to the crowd outside", terms:[], wiki:"Reims Cathedral"},
   {name:"Rose Window and Lancets, Chartres Cathedral", fig:"11-8", unit:"Gothic", period:"High Gothic", culture:"France (North Transept)", medium:"Stained glass, stone tracery", visual:"Circular rose window, narrative/symbolic glass imagery", hist:"c.1230–1235, part of Chartres's famous glass program", why:"Light becomes a symbol of divine presence, not just illumination", terms:[], wiki:"Chartres Cathedral"},
   {name:"Jamb Statues, Reims Cathedral", fig:"11-11", unit:"Gothic", period:"High Gothic", culture:"France (West Facade, Central Portal)", medium:"Stone", visual:"Elongated standing figures, increasingly naturalistic expression and drapery", hist:"c.1230–1250, part of the sculptural program flanking the main portal", why:"Shows Gothic sculpture moving toward greater naturalism within an architectural frame", terms:["Jambs"], wiki:"Reims Cathedral"},
   {name:"Interior, Upper Chapel, Sainte-Chapelle", fig:"11-12", unit:"Gothic", period:"Rayonnant Gothic", culture:"Paris, France", medium:"Stone, stained glass", visual:"Walls nearly dissolved into glass, jewel-box interior", hist:"1243–48, built to house a major relic, Christ's Crown of Thorns", why:"The Rayonnant phase pushed furthest — architecture as pure reliquary", terms:["Rayonnant","Reliquary"], wiki:"Sainte-Chapelle"},
@@ -424,41 +421,37 @@ const objects = [
   {name:"Poet Strolling by a Marshy Bank", fig:"—", unit:"China", period:"Southern Song", culture:"China", medium:"Ink on silk", visual:"Minimal brushwork, a single small figure in a mostly empty field", hist:"Liang Kai, early 13th century; literati painting valuing restraint over detail", why:"Qi and mood carried through almost nothing but a few expressive strokes", terms:["Literati","Qi","Ink wash","Calligraphy"], wiki:"Liang Kai"},
 
   {name:"Maestà", fig:"11-24", unit:"Late Medieval/Northern", period:"Late Medieval, Sienese", culture:"Siena, Italy", medium:"Tempera and gold on panel", visual:"Gold ground, Byzantine-derived frontality, large enthroned Madonna with saints", hist:"Duccio, 1308–11, made for Siena Cathedral's high altar", why:"Still rooted in Byzantine convention even as Italian painting begins to shift", terms:[], wiki:"Maestà (Duccio)"},
-  {name:"Madonna and Child Enthroned", fig:"11-27", unit:"Late Medieval/Northern", period:"Late Medieval, Proto-Renaissance", culture:"Florence, Italy", medium:"Tempera and gold on panel", visual:"Greater volume, weight, and spatial logic than Duccio's version", hist:"Giotto di Bondone, 1305–10", why:"Giotto's break from Byzantine flatness toward solid, weighted form", terms:[], wiki:"Ognissanti Madonna"},
-  {name:"Scrovegni (Arena) Chapel", fig:"11-28", unit:"Late Medieval/Northern", period:"Late Medieval, Proto-Renaissance", culture:"Padua, Italy", medium:"Fresco", visual:"Narrative fresco cycle with real emotional expression and spatial depth", hist:"Giotto di Bondone, 1305–6, private chapel commission", why:"A full painted environment built to move a viewer emotionally through the story", terms:["Fresco"], wiki:"Scrovegni Chapel"},
-  {name:"Lamentation, Scrovegni Chapel", fig:"11-29", unit:"Late Medieval/Northern", period:"Late Medieval, Proto-Renaissance", culture:"Padua, Italy", medium:"Fresco", visual:"Grief shown through gesture and posture, diagonal composition drawing the eye to Christ", hist:"Giotto di Bondone, 1305–6", why:"A landmark moment for depicting raw human emotion in religious art", terms:["Fresco"], wiki:"Lamentation (Giotto)"},
-  {name:"Mérode Altarpiece", fig:"12-3", unit:"Late Medieval/Northern", period:"Early Northern Renaissance", culture:"Flanders (Workshop of the Master of Flémalle)", medium:"Oil on wood panel, triptych", visual:"Domestic interior crowded with symbolic household objects", hist:"c.1425–1430s; a private devotional triptych", why:"Disguised symbolism hides religious meaning inside ordinary daily objects", terms:["Triptych","Disguised symbolism","Symbolism","Oil glazing"], wiki:"Merode Altarpiece"},
+  {name:"Lamentation, Arena Chapel", fig:"—", unit:"Late Medieval/Northern", period:"Late Medieval, Proto-Renaissance", culture:"Padua, Italy", medium:"Fresco", visual:"Grief shown through gesture and posture, diagonal composition drawing the eye to Christ", hist:"Giotto di Bondone, c. 1305", why:"A landmark moment for depicting raw human emotion in religious art", terms:["Fresco"], wiki:"Lamentation (Giotto)"},
+  {name:"Mérode Altarpiece", fig:"2-3", unit:"Late Medieval/Northern", period:"Early Northern Renaissance", culture:"Flanders (Workshop of the Master of Flémalle)", medium:"Oil on wood panel, triptych", visual:"Domestic interior crowded with symbolic household objects", hist:"c.1425–1430s; a private devotional triptych", why:"Disguised symbolism hides religious meaning inside ordinary daily objects", terms:["Triptych","Disguised symbolism","Symbolism","Oil glazing"], wiki:"Merode Altarpiece"},
   {name:"Double Portrait of Giovanni Arnolfini and his Wife", fig:"12-1", unit:"Late Medieval/Northern", period:"Early Northern Renaissance", culture:"Flanders", medium:"Oil on wood panel", visual:"Meticulous surface detail, convex mirror reflecting the room", hist:"Jan van Eyck, 1434; likely a private commission documenting a couple", why:"A famous test case for authorship, symbolism, and what a painting can \"witness\"", terms:["Oil glazing","Underdrawing","Disguised symbolism"], wiki:"Arnolfini Portrait"},
 
-  {name:"The Last Supper", fig:"—", unit:"Italian Renaissance", period:"High Renaissance", culture:"Milan, Italy", medium:"Wall painting (mixed technique), refectory", visual:"One-point perspective converging behind Christ, sfumato modeling", hist:"Leonardo da Vinci, 1495–98, Sta. Maria delle Grazie", why:"Mathematical perspective organizes a moment of maximum emotional disruption", terms:["One-point / linear perspective","Sfumato","Chiaroscuro"], wiki:"The Last Supper (Leonardo)"},
+  {name:"The Last Supper", fig:"13-3", unit:"Italian Renaissance", period:"High Renaissance", culture:"Milan, Italy", medium:"Wall painting (mixed technique), refectory", visual:"One-point perspective converging behind Christ, sfumato modeling", hist:"Leonardo da Vinci, 1495–98, Sta. Maria delle Grazie", why:"Mathematical perspective organizes a moment of maximum emotional disruption", terms:["One-point / linear perspective","Sfumato","Chiaroscuro"], wiki:"The Last Supper (Leonardo)"},
   {name:"School of Athens", fig:"13-5", unit:"Italian Renaissance", period:"High Renaissance", culture:"Vatican, Rome", medium:"Fresco", visual:"Classical architecture, philosophers gathered beneath a coffered vault", hist:"Raphael, c.1510–11, Stanza della Segnatura for Julius II", why:"Classical antiquity used to visually legitimize papal intellectual authority", terms:["Fresco"], wiki:"The School of Athens"},
   {name:"Pietà", fig:"13-8", unit:"Italian Renaissance", period:"High Renaissance", culture:"Rome, Italy", medium:"Marble", visual:"Idealized, youthful Mary holding Christ's body; smooth naturalistic drapery", hist:"Michelangelo, c.1500, for Old St. Peter's", why:"Naturalism used to heighten, not undercut, religious grief and tenderness", terms:[], wiki:"Pietà (Michelangelo)"},
   {name:"Venus of Urbino", fig:"13-20", unit:"Italian Renaissance", period:"High Renaissance, Venetian", culture:"Venice, Italy", medium:"Oil on canvas", visual:"Reclining nude, direct gaze, domestic interior setting", hist:"Titian, c.1538", why:"Shifts the idealized classical nude into an intimate, contemporary domestic space", terms:[], wiki:"Venus of Urbino"},
 
-  {name:"Judith Beheading Holofernes", fig:"—", unit:"Baroque", period:"Baroque, Italian", culture:"Italy", medium:"Oil on canvas", visual:"Tenebrism, violent physical struggle shown with full force", hist:"Artemisia Gentileschi, 1612–13", why:"One of the most physically direct, unflinching Baroque religious narratives", terms:["Tenebrism","Theatricality","Foreshortening"], wiki:"Judith Slaying Holofernes (Gentileschi)"},
+  {name:"Judith and Her Maidservant with the Head of Holofernes", fig:"—", unit:"Baroque", period:"Baroque, Italian", culture:"Italy", medium:"Oil on canvas, 146.5 x 108 cm", visual:"Tenebrism: two women lit sharply out of deep darkness in a tense moment after the beheading", hist:"Artemisia Gentileschi, c. 1620", why:"A woman painter gives a biblical heroine strength and physical presence through Baroque tenebrism and theatricality", terms:["Tenebrism","Theatricality","Foreshortening"], wiki:null},
   {name:"Las Meninas", fig:"14-15", unit:"Baroque", period:"Baroque, Spanish", culture:"Spain", medium:"Oil on canvas", visual:"Complex spatial illusion, painter's self-portrait, mirror reflecting the king and queen", hist:"Diego Velázquez, 1656, Spanish royal court", why:"Questions who is really the subject — the infanta, the painter, or the viewer", terms:["Illusionism","Chiaroscuro"], wiki:"Las Meninas"},
-  {name:"Juan de Pareja", fig:"—", unit:"Baroque", period:"Baroque, Spanish", culture:"Spain", medium:"Oil on canvas", visual:"Direct, dignified portrait likeness", hist:"Diego Velázquez; Pareja was Velázquez's enslaved assistant, later a painter in his own right", why:"A portrait that raises hard questions about authorship, bondage, and recognition", terms:[], wiki:"Juan de Pareja (Velázquez)"},
   {name:"Girl with a Pearl Earring", fig:"—", unit:"Baroque", period:"Dutch Golden Age", culture:"Holland", medium:"Oil on canvas", visual:"Soft chiaroscuro, direct gaze, turban and pearl earring", hist:"Johannes Vermeer, 1665", why:"Not a commissioned portrait of a known sitter — an intimate study of light and presence", terms:["Chiaroscuro","Genre painting"], wiki:"Girl with a Pearl Earring"},
   {name:"Crucifixion of St. Peter", fig:"—", unit:"Baroque", period:"Baroque, Italian", culture:"Rome, Italy", medium:"Oil on canvas", visual:"Tenebrism, strained physical effort hoisting the cross", hist:"Caravaggio, c.1600, Cerasi Chapel", why:"Makes martyrdom feel like immediate, physical labor rather than distant legend", terms:["Tenebrism","Foreshortening"], wiki:"Crucifixion of Saint Peter (Caravaggio)"},
 
-  {name:"Great Pyramid of Cholula", fig:"—", unit:"Mexico", period:"Postclassic through Colonial", culture:"Mexico (Cholula)", medium:"Earth, stone; church added later", visual:"Massive pre-contact pyramid base with a Catholic church built directly on its summit", hist:"Built c.900–1500 CE; the church was added after 1540, directly atop the sacred site", why:"Literal architectural layering of conquest — one faith's monument becomes another's foundation", terms:["Conquest"], wiki:"Great Pyramid of Cholula"},
   {name:"Mass of Saint Gregory", fig:"—", unit:"Mexico", period:"Colonial Mexico", culture:"Mexico (Nahua artists)", medium:"Featherwork", visual:"Catholic devotional subject rendered through Indigenous featherwork technique", hist:"1539, by Nahua artists whose names are unrecorded", why:"Indigenous technique carrying a European Catholic subject — survival through technique, not subject", terms:["Featherwork","Transubstantiation","Conquest"], wiki:"Mass of Saint Gregory"},
   {name:"Portrait of Moteuczoma I Being Carved at Chapultepec Hill", fig:"—", unit:"Mexico", period:"Colonial Mexico", culture:"Mexico (Nahua artists)", medium:"Ink/manuscript illustration, from Diego Durán's Historia", visual:"A ruler's portrait being carved into living rock, shown within a colonial manuscript", hist:"ca.1570–80; records earlier Aztec image-making practices through a post-conquest lens", why:"Preserves memory of pre-conquest royal commemoration, filtered through a colonial document", terms:["Nahuatl","Conquest"], wiki:null},
   {name:"The Virgin of Guadalupe", fig:"—", unit:"Mexico", period:"Colonial Mexico", culture:"Mexico City", medium:"Oil, possibly tempera, on maguey cactus cloth and cotton", visual:"Dark-skinned Virgin on a crescent moon, rays of light surrounding her", hist:"1675–1700 (tradition dates the original apparition to 1531); Basilica of Guadalupe", why:"Fuses Catholic Marian imagery with Indigenous identity — became Mexico's central devotional and national image", terms:["Conquest","Tonalli"], wiki:"Our Lady of Guadalupe"},
 
   {name:"Equestrian Oba with Attendants", fig:"—", unit:"Benin/Kongo", period:"Edo, Kingdom of Benin", culture:"Court of Benin (Nigeria)", medium:"Brass", visual:"Mounted Oba at hierarchical center, attendants surrounding", hist:"1550–1680, lost-wax brass casting, a royal technology", why:"Scale and placement signal the Oba's political and spiritual centrality", terms:["Oba"], wiki:"Benin Bronzes"},
-  {name:"Queen Mother Pendant Mask", fig:"—", unit:"Benin/Kongo", period:"Edo, Kingdom of Benin", culture:"Court of Benin (Nigeria)", medium:"Ivory with metal inlay", visual:"Idealized female face, elaborate coral-bead-style collar carved in ivory", hist:"16th century, likely worn by the Oba himself in ceremonies honoring his mother", why:"Carved by the Igbesamwan guild — ivory as a restricted, high-status royal material", terms:["Igbesamwan"], wiki:"Benin ivory mask"},
+  {name:"Ivory Salt Cellar", fig:"—", unit:"Benin/Kongo", period:"Edo, Kingdom of Benin", culture:"Court of Benin (Nigeria)", medium:"Ivory, 11.54 x 4.33 x 3.94 in", visual:"Finely carved ivory vessel with figures, made for the court's trade with Europeans", hist:"1525-1600, carved by the Igbesamwan ivory guild", why:"Ivory as a restricted royal material, and proof of Benin trading with Europeans long before the 1897 looting", terms:["Igbesamwan"], wiki:null},
   {name:"Triple Crucifix", fig:"—", unit:"Benin/Kongo", period:"Kingdom of Kongo", culture:"Kongo (Central Africa)", medium:"Brass and wood", visual:"Christ figure flanked by smaller attendant figures, local casting style", hist:"Central figure 16th/17th century, upper and lower figures added 18th/19th century", why:"Shows Christianity absorbed into Kongo visual language over generations, not simply imposed", terms:["Restitution"], wiki:null},
 ];
 
 const threads = [
-  ["LIGHT AS THE DIVINE","Chartres rose window → Sainte-Chapelle → The Last Supper → Judith Beheading Holofernes","Gothic glass makes light itself sacred; Renaissance chiaroscuro and Baroque tenebrism then turn that same light into a tool for drama and focus, religious meaning carried by illumination in every case."],
+  ["LIGHT AS THE DIVINE","Chartres rose window → Sainte-Chapelle → The Last Supper → Judith and Her Maidservant with the Head of Holofernes","Gothic glass makes light itself sacred; Renaissance chiaroscuro and Baroque tenebrism then turn that same light into a tool for drama and focus, religious meaning carried by illumination in every case."],
   ["HIDDEN MEANING IN ORDINARY THINGS","Mérode Altarpiece → Arnolfini Portrait → Dutch vanitas still lifes","Northern painters repeatedly load everyday domestic objects with religious or moral meaning — disguised symbolism becomes vanitas a century later, same instinct, more secular target."],
   ["POWER THROUGH PATRONAGE","School of Athens → Equestrian Oba with Attendants → Las Meninas","A patron's authority gets built directly into the image — papal intellectual legitimacy, royal centrality, or the Spanish crown's presence even offstage in a mirror."],
   ["COLONIAL CONTACT, ABSORBED TRADITION","Mass of Saint Gregory → Virgin of Guadalupe → Triple Crucifix","Three different colonized contexts where imported Christian subjects get carried by Indigenous or local materials and techniques — featherwork, maguey cloth, Kongo casting style."],
   ["NATURE OVER THE HUMAN FIGURE","Travelers Among Mountains and Streams → Twelve Views of Landscape → Poet Strolling by a Marshy Bank","Song dynasty landscape repeatedly shrinks the human figure against an overwhelming natural world, the opposite instinct from the European portraiture traditions studied alongside it."],
-  ["CONTESTED OBJECTS","Equestrian Oba with Attendants → Queen Mother Pendant Mask","Both were looted in the 1897 British Punitive Expedition — their meaning today includes an ongoing restitution debate, not just their original court context."],
-  ["BUILDING TOWARD NATURALISM","Maestà → Madonna and Child Enthroned → Lamentation, Scrovegni Chapel","Duccio, then Giotto, then Giotto again — watch weight, volume, and emotional expression increase step by step within a single generation."],
+  ["CONTESTED OBJECTS","Equestrian Oba with Attendants → Ivory Salt Cellar","The Oba brass was looted in the 1897 British Punitive Expedition, while ivories like the salt cellar left Benin through trade and later collecting. Both now sit in Western museums, so restitution and repatriation are part of their meaning today."],
+  ["BUILDING TOWARD NATURALISM","Maestà → Lamentation, Arena Chapel → Mérode Altarpiece","Duccio's gold-ground panel, then Giotto's weighty, emotional fresco, then Flemish oil painting with observed detail: space, volume and feeling all increase step by step."],
 ];
 
 const comparisons = [
@@ -468,19 +461,19 @@ const comparisons = [
     "The Virgin of Guadalupe reimagines a European Marian image with features and symbolism tied to Indigenous identity, painted on Indigenous maguey cloth. The Mass of Saint Gregory renders a European devotional scene entirely in featherwork, an Indigenous craft tradition. In both, a European subject survives, but the material and the hand making it stay distinctly Indigenous."],
   ["Equestrian Oba with Attendants","School of Athens","Both place a central authority figure within a crowd that visually reinforces his importance. How is that centrality built?",
     "The Oba is placed at the hierarchical center, larger and mounted, with attendants physically organized around him — a direct visual hierarchy. Raphael instead uses architecture and gesture: Plato and Aristotle hold the literal vanishing point, their authority built through composition more than scale. Both strategies serve a patron's claim to legitimacy and intellectual or political centrality."],
-  ["Judith Beheading Holofernes","Travelers Among Mountains and Streams","One is physically violent and close; the other is vast and still. What does each say about humanity's place in the world it depicts?",
-    "Gentileschi's Judith puts the viewer inches from a brutal, physical act, emphasizing human agency and consequence. Fan Kuan's landscape shrinks any human figures to near invisibility beneath towering mountains, suggesting humanity's smallness within a larger natural order. Baroque drama centers human will; Song landscape subordinates it."],
-  ["Jamb Statues, Reims Cathedral","Queen Mother Pendant Mask","Both are carved likenesses tied to a specific court tradition. What does each reveal about how status gets carried in a face?",
-    "The Reims jamb statues use increasing naturalism and individualized expression within a strict religious architectural program. The Benin pendant mask instead idealizes the Queen Mother's features within a controlled, symbolic style governed by the Igbesamwan guild's conventions. Naturalism signals status in one tradition; stylized perfection signals it in the other."],
+  ["Judith and Her Maidservant with the Head of Holofernes","Travelers Among Mountains and Streams","One is a tense, close-up human drama; the other is vast and still. What does each say about humanity's place in the world it depicts?",
+    "Gentileschi's two women fill the canvas in a spotlit hush after the killing, so human will and consequence take up all the space. Fan Kuan's landscape shrinks any human figures to near invisibility beneath towering mountains, suggesting humanity's smallness within a larger natural order. Baroque drama centers human action; Song landscape subordinates it."],
+  ["Jamb Statues, Reims Cathedral","Ivory Salt Cellar","Both are carved works tied to elite patrons. How does each use carving to show status and contact with others?",
+    "The Reims jamb statues use increasing naturalism and individualized expression inside a strict religious program that shows saints and the church to a crowd outside. The Ivory Salt Cellar was carved by Igbesamwan guild artists in the 16th century, using ivory, a royal material, for figures made for trade with Europeans. Stone carving serves a religious public; ivory carving serves a court and a trade relationship."],
   ["Las Meninas","Double Portrait of Giovanni Arnolfini and his Wife","Both paintings use a mirror to complicate who is really being depicted. What does the mirror do in each?",
     "In Las Meninas, the mirror reveals the king and queen standing where the viewer stands, implicating the viewer in the court scene and raising the question of who the true subject is. In the Arnolfini Portrait, the convex mirror reflects the entire room including two additional figures, possibly witnesses, turning the painting into a kind of legal record. Both use reflection to expand the space and authority of the image beyond its frame."],
   ["Triple Crucifix","Crucifixion of St. Peter","Both show a crucifixion scene but from entirely different cultural starting points. How does each handle the body and the cross?",
     "The Kongo Triple Crucifix renders Christ through local casting conventions, built up and added to across generations, blending Christian subject with Kongo artistic language. Caravaggio's Crucifixion of St. Peter instead uses tenebrism and foreshortening to make the physical strain of the event almost unbearably immediate. One absorbs the subject into an existing visual tradition; the other reinvents the moment through dramatic technique."],
-  ["Sutton Hoo Purse Lid","Equestrian Oba with Attendants","Both are elite court objects meant to display status through material and craft. What does each imply about who it was for?",
-    "The Sutton Hoo Purse Lid uses gold and cloisonné garnet in dense animal-style patterning, buried with a likely king as a marker of status into the afterlife. The Equestrian Oba with Attendants was made in brass by royal guild artists, displayed to assert the Oba's living political centrality. One encodes status for the dead; the other performs it for the living court."],
+  ["Sutton Hoo Hinged Clasp","Equestrian Oba with Attendants","Both are elite court objects meant to display status through material and craft. What does each imply about who it was for?",
+    "The Sutton Hoo Hinged Clasp uses gold and cloisonné garnet in dense animal-style patterning, buried with a likely king as a marker of status into the afterlife. The Equestrian Oba with Attendants was made in brass by royal guild artists, displayed to assert the Oba's living political centrality. One encodes status for the dead; the other performs it for the living court."],
   ["Cross Carpet Page, Lindisfarne Gospels","Twelve Views of Landscape","Both use empty or patterned space deliberately rather than filling a scene with figures. What's each culture doing with that space?",
     "The Lindisfarne Carpet Page fills every inch with interlace — horror vacui as a devotional, almost meditative act of ornament. Xia Gui's Twelve Views does the opposite, leaving broad areas of silk untouched to suggest mist and distance. Full and empty both serve contemplation, just aimed in opposite visual directions."],
-  ["Pietà","Lamentation, Scrovegni Chapel","Both depict grief over Christ's body, two centuries apart. How does each generation's new naturalism change the emotional effect?",
+  ["Pietà","Lamentation, Arena Chapel","Both depict grief over Christ's body, two centuries apart. How does each generation's new naturalism change the emotional effect?",
     "Giotto's Lamentation uses weighted bodies, individualized gesture, and diagonal composition to stage collective, visible grief. Michelangelo's Pietà instead idealizes Mary's youth and softens the drapery into something almost serene, emotion carried through quiet restraint rather than outward display. Both rely on new naturalism, but aim it at opposite emotional registers — communal anguish versus private tenderness."],
 ];
 
@@ -543,8 +536,8 @@ const stationExtra = {
 // a few words (still life, vanitas, chi rho) have no perfect match so
 // the line says that straight out
 const vocabLink = {
-  "Animal style":["Sutton Hoo Purse Lid","Stylized, interlaced animals fill the gold plaques."],
-  "Cloisonné":["Sutton Hoo Purse Lid","Garnets set in gold cells walled off by thin metal strips."],
+  "Animal style":["Sutton Hoo Hinged Clasp","Stylized, interlaced animals fill the gold plaques."],
+  "Cloisonné":["Sutton Hoo Hinged Clasp","Garnets set in gold cells walled off by thin metal strips."],
   "Vellum":["Cross Carpet Page, Lindisfarne Gospels","The page itself is prepared calfskin, painted in the monastery."],
   "Scriptorium":["Cross Carpet Page, Lindisfarne Gospels","Made in a monastic scriptorium, credited to Eadfrith (?)."],
   "Illuminated Manuscript":["Page with Matthew the Evangelist, Ebbo Gospels","A hand-painted gospel book: Matthew writes inside a page full of color and line."],
@@ -554,9 +547,9 @@ const vocabLink = {
   "Chi Rho":["Cross Carpet Page, Lindisfarne Gospels","The Chi Rho monogram page is this page's companion in Insular gospels; the carpet page is your focus object, so use it and name the Chi Rho as the other showpiece."],
   "Carolingian":["Page with Matthew the Evangelist, Ebbo Gospels","Charlemagne-era revival of Roman classicism for a Christian subject, fig. 10-10."],
   "Rayonnant":["Interior, Upper Chapel, Sainte-Chapelle","Walls nearly dissolved into glass, 1243-48."],
-  "Tympanum":["Jamb Statues, Reims Cathedral","The tympanum sits over this same central portal; the jamb statues stand beside it."],
+  "Tympanum":["West Façade, Cathedral of Notre-Dame, Reims","Each portal on the west front has a tympanum over its doors; the jamb statues stand beside them."],
   "Jambs":["Jamb Statues, Reims Cathedral","Standing figures carved into the sides of the central portal."],
-  "Flying buttresses":["Amiens Cathedral","They carry the roof's thrust outward so the walls can hold huge windows."],
+  "Flying buttresses":["Rose Window and Lancets, Chartres Cathedral","Buttresses outside carry the roof's thrust so the walls can open into huge windows of glass."],
   "Reliquary":["Interior, Upper Chapel, Sainte-Chapelle","Built to house the Crown of Thorns, so the whole chapel acts as a reliquary."],
   "Shan Shui":["Travelers Among Mountains and Streams","Fan Kuan's monumental mountain-water landscape."],
   "Ink wash":["Poet Strolling by a Marshy Bank","Tones of diluted ink with almost no color or detail."],
@@ -577,17 +570,17 @@ const vocabLink = {
   "Fresco":["School of Athens","Painted into wet plaster on the Vatican wall, Stanza della Segnatura."],
   "Sfumato":["The Last Supper","Smoky, soft edges with no hard outlines, Leonardo's signature."],
   "One-point / linear perspective":["The Last Supper","Every architectural line converges behind Christ's head."],
-  "Baroque":["Judith Beheading Holofernes","Drama, movement and emotion in a violent moment, 1612-13."],
+  "Baroque":["Judith and Her Maidservant with the Head of Holofernes","Drama, movement and emotion in a tense, spotlit moment, c. 1620."],
   "Iconoclasm":["Crucifixion of St. Peter","Reformation iconoclasm is the backdrop; this vivid chapel painting is Catholic art answering it."],
-  "Tenebrism":["Judith Beheading Holofernes","Harsh single spotlight against a dark ground."],
+  "Tenebrism":["Judith and Her Maidservant with the Head of Holofernes","Harsh single spotlight against a dark ground."],
   "Foreshortening":["Crucifixion of St. Peter","The straining bodies and raised cross project at the viewer."],
   "Illusionism":["Las Meninas","A painted room that reads as real space, with a mirror extending it."],
-  "Theatricality":["Judith Beheading Holofernes","A staged, spotlit struggle meant to hit the viewer emotionally."],
+  "Theatricality":["Judith and Her Maidservant with the Head of Holofernes","A staged, spotlit moment meant to hit the viewer emotionally."],
   "Genre painting":["Girl with a Pearl Earring","Vermeer's quiet Dutch world; lecture also uses his Woman with a Water Pitcher."],
   "Still life":["Girl with a Pearl Earring","No focus object is a still life; the lecture example is Heda's Breakfast with a Lobster, so name it, and use Vermeer as the nearest Dutch focus object."],
   "Vanitas":["Girl with a Pearl Earring","Same story as still life: the lecture example is Heda's Breakfast with a Lobster; Vermeer is the nearest Dutch focus object."],
   "Counter-Reformation / Catholic Reformation":["Crucifixion of St. Peter","Emotional, physical martyrdom made to move a Catholic congregation."],
-  "Conquest":["Great Pyramid of Cholula","A Catholic church built straight on top of the sacred pyramid after 1540."],
+  "Conquest":["Mass of Saint Gregory","Made in 1539 by Nahua artists, within two decades of the Spanish invasion of 1521."],
   "Enconchada":["The Virgin of Guadalupe","Lecture lists mother-of-pearl inlay as an Indigenous tradition blended into colonial painting; enconchada is the shell-inlay technique, so state that link as your own."],
   "Transubstantiation":["Mass of Saint Gregory","The subject is the Mass miracle where the host becomes Christ's body."],
   "Tonalli":["The Virgin of Guadalupe","Sun-rays around the Virgin are a natural hook for the Nahua life force tied to the sun; say it as your own interpretation."],
@@ -596,24 +589,21 @@ const vocabLink = {
   "Featherwork":["Mass of Saint Gregory","A European devotional image made with an Indigenous craft."],
   "Oba":["Equestrian Oba with Attendants","The king shown mounted at the center of his court."],
   "Restitution":["Equestrian Oba with Attendants","Brass court art from the 1897 looting is at the heart of the restitution debate."],
-  "Repatriation":["Queen Mother Pendant Mask","A Benin court treasure in a Western museum is exactly what repatriation claims are about."],
-  "Igbesamwan":["Queen Mother Pendant Mask","The guild of ivory and wood carvers made court objects like this."]
+  "Repatriation":["Ivory Salt Cellar","Benin court ivory now in Western museums is the kind of object repatriation claims are about."],
+  "Igbesamwan":["Ivory Salt Cellar","The guild of ivory and wood carvers made court objects like this."]
 };
 
 // the folder gave direct links for some objects, so they go on the card
 const objSrc = {
   "Maestà":"https://drive.google.com/file/d/17ZRFvDF-1yar6f8dMK57TMmFuvpZS2nk/view?usp=drive_link",
-  "Madonna and Child Enthroned":"https://drive.google.com/file/d/166Wxm7CC7g0Mwn4Wc7iVKj8A6drQg3Nl/view?usp=drive_link",
-  "Scrovegni (Arena) Chapel":"https://drive.google.com/file/d/1KBmO6STJyqqb3YWEV1W_Oi-_kQq2vHfY/view?usp=drive_link",
-  "Lamentation, Scrovegni Chapel":"https://drive.google.com/file/d/1HBcGNX6UAWtqGOqYCjarjFX79ezbrdoO/view?usp=drive_link",
+  "Lamentation, Arena Chapel":"https://drive.google.com/file/d/1HBcGNX6UAWtqGOqYCjarjFX79ezbrdoO/view?usp=drive_link",
   "Mérode Altarpiece":"https://www.metmuseum.org/art/collection/search/470304",
   "Double Portrait of Giovanni Arnolfini and his Wife":"https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait",
   "The Last Supper":"https://www.britannica.com/topic/Last-Supper-fresco-by-Leonardo-da-Vinci",
   "Crucifixion of St. Peter":"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Crucifixion_of_Saint_Peter-Caravaggio_%28c.1600%29.jpg/1920px-Crucifixion_of_Saint_Peter-Caravaggio_%28c.1600%29.jpg",
   "The Virgin of Guadalupe":"https://vistasgallery.ace.fordham.edu/items/show/1921",
-  "The Lindisfarne Gospels":"https://www.lindisfarne.org.uk/gospels/",
   "Cross Carpet Page, Lindisfarne Gospels":"https://www.lindisfarne.org.uk/gospels/",
-  "Sutton Hoo Purse Lid":"https://www.suttonhoo.org/"
+  "Sutton Hoo Hinged Clasp":"https://www.suttonhoo.org/"
 };
 
 // object vocab chips come from the map above so they always agree
@@ -671,10 +661,10 @@ document.addEventListener('click', e=>{
 // the id question wants a date and an artist, so they get their own
 // lines here instead of being buried in the hist text
 const objMeta = {
-  "Sutton Hoo Purse Lid":["c. 700","maker unknown"],
+  "Sutton Hoo Hinged Clasp":["early 7th century","maker unknown"],
   "Cross Carpet Page, Lindisfarne Gospels":["c. 700","Eadfrith (?)"],
   "Page with Matthew the Evangelist, Ebbo Gospels":["9th century","maker unknown"],
-  "Amiens Cathedral":["begun c. 1220","architects not named in our materials"],
+  "West Façade, Cathedral of Notre-Dame, Reims":["1220s-1260; towers mid 15th c.","architects not named in our materials"],
   "Rose Window and Lancets, Chartres Cathedral":["c. 1230-1235","maker unknown"],
   "Jamb Statues, Reims Cathedral":["c. 1230-1250","sculptors unknown"],
   "Interior, Upper Chapel, Sainte-Chapelle":["1243-48","commissioned by King Louis IX"],
@@ -682,57 +672,52 @@ const objMeta = {
   "Twelve Views of Landscape":["early 13th century","Xia Gui"],
   "Poet Strolling by a Marshy Bank":["early 13th century","Liang Kai"],
   "Maestà":["1308-11","Duccio"],
-  "Madonna and Child Enthroned":["1305-10","Giotto di Bondone"],
-  "Scrovegni (Arena) Chapel":["1305-6","Giotto di Bondone"],
-  "Lamentation, Scrovegni Chapel":["1305-6","Giotto di Bondone"],
+  "Lamentation, Arena Chapel":["c. 1305","Giotto di Bondone"],
   "Mérode Altarpiece":["c. 1425-1430s","Workshop of the Master of Flémalle"],
   "Double Portrait of Giovanni Arnolfini and his Wife":["1434","Jan van Eyck"],
   "The Last Supper":["1495-1498","Leonardo da Vinci"],
   "School of Athens":["c. 1510-1511","Raphael"],
   "Pietà":["c. 1500","Michelangelo"],
   "Venus of Urbino":["c. 1538","Titian"],
-  "Judith Beheading Holofernes":["1612-13","Artemisia Gentileschi"],
+  "Judith and Her Maidservant with the Head of Holofernes":["c. 1620","Artemisia Gentileschi"],
   "Las Meninas":["1656","Diego Velázquez"],
-  "Juan de Pareja":["1606 on the review sheet (the painting is usually dated c. 1650)","Diego Velázquez"],
   "Girl with a Pearl Earring":["c. 1665","Johannes Vermeer"],
   "Crucifixion of St. Peter":["c. 1600","Caravaggio"],
-  "Great Pyramid of Cholula":["c. 900-1500 CE; church on top after 1540","maker unknown"],
   "Mass of Saint Gregory":["1539","Nahua artists, names unknown"],
   "Portrait of Moteuczoma I Being Carved at Chapultepec Hill":["c. 1570-80","Nahua artists, names unknown"],
   "The Virgin of Guadalupe":["17th century (1675-1700)","name(s) unknown"],
   "Equestrian Oba with Attendants":["1550-1680","Edo maker, name once known"],
-  "Queen Mother Pendant Mask":["16th century","Edo (Igbesamwan guild), name once known"],
+  "Ivory Salt Cellar":["1525-1600","Edo (Igbesamwan guild), name once known"],
   "Triple Crucifix":["16th-17th c. center; upper and lower figures 18th-19th c.","Kongo maker, name once known"]
 };
 
 // how the object represents things (abstracted / naturalistic / idealized),
 // used for the starter answers in the comparison builder
 const objRep = {
-  "Sutton Hoo Purse Lid":"abstracted","Cross Carpet Page, Lindisfarne Gospels":"abstracted",
+  "Sutton Hoo Hinged Clasp":"abstracted","Cross Carpet Page, Lindisfarne Gospels":"abstracted",
   "Page with Matthew the Evangelist, Ebbo Gospels":"naturalistic with a classical model",
-  "Amiens Cathedral":"architectural, built to symbolize heaven","Rose Window and Lancets, Chartres Cathedral":"abstracted and symbolic",
+  "West Façade, Cathedral of Notre-Dame, Reims":"architectural, built to symbolize heaven","Rose Window and Lancets, Chartres Cathedral":"abstracted and symbolic",
   "Jamb Statues, Reims Cathedral":"increasingly naturalistic","Interior, Upper Chapel, Sainte-Chapelle":"architectural, built to symbolize heaven",
   "Travelers Among Mountains and Streams":"naturalistic but philosophical","Twelve Views of Landscape":"abstracted and suggestive",
   "Poet Strolling by a Marshy Bank":"abstracted and suggestive","Maestà":"idealized, still Byzantine-influenced",
-  "Madonna and Child Enthroned":"moving toward naturalism","Scrovegni (Arena) Chapel":"naturalistic and emotional",
-  "Lamentation, Scrovegni Chapel":"naturalistic and emotional","Mérode Altarpiece":"naturalistic, with disguised symbolism",
+  "Lamentation, Arena Chapel":"naturalistic and emotional","Mérode Altarpiece":"naturalistic, with disguised symbolism",
   "Double Portrait of Giovanni Arnolfini and his Wife":"highly naturalistic","The Last Supper":"naturalistic and idealized",
   "School of Athens":"idealized","Pietà":"idealized and naturalistic","Venus of Urbino":"naturalistic",
-  "Judith Beheading Holofernes":"naturalistic and theatrical","Las Meninas":"naturalistic with illusionism",
-  "Juan de Pareja":"naturalistic","Girl with a Pearl Earring":"naturalistic","Crucifixion of St. Peter":"naturalistic and theatrical",
-  "Great Pyramid of Cholula":"architectural, symbolic","Mass of Saint Gregory":"stylized, European subject in Indigenous technique",
+  "Judith and Her Maidservant with the Head of Holofernes":"naturalistic and theatrical","Las Meninas":"naturalistic with illusionism",
+  "Girl with a Pearl Earring":"naturalistic","Crucifixion of St. Peter":"naturalistic and theatrical",
+  "Mass of Saint Gregory":"stylized, European subject in Indigenous technique",
   "Portrait of Moteuczoma I Being Carved at Chapultepec Hill":"Indigenous pictorial convention","The Virgin of Guadalupe":"idealized and symbolic",
-  "Equestrian Oba with Attendants":"idealized, hierarchical scale","Queen Mother Pendant Mask":"idealized",
+  "Equestrian Oba with Attendants":"idealized, hierarchical scale","Ivory Salt Cellar":"stylized, European figures as Edo carvers saw them",
   "Triple Crucifix":"abstracted, local style"
 };
 
 // themes each object touches. the comparison builder uses overlaps between
 // these to decide what two works have in common
 const objTags = {
-  "Sutton Hoo Purse Lid":["power","funerary","ornament","abstraction"],
+  "Sutton Hoo Hinged Clasp":["power","funerary","ornament","abstraction"],
   "Cross Carpet Page, Lindisfarne Gospels":["divine","ornament","text","abstraction","ritual"],
   "Page with Matthew the Evangelist, Ebbo Gospels":["divine","text","emotion","power"],
-  "Amiens Cathedral":["divine","architecture","light","ritual","power"],
+  "West Façade, Cathedral of Notre-Dame, Reims":["divine","architecture","light","ritual","power"],
   "Rose Window and Lancets, Chartres Cathedral":["divine","light","narrative","architecture"],
   "Jamb Statues, Reims Cathedral":["divine","narrative","naturalism","architecture","power"],
   "Interior, Upper Chapel, Sainte-Chapelle":["divine","light","power","architecture","ritual"],
@@ -740,36 +725,32 @@ const objTags = {
   "Twelve Views of Landscape":["nature","abstraction"],
   "Poet Strolling by a Marshy Bank":["nature","abstraction","portrait"],
   "Maestà":["divine","ritual","narrative","power"],
-  "Madonna and Child Enthroned":["divine","naturalism","emotion"],
-  "Scrovegni (Arena) Chapel":["divine","narrative","naturalism","emotion"],
-  "Lamentation, Scrovegni Chapel":["emotion","naturalism","narrative","divine"],
+  "Lamentation, Arena Chapel":["emotion","naturalism","narrative","divine"],
   "Mérode Altarpiece":["divine","naturalism","ritual","narrative","authorship"],
   "Double Portrait of Giovanni Arnolfini and his Wife":["portrait","naturalism","authorship","power"],
   "The Last Supper":["divine","naturalism","narrative","emotion"],
   "School of Athens":["power","architecture","naturalism"],
   "Pietà":["divine","emotion","naturalism","funerary"],
   "Venus of Urbino":["naturalism","portrait","power"],
-  "Judith Beheading Holofernes":["emotion","narrative","light","naturalism"],
+  "Judith and Her Maidservant with the Head of Holofernes":["emotion","narrative","light","naturalism"],
   "Las Meninas":["portrait","power","authorship","naturalism"],
-  "Juan de Pareja":["portrait","naturalism","authorship","colonial"],
   "Girl with a Pearl Earring":["portrait","light","naturalism"],
   "Crucifixion of St. Peter":["divine","emotion","light","naturalism","narrative"],
-  "Great Pyramid of Cholula":["ritual","architecture","colonial","power"],
   "Mass of Saint Gregory":["divine","ritual","colonial"],
   "Portrait of Moteuczoma I Being Carved at Chapultepec Hill":["portrait","power","colonial","narrative"],
   "The Virgin of Guadalupe":["divine","colonial","ritual","portrait"],
   "Equestrian Oba with Attendants":["power","portrait","colonial","ritual"],
-  "Queen Mother Pendant Mask":["power","portrait","ritual","colonial"],
+  "Ivory Salt Cellar":["power","ornament","colonial","narrative"],
   "Triple Crucifix":["divine","ritual","colonial","abstraction"]
 };
 
 // longer significance notes: first what the art is doing (form, medium,
 // technique), then why it mattered historically
 const objSig = {
-  "Sutton Hoo Purse Lid":"Gold plaques inlaid with garnet and glass in cloisonné, every cell cut and set so tightly that the surface glitters. The animal style turns beasts and figures into interlocked pattern instead of observed bodies. It came out of a ship burial, probably of an East Anglian king, with no writing to explain it, so almost everything we say is inference. Importance: it proves a rich, well-connected Anglo-Saxon court with specialist metalworkers, and it shows the animal and interlace vocabulary that Insular manuscripts later carry onto vellum.",
+  "Sutton Hoo Hinged Clasp":"Gold plaques inlaid with garnet and millefiori glass in cloisonné, with fine granulation (tiny gold beads) on the metal, every cell cut and set so tightly that the clasp glitters. It is a hinged fastening about 5 inches long. The animal style turns beasts and figures into interlocked pattern instead of observed bodies. It came out of a ship burial, probably of an East Anglian king, with no writing to explain it, so almost everything we say is inference. Importance: it proves a rich, well-connected Anglo-Saxon court with specialist metalworkers, and it shows the animal and interlace vocabulary that Insular manuscripts later carry onto vellum.",
   "Cross Carpet Page, Lindisfarne Gospels":"A full page of interlace, spirals and bird and animal heads built on a controlled geometry, with a cross hidden inside the pattern and no text at all. That is horror vacui used as devotion: the viewer has to slow down and trace the lines. It was made on vellum in the Northumbrian monastery's scriptorium, and it blends Celtic, Anglo-Saxon and Christian traditions. Importance: it is the model of Hiberno-Saxon / Insular style and shows monasteries as keepers of both learning and craft, a page that works as a prayer.",
   "Page with Matthew the Evangelist, Ebbo Gospels":"Matthew sits at his desk writing while the drapery, hills and furniture seem to vibrate with nervous, energetic line. The solid seated body and classical drapery come from late Roman models, but the restless pen work is new. It was made in Charlemagne's circle, so it belongs to the Carolingian revival of Roman classicism for Christian books. Importance: it shows the empire presenting itself as a new Christian Rome and a different choice from the Insular carpet page, putting the human author at the center instead of pure ornament.",
-  "Amiens Cathedral":"A very tall nave built with pointed arches and ribbed vaults, with flying buttresses outside carrying the thrust so the walls can be opened for glass. The west facade is packed with portals and sculpture that teach scripture. It was begun c. 1220 in a prosperous northern French city and is one of the largest Gothic cathedrals. Importance: it is the High Gothic ideal of height, order and light, built over generations by a whole community, and it was also a civic and pilgrimage landmark that kept relics and competed with rival towns.",
+  "West Façade, Cathedral of Notre-Dame, Reims":"A huge screen of sculpture across the west front: three deep portals, each with a tympanum over the doors and jamb figures at the sides, a rose window above and rows of statues, begun in the 1220s and carried on to about 1260, with the towers finished in the mid 15th century. Behind it the nave uses pointed arches, rib vaults and flying buttresses so the walls can hold glass. It was the coronation church of French kings. Importance: it is the High Gothic ideal of height, order and light, built over generations by a whole community, and the facade works like a stone Bible, teaching scripture to people outside. It replaced Amiens as the Gothic focus object because Amiens was not covered in lecture.",
   "Rose Window and Lancets, Chartres Cathedral":"A huge circular window with radiating stone tracery sits over tall lancets. The glass is built from small colored pieces joined by lead, so the window is both an image and a filter that turns daylight into color. Light reads as divine presence moving through the church. It dates c. 1230-35 and is part of Chartres's famous glass program, with royal patronage. Importance: for a mostly illiterate public, glass told sacred history, and it shows Gothic structure dissolving the wall so light itself becomes the message.",
   "Jamb Statues, Reims Cathedral":"Tall figures attached to the columns of the central west portal. Compared to earlier stiff jamb figures they have softer faces, weight shifts and drapery that falls naturally, some with clear classical influence. They stand beside the tympanum and link people entering the church to biblical figures. Reims was where French kings were crowned, so the sculpture also supports royal and religious authority. Importance: it shows Gothic sculpture moving toward naturalism inside an architectural frame; the assigned Jacqueline Jung reading adds that Gothic sculpture also included Black African figures.",
   "Interior, Upper Chapel, Sainte-Chapelle":"Walls are almost entirely stained glass between thin stone supports, with a star-spangled vault and gilded detail, the Rayonnant ideal of a glowing shell. It was built 1243-48 for King Louis IX to house relics of Christ's Passion, above all the Crown of Thorns, so the whole room acts as a huge reliquary. Importance: it ties French royal power to sacred relics and biblical kings, and it shows how far Gothic could go in turning structure into light.",
@@ -777,26 +758,22 @@ const objSig = {
   "Twelve Views of Landscape":"A handscroll in ink on silk, read section by section, with quick economical brush strokes, a landscape pushed into one side of the composition and large blank areas of silk that become mist, water and distance. Negative space does the work that dense detail does in Fan Kuan. Made in the Southern Song, early 13th century. Importance: it marks a shift from monumental permanence to a quieter, poetic mood, and shows how format matters: a handscroll turns looking into a journey through time.",
   "Poet Strolling by a Marshy Bank":"A single scholar walks by water, drawn in a few rapid, wet ink strokes with the reeds and bank barely suggested and the rest left empty. Loose ink wash and expressive brush quality carry the mood, tied to qi. Early 13th century, Southern Song, and associated with Liang Kai's free manner. Importance: it shows literati values of restraint and personal expression, and it puts the human figure back at the center of a landscape on an intimate scale, an answer to the monumental Northern Song mountains.",
   "Maestà":"A huge two-sided altarpiece. The front shows the enthroned Virgin and Child with angels and saints on a gold ground; the back tells scenes from Christ's life. It keeps Byzantine habits, gold background and formal frontality, but gentler gestures, softened faces and a throne with some depth show the style loosening. Made 1308-11 for Siena Cathedral's high altar, it was a civic point of pride and devotion to the Virgin as the city's protector. Importance: it represents one road out of Byzantine style, line and elegance, against Giotto's weight and volume.",
-  "Madonna and Child Enthroned":"The Virgin sits on a throne that feels like it occupies real space, with robes that cover a solid body and kneeling angels and saints around her. Giotto models forms with light and shadow instead of flat gold pattern. Made c. 1305-10 in Florence. Importance: it is a key moment in the Proto-Renaissance shift from Byzantine flatness toward volume, weight and believable space, and later writers treat Giotto as the start of Western naturalism; compare Duccio and Cimabue's more linear designs.",
-  "Scrovegni (Arena) Chapel":"A private chapel in Padua painted from floor to vault with a fresco cycle of the lives of Mary and Christ and a Last Judgment under a blue star-filled ceiling. Giotto gives figures volume, sets them in shallow but believable spaces and organizes scenes to read quickly. It was commissioned c. 1305-6 by Enrico Scrovegni, a wealthy banker, often said to be atoning for his family's moneylending. Importance: it shows fresco wrapping the viewer in a painted environment and moving painting toward illusionistic space and human emotion.",
-  "Lamentation, Scrovegni Chapel":"Mourners crowd around Christ's body in a strong diagonal that runs down the rocky slope to his head, with angels twisting overhead in grief and figures with backs turned. Weighted bodies, gesture and posture show grief instead of idealized calm. Fresco, 1305-6. Importance: it is a landmark of psychological realism in religious art, making viewers feel a sacred story as a human event, and it points ahead to the Renaissance interest in emotion and expression.",
+  "Lamentation, Arena Chapel":"Mourners crowd around Christ's body in a strong diagonal that runs down the rocky slope to his head, with angels twisting overhead in grief and figures with backs turned. Weighted bodies, gesture and posture show grief instead of idealized calm. Fresco, 1305-6. Importance: it is a landmark of psychological realism in religious art, making viewers feel a sacred story as a human event, and it points ahead to the Renaissance interest in emotion and expression.",
   "Mérode Altarpiece":"A triptych that sets the Annunciation in a middle-class Flemish room: the Virgin reads beside a vase of lilies and a snuffed candle, Gabriel is in the room, and in a wing Joseph works as a carpenter. Oil on wood panel with oil glazing gives jewel-like color, texture and reflections. Disguised symbolism lets ordinary objects carry meaning about purity and the Incarnation. Made c. 1425-1430s in a workshop (authorship is a question). Importance: sacred events are placed in a believable home, a private devotional image for urban patrons.",
   "Double Portrait of Giovanni Arnolfini and his Wife":"A full-length couple in a bedroom where every surface is rendered: fur, brass chandelier, fruit, a dog and a convex mirror that reflects the whole room, including two figures in the doorway. Oil glazing over careful underdrawing makes the surface glow. A wall inscription announces van Eyck's presence. Made 1434 in Flanders. Importance: it shows what oil can do, the rise of merchant patrons, and a test case for symbolism (Panofsky's 1934 reading) and authorship, which is why it keeps appearing in discussions.",
   "The Last Supper":"A wall painting in a monastery refectory, in an experimental technique rather than true fresco. One-point perspective sends every line toward Christ's head, and the apostles react in groups of three to the news of betrayal, modeled with sfumato and chiaroscuro. Made 1495-1498 in Milan. Importance: it unites mathematics, naturalism and emotion, the High Renaissance ideal, and it makes the monks' own dining room part of the sacred scene.",
   "School of Athens":"A fresco in a Vatican room under a coffered classical vault, with Plato and Aristotle at the vanishing point and philosophers and scientists grouped in lively conversation. The architecture, balanced symmetry and perspective express harmony and idealism. Painted c. 1510-11 for Pope Julius II and paired with Parnassus. Importance: it uses classical antiquity to present Rome and the papacy as heirs to Greek wisdom, art working for papal power and prestige as well as showing High Renaissance ideals.",
   "Pietà":"Mary supports the adult Christ across her lap in a stable pyramid of forms. Her face is youthful and calm, the drapery deep and carefully polished, and the anatomy accurate, all in marble. Made c. 1500 in Rome for Old St. Peter's, the only work Michelangelo signed. Importance: it uses naturalism and idealism to deepen grief instead of weakening devotion, launched the young sculptor's fame and is a core example of High Renaissance religious art.",
   "Venus of Urbino":"A nude reclines on a bed and looks directly at the viewer, with a sleeping dog and servants at a chest behind her. Oil on canvas with warm color, soft modeling and rich fabric shows the Venetian taste for color over Florentine drawing. Painted c. 1538, probably for a ducal patron. Importance: it turns the classical Venus into an intimate domestic scene, whether goddess, bride or courtesan is debated, and it shaped the tradition of the reclining nude.",
-  "Judith Beheading Holofernes":"Judith and her maidservant press down on the struggling Holofernes in a violent diagonal, blood spurting, out of deep darkness. Tenebrism and foreshortened arms push the action into the viewer's space; the naturalism owes a debt to Caravaggio's earlier Judith. Made 1612-13 by Artemisia Gentileschi. Importance: a woman painter makes a biblical heroine strong and physically convincing, and it embodies Baroque theatricality. It is often read alongside her biography, although biography-only readings are limited, the Vasari problem from the Renaissance reading.",
+  "Judith and Her Maidservant with the Head of Holofernes":"Judith and her maidservant are packed into a deep darkness and lit sharply from one source, caught in the tense seconds after the beheading as they glance out of the frame, with the head of Holofernes at hand. Tenebrism and the tight, cropped composition push the pair into the viewer's space; the naturalism owes a debt to Caravaggio. Oil on canvas, c. 1620, by Artemisia Gentileschi. Importance: a woman painter makes a biblical heroine strong, alert and physically convincing, and it embodies Baroque theatricality. It is often read alongside her biography, although biography-only readings are limited, the Vasari problem from the Renaissance reading.",
   "Las Meninas":"A huge canvas with the young infanta, her maids, a dwarf and a dog, and Velázquez himself at a large canvas, while a mirror in the back wall shows the king and queen and a figure stands in an open doorway. Loose brushwork and layered space create illusionism. Made 1656 for the Spanish court. Importance: it makes us ask who the subject is, the royal couple, the infanta or the viewer, and it raises painting's status by putting the painter among the court, art about art and royal power.",
-  "Juan de Pareja":"A direct, confident half-length portrait with a sharp glance and brisk brushwork in the collar and cloak. Pareja was Velázquez's enslaved assistant and later a painter in his own right. The review sheet lists 1606, but the painting is generally dated c. 1650. Importance: it gives dignity to a man the society treated as property and raises questions of authorship, race, enslavement and recognition, which Julie Mehretu discusses in the assigned video.",
   "Girl with a Pearl Earring":"A girl turns toward the viewer against a dark ground, her skin and blue and yellow turban softly lit and a pearl catching one highlight, built from thin glazed layers of oil. It is a tronie, a character study, not a commissioned portrait of a known sitter. Painted c. 1665 in Holland. Importance: it shows the Dutch Republic's market for modest, privately owned pictures and Vermeer's mastery of light, an intimacy that contrasts with the theatrical Catholic Baroque.",
   "Crucifixion of St. Peter":"Three laborers strain to haul Peter's cross up, and he stares out of the dark, muscular and human. Tenebrism makes the bodies emerge from black, foreshortening pushes them forward and there are no halos or angels. Made c. 1600-1601 for the Cerasi Chapel in Santa Maria del Popolo, Rome. Importance: it shows Counter-Reformation art making faith vividly present and emotional, and Caravaggio's naturalism, which both shocked and inspired other artists.",
-  "Great Pyramid of Cholula":"One of the largest pyramids in the Americas by volume, a stepped earthen structure built and expanded over centuries (c. 900-1500 CE) that now looks like a hill with a church built on its summit after 1540. Importance: the Spanish placed Christian worship directly on a sacred Indigenous site to claim it, so the building is conquest as architectural layering, and it shows both erasure and persistence, since people still use the site, a question of religion, power and memory in colonial space.",
   "Mass of Saint Gregory":"A picture made from tiny feathers cut and glued to a surface, showing the Mass miracle in which Christ appears over the altar while Pope Gregory prays, a subject known from European prints such as van Meckenem's engraving. Made in 1539 by Nahua artists, whose featherwork was prestigious. Importance: the Catholic doctrine of transubstantiation is carried by an Indigenous technique, so Indigenous skill survives inside a conversion image and shows adaptation and resistance, now kept in Auch, France.",
   "Portrait of Moteuczoma I Being Carved at Chapultepec Hill":"A manuscript scene in Diego Durán's history showing the ruler's portrait carved into a cliff at Chapultepec while workers carve, mixing Indigenous pictorial conventions with a European book format. Made c. 1570-80 by Nahua artists. Importance: it preserves memory of how Aztec rulers commemorated themselves with portraits in rock, and it shows how Indigenous perspectives reach us through colonial manuscripts shaped by friars' interest in understanding and controlling that history.",
   "The Virgin of Guadalupe":"The Virgin stands on a crescent moon held by an angel, in a mantle of stars with golden rays around her, painted on maguey cloth and cotton with oil and possibly tempera. Many versions carry the words tocada el original, touched to the original. Tradition links it to an apparition to Juan Diego. Importance: it fuses Marian devotion with Indigenous identity, the Virgin appearing as an Indigenous woman, and it became a unifying devotional and national image across Mexico.",
   "Equestrian Oba with Attendants":"A brass figure of the Oba mounted between attendants, with scale and placement showing hierarchy, frontal formal arrangement and detailed relief cast by the lost-wax technique, made 1550-1680 for the Benin court. Brass casting was a royal, guild-controlled craft. Importance: it asserts the Oba's divine kingship and military power, and because such works were looted in the British expedition of 1897, the object now also stands for colonial violence and the restitution and repatriation debate.",
-  "Queen Mother Pendant Mask":"A carved ivory face with narrowed inlaid eyes, iron inlay in the brow and ornamented crown and collar, idealized and calm, made by the Igbesamwan ivory carvers' guild in the 16th century. It honors the Queen Mother, associated with Iyoba Idia, whose power helped her son rule. Importance: it shows ivory as a restricted royal material, women's political and ritual power at court, and a Benin court treasure now held in museums abroad, the type of object restitution arguments cover.",
+  "Ivory Salt Cellar":"A small, intricately carved ivory vessel from the Edo court of Benin, 1525-1600, about 11.5 inches tall, made by the Igbesamwan ivory guild. Salt cellars of this type show Portuguese-style figures as Edo carvers imagined them, so the object records how Benin saw its European trading partners. Importance: ivory was a restricted royal material controlled by the Oba, the piece shows Benin as an active maker and trading partner in the 1500s Atlantic world, and it now sits in a Western museum, the kind of object restitution and repatriation arguments cover.",
   "Triple Crucifix":"Cast brass figures on a wooden cross, with a central Christ figure and extra figures above and below added later, in a local Kongo style. The center is 16th-17th century and the upper and lower figures are 18th-19th. Importance: Christianity arrived in Kongo through Portuguese contact and was absorbed into Kongo ideas of authority, ritual and protection over generations, so it shows cultural exchange running in both directions and objects changing over time."
 };
 
@@ -810,44 +787,44 @@ objects.forEach(o=>{
 
 // more pairs i could see her picking. the first ten are up above
 comparisons.push(
-  ["Sutton Hoo Purse Lid","Cross Carpet Page, Lindisfarne Gospels","Both are covered in animal-style and interlace pattern. How does ornament work in a royal burial compared with a monastery book?",
-    "Both lean on animal style and interlace, with almost no empty ground. The purse lid does it in gold and garnet cloisonné, a status object for a king taken into the grave. The Lindisfarne page does it in ink on vellum in a scriptorium, with a cross buried in the pattern so the viewer has to meditate to find it. Same visual language, secular display in one and devotion in the other, which shows how Insular artists moved pagan-era craft into Christian service."],
+  ["Sutton Hoo Hinged Clasp","Cross Carpet Page, Lindisfarne Gospels","Both are covered in animal-style and interlace pattern. How does ornament work in a royal burial compared with a monastery book?",
+    "Both lean on animal style and interlace, with almost no empty ground. The hinged clasp does it in gold and garnet cloisonné, a status object for a king taken into the grave. The Lindisfarne page does it in ink on vellum in a scriptorium, with a cross buried in the pattern so the viewer has to meditate to find it. Same visual language, secular display in one and devotion in the other, which shows how Insular artists moved pagan-era craft into Christian service."],
   ["Cross Carpet Page, Lindisfarne Gospels","Page with Matthew the Evangelist, Ebbo Gospels","Compare Hiberno-Saxon and Carolingian approaches to representation and ornament in a gospel book.",
     "The Insular carpet page is pure abstraction: no figure, all interlace, horror vacui as prayer. The Carolingian Matthew puts a seated human author at the center, with classical drapery borrowed from Roman models and an energetic line. Insular art spoke through pattern; the Carolingians revived Roman figure style to present Charlemagne's empire as a new Christian Rome."],
-  ["Amiens Cathedral","Interior, Upper Chapel, Sainte-Chapelle","Both are Gothic buildings built for light. How do the two phases of Gothic differ and what do they share?",
-    "Both use pointed arches and rib vaults and treat light as divine. Amiens is High Gothic: a huge community cathedral with flying buttresses and thick sculpture-covered portals. Sainte-Chapelle is Rayonnant: a small royal chapel whose walls nearly vanish into glass, built as a giant reliquary for the Crown of Thorns. One is civic and monumental, the other royal and jewel-like, both about heaven on earth."],
+  ["West Façade, Cathedral of Notre-Dame, Reims","Interior, Upper Chapel, Sainte-Chapelle","Both are Gothic buildings built for light and meaning. How do the two phases of Gothic differ and what do they share?",
+    "Both use pointed arches and rib vaults and treat light as divine. Reims is High Gothic: a huge cathedral where French kings were crowned, its west facade covered in portals with a tympanum and jamb statues that teach scripture to the crowd outside, and flying buttresses doing the structural work behind. Sainte-Chapelle is Rayonnant: a small royal chapel (1243-48) whose walls nearly vanish into stained glass, built for Louis IX to hold the Crown of Thorns, so the upper chapel works as a reliquary. One is a public, sculptural stage; the other is a glowing private jewel box."],
   ["Rose Window and Lancets, Chartres Cathedral","Travelers Among Mountains and Streams","How do two cultures connect the sacred to light or to the natural world?",
     "Chartres turns daylight into colored glass so that the church itself feels like divine presence, with saints and stories that teach a Christian public. Fan Kuan's mountain makes nature the sacred subject, with Daoist harmony and Neo-Confucian order read into mist and rock and people shown as tiny. One makes the divine visible through architecture and light, the other through an unpeopled landscape."],
   ["Travelers Among Mountains and Streams","Poet Strolling by a Marshy Bank","Compare Northern and Southern Song approaches to landscape.",
     "Fan Kuan's Northern Song hanging scroll is monumental and detailed, with a huge mountain and tiny travelers. Liang Kai's Southern Song poet is small, loose and mostly empty space, a few strokes of ink wash carrying qi and mood. Both use ink and the idea of humanity inside nature, but one stresses permanence and grandeur and the other personal, literati restraint."],
-  ["Maestà","Madonna and Child Enthroned","Compare Duccio and Giotto: how do their Madonnas show the move away from Byzantine style?",
-    "Duccio's Maestà keeps the gold ground, frontal formality and graceful line of Byzantine tradition, with just a hint of softer modeling. Giotto's Madonna has weight: robes cover a solid body, the throne sits in space and the figures are modeled with light and shadow. Both are Siena or Florence altarpieces for the Virgin, but Giotto's volume points to Renaissance naturalism."],
-  ["Lamentation, Scrovegni Chapel","Judith Beheading Holofernes","Both show raw emotion in a religious story, three centuries apart. How is emotion built into each?",
-    "Giotto uses gesture, a strong diagonal and angels twisting in grief to make a quiet, communal sorrow. Gentileschi uses tenebrism, foreshortening and physical force to make violence immediate. Both pull viewers into a biblical story through human feeling, but the medieval-to-Renaissance Giotto is mournful and Baroque Judith is theatrical and aggressive."],
+  ["Maestà","Lamentation, Arena Chapel","Compare Duccio and Giotto: how do their paintings show the move away from Byzantine style?",
+    "Duccio's Maestà (1308-11) is tempera and gold on panel: a gold ground, a grand enthroned Virgin and rows of saints, still close to Byzantine pattern even with a softer touch. Giotto's Lamentation (c. 1305) is fresco in the Arena Chapel, with weighty modeled bodies in believable space, a strong diagonal and real grief shown through gesture. Duccio builds a devotional image of heavenly splendor; Giotto stages a human event, so volume and emotion replace gold surface."],
+  ["Lamentation, Arena Chapel","Judith and Her Maidservant with the Head of Holofernes","Both show raw emotion in a religious story, about three centuries apart. How is emotion built into each?",
+    "Giotto uses gesture, a strong diagonal and angels twisting in grief to make a quiet, communal sorrow. Gentileschi uses tenebrism and the two women's alert glances to make tension immediate. Both pull viewers into a biblical story through human feeling, one in grief, the other in suspense."],
   ["Double Portrait of Giovanni Arnolfini and his Wife","Girl with a Pearl Earring","Both use oil and observed light. How do the two painters turn ordinary people into subjects worth looking at closely?",
     "Van Eyck uses oil glazing, underdrawing and dense detail so a merchant couple's room becomes a document full of disguised meaning. Vermeer uses soft glazed layers, a dark ground and one pearl highlight to make a single anonymous face feel intimate. Flemish detail asks for decoding, Dutch Baroque light asks for quiet attention, and both are private pictures for a middle-class market."],
   ["The Last Supper","School of Athens","Both use perspective to organize a crowd. What does each want the viewer to see?",
     "Leonardo's one-point perspective focuses everything on Christ at the center of a moment of betrayal, with chiaroscuro and sfumato modeling emotion. Raphael's classical vault frames Plato and Aristotle among philosophers to present harmony and learning. Both are High Renaissance and balanced, but one is a sacred drama in a refectory and the other a papal statement that Rome inherits Greek wisdom."],
   ["Pietà","Venus of Urbino","One is sacred and one is secular. How does Renaissance naturalism serve each?",
     "Michelangelo's marble Mary and Christ use perfect anatomy and polished drapery to make devotion and grief feel real. Titian's oil nude uses color, warm light and a direct gaze to make a goddess feel like a person in a household. Same naturalism, one pushing sacred emotion and the other sensuous presence and patron taste."],
-  ["Judith Beheading Holofernes","Crucifixion of St. Peter","Compare how two Italian Baroque painters use light and the body.",
-    "Both use tenebrism, foreshortening and ordinary physical bodies to drag the viewer into the scene. Caravaggio shows a martyr's weight being hauled up with no heroics, while Gentileschi shows a heroine's strength and effort in a murder. Both reflect the Counter-Reformation push for emotional, believable religious art, and Artemisia clearly learned from Caravaggio."],
-  ["Las Meninas","Juan de Pareja","Both are by Velázquez. What do they say about status and who gets to be seen?",
-    "Las Meninas shows the royal family and court in a complex, mirrored space and puts the painter among the elite. Juan de Pareja gives a direct, dignified likeness of an enslaved assistant who later became a painter himself. Together they show how one artist handles power and identity in a court that also depended on enslaved labor."],
+  ["Judith and Her Maidservant with the Head of Holofernes","Crucifixion of St. Peter","Compare how two Italian Baroque painters use light and the body.",
+    "Caravaggio's Crucifixion of St. Peter uses a spotlight and straining, foreshortened bodies to make physical effort unavoidable. Gentileschi, who learned from Caravaggio's tenebrism, lights two women out of deep darkness so the drama sits in watchfulness instead of strain. Both use dark grounds and theatricality to force the viewer into the scene; one stages labor, the other suspense."],
+  ["Las Meninas","Venus of Urbino","Both figures look straight out at the viewer. What does that look do, and who is each picture made for?",
+    "In Las Meninas the princess, the court and Velázquez himself turn toward us, and the mirror shows the king and queen standing where the viewer stands, so the viewer is pulled into the royal space. In Titian's Venus of Urbino a reclining nude holds the viewer's gaze in a domestic Venetian interior, painted c. 1538 in oil for a private patron, so the look is intimate. One look implicates the viewer in court hierarchy; the other is a private, sensual address. Both use oil and observed light to make presence feel real."],
   ["Girl with a Pearl Earring","Las Meninas","Compare Dutch and Spanish Baroque: how do their audiences shape the pictures?",
     "Vermeer's small, quiet canvas was made for the Dutch market and focuses on one face and a single bright pearl. Velázquez's huge royal canvas shows a layered court scene with a mirror and a painter inside it. Spain's Catholic monarchy produces grand, complex illusion and Holland's merchant culture produces private intimacy."],
-  ["Great Pyramid of Cholula","Amiens Cathedral","Both are sacred sites built by communities over time. How are power and religion built into each?",
-    "Amiens was built over generations as a civic and religious landmark of height and light. Cholula grew over centuries as an Indigenous sacred pyramid and then had a church built directly on top after 1540. One shows a community expressing devotion through new architecture, the other shows conquest claiming a holy place by building over it."],
+  ["Mass of Saint Gregory","Portrait of Moteuczoma I Being Carved at Chapultepec Hill","Both were made by Nahua artists after the Spanish invasion. What do Indigenous artists keep and what do they have to adjust?",
+    "The Mass of Saint Gregory (1539) turns a European Catholic subject, the miracle of transubstantiation, into an Indigenous craft by making it in featherwork. The portrait of Moteuczoma I being carved at Chapultepec Hill (c. 1570-80) comes from Diego Durán's Spanish-sponsored history, where Nahua artists record their own ruler's commemoration for colonial readers. In both, Nahua artists work inside a colonial commission: one carries a European subject in Indigenous materials, the other carries Indigenous history in a book format Spaniards wanted."],
   ["Mass of Saint Gregory","Triple Crucifix","Both put Christian subjects in non-European hands. What survives of local tradition in each?",
     "The Mass of Saint Gregory is made of feathers by Nahua artists, keeping an Indigenous craft inside a Catholic conversion subject. The Triple Crucifix is cast in brass in a Kongo style and altered over centuries. Both show Christianity being absorbed and reshaped, not just imposed, though Mexico's case follows military conquest and Kongo's followed a longer diplomatic relationship."],
   ["Portrait of Moteuczoma I Being Carved at Chapultepec Hill","Equestrian Oba with Attendants","Both record how a ruler is commemorated. What does each show about portraits and power?",
     "The Moteuczoma scene shows a king's portrait being carved into rock, preserved through a colonial manuscript made by Nahua artists. The Benin Oba is cast in brass by court guilds, mounted and central, made for the court itself. Both use portraiture to legitimize rule, but one survives filtered through colonial documents and the other through looted museum collections."],
-  ["The Virgin of Guadalupe","Madonna and Child Enthroned","Both are images of Mary. How do culture and context change her?",
-    "Giotto's Madonna and Child is a Florentine altarpiece figure with weight and space, a step toward naturalism. Guadalupe stands on a crescent moon in rays of light as an Indigenous woman on maguey cloth, tied to a Mexican apparition story. Same holy figure, but one shows European naturalism and the other shows Catholic devotion merged with Indigenous identity."],
-  ["Equestrian Oba with Attendants","Queen Mother Pendant Mask","Both come from the court of Benin. How do they show different kinds of royal power?",
-    "The brass Oba shows the king in military and political command, with hierarchical scale and attendants. The ivory mask honors the Queen Mother, a spiritual and political power behind the Oba. Brass casting and ivory carving were both guild crafts under royal control, and both were later taken in the 1897 expedition."],
-  ["Mérode Altarpiece","Scrovegni (Arena) Chapel","Both bring sacred stories into ordinary-looking spaces. How does each try to make faith feel close?",
-    "The Mérode triptych sets the Annunciation in a Flemish home, with oil glazing and disguised symbolism in the candle, lilies and Joseph's workshop. Giotto's chapel wraps the viewer in a fresco cycle with weighty figures and real emotion. One makes faith intimate through objects, the other through human feeling and space."]
+  ["The Virgin of Guadalupe","Maestà","Both are images of Mary. How do culture and context change her?",
+    "Duccio's Maestà shows Mary enthroned in gold, a Sienese altarpiece for a cathedral, still tied to Byzantine ideas of a heavenly queen. The Virgin of Guadalupe stands on a crescent moon in rays of light, painted in oil on maguey cloth in the late 1600s, tied to a Mexican apparition story and to Indigenous communities. Same holy figure, but one is imperial heaven in gold and the other is a local Mexican Mary whose sun rays could echo Indigenous ideas like tonalli."],
+  ["Equestrian Oba with Attendants","Ivory Salt Cellar","Both come from the court of Benin. How do they show different kinds of royal power and outside contact?",
+    "The brass Oba shows the king in military and political command at the center of a hierarchy, cast by court guild artists in the lost-wax method. The ivory salt cellar was carved by the Igbesamwan guild; ivory was a royal material, and salt cellars like this were made for exchange with Europeans in the 1500s, so they show Benin as a trading partner and not only a victim of the later 1897 raid. Both now sit in museums outside Nigeria, which is why restitution matters for each."],
+  ["Mérode Altarpiece","Lamentation, Arena Chapel","Both bring sacred stories into human-scale settings. How does each try to make faith feel close?",
+    "The Mérode triptych sets the Annunciation in a Flemish home, with oil glazing and disguised symbolism in the candle, lilies and Joseph's workshop. Giotto's Lamentation puts mourners around Christ in a fresco with weighty figures and visible grief. One makes faith intimate through everyday objects, the other through human emotion; both pull heaven down into recognizable life."]
 );
 
 // slide-deck works that aren't focus objects. part 2 will be something
@@ -859,9 +836,6 @@ const unknownWorks = [
   {name:"The Calling of St. Matthew, Caravaggio", date:"1599-1600", wiki:null, culture:"Rome", answer:"Italian Baroque painting",
    keys:["oil on canvas","tenebrism","single beam of light","ordinary clothing","Counter-Reformation","chapel","dramatic gesture","Baroque"],
    note:"Same light and ordinary bodies as the Crucifixion of St. Peter."},
-  {name:"Judith and Her Maidservant with the Head of Holofernes, Gentileschi", date:"c. 1625", wiki:null, culture:"Italy", answer:"Italian Baroque painting",
-   keys:["oil on canvas","tenebrism","chiaroscuro","biblical heroine","theatricality","female artist","Baroque"],
-   note:"Same subject as the focus Judith, a calmer later version."},
   {name:"Breakfast with a Lobster, Heda", date:"1648", wiki:null, culture:"Dutch Republic", answer:"Dutch Baroque still life",
    keys:["still life","vanitas","oil on canvas","everyday objects","reflections","trade and wealth","mortality","Dutch Republic"],
    note:"Contrasts with the dramatic Catholic Baroque, a secular, market-driven picture."},
@@ -880,9 +854,6 @@ const unknownWorks = [
   {name:"Image of Christ made with feathers, Juan Baptista Cuiris", date:"c. 1590-1600", wiki:null, culture:"Mexico", answer:"Colonial Mexican featherwork",
    keys:["featherwork","Indigenous technique","Christian subject","conquest","colonial Mexico","cultural survival","Nahua"],
    note:"Same idea as the Mass of Saint Gregory."},
-  {name:"Saltcellar with Portuguese Figures, Benin", date:"1525-1600", wiki:null, culture:"Benin", answer:"Benin court ivory carving",
-   keys:["ivory","Edo","Igbesamwan guild","Portuguese figures","cultural exchange","trade","court art","colonial collecting"],
-   note:"Shows trade and exchange between Benin and Europeans before the 1897 expedition."},
   {name:"Head of a ruler from Ife, Yoruba", date:"1300-1450", wiki:null, culture:"Nigeria (Yoruba)", answer:"Yoruba, Ife, brass portrait head",
    keys:["lost-wax casting","brass","naturalism","ruler","royal portraiture","Africa before colonialism","Yoruba","idealized features"],
    note:"Lecture example of lost-wax casting before Benin."},
